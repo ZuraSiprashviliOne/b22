@@ -1,0 +1,317 @@
+
+@import 'bootstrap/functions';
+@import 'bootstrap/variables';
+
+@keyframes loading{
+  from{
+    transform: rotate(0);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+body{
+  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+  .loading {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: rgba($grass, 0.7);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: $h1-font-size;
+
+    .fa {
+      animation-name: loading;
+      animation-iteration-count: infinite;
+      animation-duration: 1s;
+      transform: rotate(0);
+      transition: 0.3s;
+    }
+  }
+  #root {
+    min-height: inherit;
+    height: inherit;
+    overflow: hidden;
+
+    #App {
+      min-height: inherit;
+      height: inherit;
+      overflow-x: hidden;
+      position: relative;
+    }
+  }
+}
+
+html{
+  overflow-x: hidden;
+}
+
+input::placeholder{
+  color: $dark;
+}
+input.bg-light::placeholder{
+  color: $dark
+}
+.rounded{
+  border-radius: 45px !important;
+
+  &-no{
+    border-radius: 0 !important;
+  }
+}
+.circle{
+  border-radius: 50% !important;
+
+  &-el{
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    @extend .circle;
+  }
+}
+
+@mixin rect($size: 60px){
+  width: $size;
+  height: $size;
+  text-align: center;
+  line-height: $size;
+}
+
+.rect{
+  @include rect();
+}
+
+.border{
+  border-color: rgba($light, 0.7);
+}
+
+a{
+  text-decoration: none !important;
+}
+
+*{
+  outline: none !important
+}
+
+.btn{
+  @extend .rounded-no;
+}
+
+.shadow{
+  box-shadow: 0 0 15px 2px rgba($black, 0.1);
+}
+
+.pre-footer{
+  .top{
+    border-bottom: 1px solid rgba($__grass, 0.3);
+  }
+}
+
+header{
+  .top{
+    .top-nav{
+      ul{
+        height: 100%;
+        li{
+          border-right: 1px solid rgba($__grass, 0.3);
+          height: 100%;
+          transition: $transition-base;
+
+          &.active{
+            background-color: rgba($__grass, 0.3);
+            color: $white;
+          }
+
+          &:hover{
+            @extend .active;
+          }
+
+          &:first-child{
+            border-left: 1px solid rgba($__grass, 0.3);
+          }
+
+          a{
+            display: block;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+
+  .navbar{
+    box-shadow: 0 0 18px 2px rgba($grass, 0.2);
+    .navbar-nav{
+      .nav-item{
+        border-right: 1px solid rgba($_grass, 0.1);
+
+        transition: $transition-base;
+
+        &:first-child{
+          border-left: 1px solid rgba($_grass, 0.1);
+
+        }
+
+        @media only screen and(max-width: $md){
+          border: 0 !important;
+        }
+        &.active{
+          background-color: rgba($_grass, 0.1);
+        }
+
+        &:hover{
+          @extend .active;
+        }
+
+        &.dropdown{
+          .dropdown-item{
+            a{
+              transition: $transition-base;
+            }
+            &:hover{
+              a{
+                background-color: rgba($_grass, 0.1) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.swiper-container{
+  position: relative;
+
+  .swiper-button-prev{
+    left: 0;
+  }
+}
+
+.slider{
+  .swiper-container{
+    height: 400px;
+    .swiper-wrapper{
+      .swiper-slide {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: bottom;
+
+        .data {
+          background-color: rgba($light, 0.1);
+
+          .rect {
+            @include rect(40px);
+            transition: $transition-base;
+
+            &:hover {
+              color: $grass !important;
+              background-color: $white !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .swiper-button-next, .swiper-button-prev{
+    background: transparent;
+  }
+
+  .thumbKinds{
+    .thumbsRow{
+      >div{
+        transition: $transition-base;
+        cursor: pointer;
+
+        .rounded{
+          background-color: $black;
+          transition: $transition-base;
+        }
+
+        &.active{
+          background-color: rgba($_grass, 0.1);
+          .rounded{
+            background-color: $_grass;
+          }
+        }
+
+        &:hover{
+          @extend .active;
+        }
+      }
+    }
+  }
+}
+
+.offers{
+  .item{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    @extend .shadow;
+    .cover{
+      background-color: rgba($black, 0.3);
+
+      .text{
+        background-color: rgba($black, 0.7);
+      }
+    }
+  }
+}
+
+.addons{
+  .addon{
+  }
+}
+
+.collections{
+
+  .collection-button{
+    width: auto;
+    @media only screen and(max-width: $sm){
+      width: 100%;
+      .btn{
+        width: 100%;
+      }
+    }
+  }
+
+  .collection{
+    position: relative;
+    .image{
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .price{
+      position: relative;
+      .lie{
+        margin-top: -1rem;
+      }
+    }
+  }
+}
+
+.basic-swiper-container{
+  .swiper-button-next, .swiper-button-prev{
+    background: transparent;
+  }
+}
+
+#home_page{
+  .page-divider{
+    border-bottom: 1px solid rgba($dark, 0.3);
+  }
+}
