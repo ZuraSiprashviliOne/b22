@@ -11,18 +11,26 @@ import Logger from 'redux-logger';
 
 import LocaleReducer from './Reducers/LocaleReducer';
 import NavigationReducer from './Reducers/NavigationReducer';
+import CommonReducer from './Reducers/CommonReducer';
 
 import SliderReducer from './Reducers/SliderReducer';
+import SalesReducer from './Reducers/SalesReducer';
+import CollectionsReducer from './Reducers/CollectionsReducer';
+import AddonsReducer from './Reducers/AddonsReducer';
 
 export default createStore(
   combineReducers({
     LocaleReducer,
     NavigationReducer,
-    SliderReducer
+    SliderReducer,
+    CommonReducer,
+    SalesReducer,
+    CollectionsReducer,
+    AddonsReducer
   }),
   {},
   applyMiddleware(
-    Logger,
+    // Logger,
     Promise(),
     Thunk
   )

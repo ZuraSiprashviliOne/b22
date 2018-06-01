@@ -25,15 +25,32 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Badge
+  Badge,
+  Button
 } from 'reactstrap';
 
 import Translate from './Translate';
 
-
 class NavigationTop extends React.Component{
   constructor(props){
     super(props);
+
+    this.state = {
+      searchIconClicked: false
+    };
+
+    this._searchClick = this._searchClick.bind(this);
+  }
+
+  _searchClick(){
+    if(this.searchInput !== undefined){
+      this.setState({searchIconClicked: !this.state.searchIconClicked});
+      if(this.searchInput.classList.contains('fadeInRight')){
+        this.searchInput.classList.remove('fadeOutRight');
+      }else{
+        this.searchInput.classList.add('fadeInRight');
+      }
+    }
   }
 
   render(){
@@ -68,11 +85,21 @@ class NavigationTop extends React.Component{
             xs={9}
             className="top-nav text-white d-flex flex-row align-items-center justify-content-end">
             <ul className="list-unstyled  m-0 d-flex flex-row align-items-center">
+              <li className={`search flex-column justify-content-center align-items-center px-1 ${this.state.searchIconClicked === true ? 'd-flex': 'd-none'}`}>
+                <input
+                  ref={(element) => {this.searchInput = element}}
+                  type="text"
+                  className="w-100 animated border-_grass rounded-no bg-transparent my-1 form-control"
+                  placeholder={'Search...'}/>
+              </li>
               <li>
-                <a href="#" className="px-3 py-3 text-white">
+                <Button
+                  onClick={this._searchClick}
+                  ref={(element) => {this.searchIcon = element}}
+                  className="btn bg-transparent border-0 px-3 py-3 text-white">
                   <FontAwesome
                     name={'search'}/>
-                </a>
+                </Button>
               </li>
               {/*<li>*/}
                 {/*<a href="#" className="px-3 py-3 text-white font-weight-light">Register Or Login</a>*/}
@@ -227,13 +254,23 @@ class NavigationNavbar extends React.Component{
     });
   }
 
+  componentWillReceiveProps(props){
+    if(props.fixed){
+      setTimeout(() => {
+        this.navbar.classList.add('fixed-top');
+      }, 500);
+    }else{
+      setTimeout(() => {
+        this.navbar.classList.remove('fixed-top');
+      }, 500);
+    }
+  }
+
   render(){
     return (
-      <Navbar
-        color={'white'}
-        light
-        expand={'md'}
-        className={'py-1 py-md-0'}>
+      <div
+        className={'py-1 py-md-0 animated navbar navbar-expand-md navbar-light bg-white'}
+        ref={(element) => {this.navbar = element}}>
         <Container>
           <NavbarBrand
             className={'text-capitalize font-weight-bold d-none d-sm-none d-md-none d-lg-none d-xl-none'}
@@ -250,7 +287,7 @@ class NavigationNavbar extends React.Component{
             <UserFavourites/>
           </Collapse>
         </Container>
-      </Navbar>
+      </div>
 
     );
   }
@@ -268,8 +305,8 @@ class Element extends React.Component{
         id={'header'}>
         <NavigationTop
           title={this.props.title}/>
-
         <NavigationNavbar
+          fixed={this.props.fixed}
           {...this.props.Navigation}/>
       </header>
     );

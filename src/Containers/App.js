@@ -34,11 +34,15 @@ import Navigation from './Navigation';
 import Footer from './Footer';
 
 import Pages from './Pages';
+import {INIT_COMMON_REDUCER} from "../Actions/CommonActions";
 
 class Element extends React.Component{
   constructor(props){
     super(props);
 
+    this.state = {
+      navbarIsFixed: false
+    };
   }
 
   render(){
@@ -46,11 +50,23 @@ class Element extends React.Component{
       <div
         id={'App'}
         className={'Application'}>
-        <Scrollbar>
+        <Scrollbar
+          onScroll={(event) => {
+            if(event.target.scrollTop > 50){
+              if(!this.state.navbarIsFixed){
+                this.setState({navbarIsFixed: true});
+              }
+            }else{
+              if(this.state.navbarIsFixed){
+                this.setState({navbarIsFixed: false});
+              }
+            }
+          }}>
           <Router>
             <div
                 id={'RouterContainer'}>
               <Navigation
+                fixed={this.state.navbarIsFixed}
                 setLocale={this.props.setLocale}/>
               <Switch>
                 <Route
@@ -58,7 +74,8 @@ class Element extends React.Component{
                   exact={true}
                   component={Pages.Home}/>
               </Switch>
-              <Footer/>
+              <Footer
+                common={this.props.Common}/>
             </div>
           </Router>
         </Scrollbar>
@@ -73,11 +90,14 @@ class App extends React.Component{
 
 
     this.state = {
-      ready: () => checkPromise(this.props.Locale.primary)
+      ready: () =>
+        checkPromise(this.props.Locale.primary)
+        && checkPromise(this.props.Common)
     }
   }
 
   componentDidMount(){
+    this.props.initCommon();
     this.props.initLocale(() => {
       if(!this.props.Locale.current){
         this.props.setLocale(this.props.Locale.default);
@@ -92,7 +112,8 @@ class App extends React.Component{
 
 const states = (state) => {
   return {
-    Locale: state.LocaleReducer
+    Locale: state.LocaleReducer,
+    Common: state.CommonReducer
   };
 };
 
@@ -115,6 +136,9 @@ const actions = (dispatch) => {
         Storage.set('locale', code);
       }
     },
+    initCommon: () => {
+      dispatch(INIT_COMMON_REDUCER());
+    }
   };
 };
 

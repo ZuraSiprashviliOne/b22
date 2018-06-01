@@ -1,0 +1,39 @@
+[
+  {
+    "id":"1",
+    "title":"home",
+    "slag":"home_page"
+  },
+  {
+    "id":"2",
+    "title":"flowers",
+    "slag":"flowers_page",
+    "sub": [
+      {
+        "id": "3",
+        "title": "mourning floristic",
+        "slag": "mourning_floristic"
+      },
+      {
+        "id": "4",
+        "title": "bouquets",
+        "slag": "bouquets"
+      }
+    ]
+  },
+  {
+    "id":"5",
+    "title":"individual order",
+    "slag":"individual_order_page"
+  },
+  {
+    "id": "6",
+    "title": "conditions",
+    "slag": "conditions_page"
+  },
+  {
+    "id": "7",
+    "title": "contact",
+    "slag": "contact_page"
+  }
+]

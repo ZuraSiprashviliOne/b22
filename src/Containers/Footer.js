@@ -13,9 +13,18 @@ import {
 
 import {Loading} from "../Components/Loading";
 
+import Translate from './Translate';
+
 class Top extends React.Component{
   constructor(props){
     super(props);
+
+    this._subscribe = this._subscribe.bind(this);
+  }
+
+  _subscribe(event){
+    alert('subscribed');
+    event.preventDefault();
   }
 
   render(){
@@ -69,21 +78,22 @@ class Top extends React.Component{
               xs={12}>
               <Container>
                 <Row className={'align-items-center'}>
-                  <form className={'col-lg-4 col-md-6 col-sm-8 b d-flex flex-row align-items-center jutify-content-start'}>
+                  <div className={'col-lg-4 col-md-6 col-sm-8 b d-flex flex-row align-items-center jutify-content-start'}>
                     <div className={'input-group'}>
                       <input
                         type={'text'}
+                        ref={(element) => {this.textInput = element}}
                         className={'rounded-no bg-__grass text-light px-3 py-2 form-control border-0'}
                         placeholder={'Enter your Email form Subscription'} />
                     </div>
                     <div className={'input-group'} style={{flex: 0}}>
                       <button
-                        className={'rounded-no btn-white border-white text-grass form-control'}
-                              type="submit">
+                        onClick={this._subscribe}
+                        className={'rounded-no btn-white border-white text-grass form-control'}>
                         <FontAwesome name={'angle-right'}/>
                       </button>
                     </div>
-                  </form>
+                  </div>
                 </Row>
               </Container>
             </Col>
@@ -108,10 +118,14 @@ class Bottom extends React.Component{
               md={6}
               className={'p-2'}>
               <div className={'text-capitalize'}>
-                copyright Botanica22
+                <Translate>
+                  {this.props.common.title}
+                </Translate>
               </div>
               <div className={'text-capitalize small'}>
-                Designed By FireFly
+                <Translate>
+                  {this.props.common.copy}
+                </Translate>
               </div>
             </Col>
             <Col
@@ -160,7 +174,7 @@ class Element extends React.Component{
   render(){
     return [
       <Top key={'top'}/>,
-      <Bottom key={'bottom'}/>
+      <Bottom common={this.props.common} key={'bottom'}/>
     ]
   }
 }

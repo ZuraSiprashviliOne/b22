@@ -78,13 +78,13 @@ export default class Slider extends React.Component{
       swiper: null,
       activeIndex: 0,
       params: {
-        simulateTouch: false
-        // navigation: {
-        //   nextEl: '.swiper-button-next',
-        //   prevEl: '.swiper-button-prev',
-        // },
-        // renderPrevButton: () => <SliderButton to={'left'}/>,
-        // renderNextButton: () => <SliderButton to={'right'}/>
+        loop: true,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        renderPrevButton: () => <SliderButton to={'left'}/>,
+        renderNextButton: () => <SliderButton to={'right'}/>
       }
     };
 
