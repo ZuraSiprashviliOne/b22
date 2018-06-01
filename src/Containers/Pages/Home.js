@@ -40,7 +40,7 @@ class Element extends React.Component{
 
         <CollectionsComponent {...this.props.Collections}/>
 
-        <Addons {...this.props.Addons}/>
+        {/*<Addons {...this.props.Addons}/>*/}
       </main>
     );
   }

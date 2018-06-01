@@ -41,7 +41,7 @@ class CollectionItem extends React.Component{
                 <div className={'bg-grass py-2 lie'}></div>
                 <div className={'bg-grass text-center text-white font-weight-bold pt-3 pb-4'}>
                   <i>
-                    {this.props.price}
+                    ${this.props.price}
                   </i>
                 </div>
               </Col>
@@ -51,7 +51,7 @@ class CollectionItem extends React.Component{
                 <h5 className={'m-0 py-3 font-weight-light'}>
                   <Link
                     className={'text-muted d-block'}
-                    to={this.props.route}>
+                    to={'/flowers/items/item_' + this.props.id}>
                     <Translate>
                       {this.props.title}
                     </Translate>
@@ -123,7 +123,7 @@ class Collections extends React.Component{
                 </h1>
               </div>
               <div className={'collection-button'}>
-                <Link to={this.props.route} className={'btn btn-outline-_grass text-capitalize'}>
+                <Link to={this.props.slag} className={'btn btn-outline-_grass text-capitalize'}>
                   <Translate>
                     show all
                   </Translate>
@@ -158,8 +158,8 @@ export class CollectionsComponent extends React.Component{
   }
 
   render(){
-    return this.props.items.map((item) => {
-      return <Collections key={item.id} {...item}/>;
+    return this.props.items.map((item, index) => {
+      return <Collections key={index} {...item}/>;
     });
   }
 }

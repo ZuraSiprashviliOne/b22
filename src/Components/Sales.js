@@ -49,7 +49,7 @@ export class Sales extends React.Component{
       return (
         <div
           data-aos={'fade-in'}
-          key={item.route}
+          key={item.id}
           className={'h-100 item text-center'}
              style={{
                backgroundImage: `url(${item.image})`
@@ -58,10 +58,10 @@ export class Sales extends React.Component{
             <div className={'text my-5 text-uppercase text-white"'}>
               <Link
                 className={'text-light'}
-                to={item.route}>
+                to={'/flowers/items/item_' + item.id}>
                 <h1 className={'m-0 font-weight-light'}>
                   <Translate>
-                    {item.text}
+                    sale
                   </Translate>
                 </h1>
               </Link>

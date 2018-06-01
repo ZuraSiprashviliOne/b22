@@ -145,7 +145,7 @@ class NavigationNavNavItemWithDropdown extends React.Component{
         <DropdownItem
           key={item.slag}
           tag={Link}
-          to={this.props.slag + '/' + item.slag}>
+          to={item.slag}>
           <Translate>
             {item.title}
           </Translate>

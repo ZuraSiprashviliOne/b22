@@ -30,7 +30,7 @@ export default createStore(
   }),
   {},
   applyMiddleware(
-    // Logger,
+    Logger,
     Promise(),
     Thunk
   )

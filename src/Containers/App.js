@@ -52,19 +52,19 @@ class Element extends React.Component{
         className={'Application'}>
         <Scrollbar
           onScroll={(event) => {
-            if(event.target.scrollTop > 50){
-              if(!this.state.navbarIsFixed){
+            if (event.target.scrollTop > 50) {
+              if (!this.state.navbarIsFixed) {
                 this.setState({navbarIsFixed: true});
               }
-            }else{
-              if(this.state.navbarIsFixed){
+            } else {
+              if (this.state.navbarIsFixed) {
                 this.setState({navbarIsFixed: false});
               }
             }
           }}>
           <Router>
             <div
-                id={'RouterContainer'}>
+              id={'RouterContainer'}>
               <Navigation
                 fixed={this.state.navbarIsFixed}
                 setLocale={this.props.setLocale}/>
@@ -73,6 +73,10 @@ class Element extends React.Component{
                   path={'/'}
                   exact={true}
                   component={Pages.Home}/>
+                <Route
+                  path={'/contact'}
+                  exact={true}
+                  component={Pages.Contact}/>
               </Switch>
               <Footer
                 common={this.props.Common}/>

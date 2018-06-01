@@ -5,7 +5,11 @@ export function INIT_COLLECTIONS(){
   return {
     type: 'INIT_COLLECTIONS',
     payload: new Promise((resolve, reject) => {
-      Axios.get('/data/collections/collections.json')
+      Axios.get('http://zurasiprashvilitwo.000webhostapp.com/index.php', {
+        params: {
+          common: 'locale'
+        }
+      })
         .then((response) => {
           resolve({
             divider: response.data.divider,
@@ -23,9 +27,13 @@ export function SET_COLLECTIONS_ITEMS(){
   return {
     type: 'SET_COLLECTIONS_ITEMS',
     payload: new Promise((resolve, reject) => {
-      Axios.get('/data/collections/items.json')
+      Axios.get('http://zurasiprashvilitwo.000webhostapp.com/index.php', {
+        params: {
+          products: 'catalog'
+        }
+      })
         .then((response) => {
-          resolve(response.data.items);
+          resolve(response.data);
         })
         .catch((error) => {
           reject(error);

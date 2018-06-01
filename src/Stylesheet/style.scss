@@ -36,13 +36,14 @@ body{
     left: 0;
     right: 0;
     color: rgba($grass, 0.7);
+    background-color: $white !important;
 
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     font-size: $h1-font-size;
-
+    z-index: 100 !important;
     .fa {
       animation-name: loading;
       animation-iteration-count: infinite;

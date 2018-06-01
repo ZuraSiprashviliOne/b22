@@ -35,13 +35,13 @@ class SliderSlide extends React.Component{
               <div className={'text-light text-capitalize'}>
                 <h1 className={'m-0'}>
                   <Translate>
-                    {this.props.description.title}
+                    {this.props.title}
                   </Translate>
                 </h1>
               </div>
               <div className={'py-3 small text-light pr-lg-5 mr-lg-5'}>
                 <Translate>
-                  {this.props.description.desc}
+                  {this.props.description}
                 </Translate>
               </div>
               <div className={'rects d-flex flex-row align-items-center-justify-content-start'}>
@@ -130,14 +130,14 @@ export default class Slider extends React.Component{
             <div className={'py-2 px-xl-4 text-white px-lg-3 text-capitalize'}>
               <h5 className={'font-weight-light m-0'}>
                 <Translate>
-                  {slide.description.title}
+                  {slide.title}
                 </Translate>
               </h5>
             </div>
             <div className={'text-light'}>
               <small>
-                <Translate>
-                  {slide.priceText}
+                <Translate divider={this.props.divider}>
+                  {`now from >>> $${slide.price}`}
                 </Translate>
               </small>
             </div>

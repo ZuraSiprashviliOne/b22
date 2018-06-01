@@ -5,7 +5,11 @@ export function INIT_SALES(){
   return {
     type: 'INIT_SALES',
     payload: new Promise((resolve, reject) => {
-      Axios.get('/data/sales/sales.json')
+      Axios.get('http://zurasiprashvilitwo.000webhostapp.com/index.php', {
+        params: {
+          common: 'locale'
+        }
+      })
         .then((response) => {
           resolve({
             divider: response.data.divider,
@@ -23,9 +27,13 @@ export function SET_SALES_ITEMS(){
   return {
     type: 'SET_SALES_ITEMS',
     payload: new Promise((resolve, reject) => {
-      Axios.get('/data/sales/items.json')
+      Axios.get('http://zurasiprashvilitwo.000webhostapp.com/index.php', {
+        params: {
+          products: 'sales'
+        }
+      })
         .then((response) => {
-          resolve(response.data.items);
+          resolve(response.data);
         })
         .catch((error) => {
           reject(error);

@@ -6,8 +6,16 @@ export function SET_NAVIGATION(){
     type: 'SET_NAVIGATION',
     payload: new Promise((resolve, reject) => {
       Axios.all([
-        Axios.get('/data/navigation/nav.json'),
-        Axios.get('/data/navigation/list.json')
+        Axios.get('http://zurasiprashvilitwo.000webhostapp.com/index.php', {
+          params: {
+            common: 'locale'
+          }
+        }),
+        Axios.get('http://zurasiprashvilitwo.000webhostapp.com/index.php', {
+          params: {
+            categories: 'list'
+          }
+        })
       ])
         .then(Axios.spread((nav, list) => {
           resolve({
