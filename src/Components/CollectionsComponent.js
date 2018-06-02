@@ -15,7 +15,7 @@ import Translate from '../Containers/Translate';
 
 import {Link} from 'react-router-dom';
 
-class CollectionItem extends React.Component{
+export class CollectionItem extends React.Component{
   constructor(props){
     super(props);
   }

@@ -74,9 +74,9 @@ class Element extends React.Component{
                   exact={true}
                   component={Pages.Home}/>
                 <Route
-                  path={'/contact'}
+                  path={'/flowers/:flower_category'}
                   exact={true}
-                  component={Pages.Contact}/>
+                  component={Pages.Flowers}/>
               </Switch>
               <Footer
                 common={this.props.Common}/>
