@@ -182,22 +182,22 @@ header .navbar {
     .offers .item .cover .text {
       background-color: rgba(0, 0, 0, 0.7); }
 
-.collections .collection-button {
+.collections .collection-button, .collections-flowers .collection-button {
   width: auto; }
   @media only screen and (max-width: 576px) {
-    .collections .collection-button {
+    .collections .collection-button, .collections-flowers .collection-button {
       width: 100%; }
-      .collections .collection-button .btn {
+      .collections .collection-button .btn, .collections-flowers .collection-button .btn {
         width: 100%; } }
-.collections .collection {
+.collections .collection, .collections-flowers .collection {
   position: relative; }
-  .collections .collection .image {
+  .collections .collection .image, .collections-flowers .collection .image {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center; }
-  .collections .collection .price {
+  .collections .collection .price, .collections-flowers .collection .price {
     position: relative; }
-    .collections .collection .price .lie {
+    .collections .collection .price .lie, .collections-flowers .collection .price .lie {
       margin-top: -1rem; }
 
 .basic-swiper-container .swiper-button-next, .basic-swiper-container .swiper-button-prev {

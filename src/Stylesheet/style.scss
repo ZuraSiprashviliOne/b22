@@ -335,6 +335,10 @@ header{
       }
     }
   }
+
+  &-flowers{
+    @extend .collections;
+  }
 }
 
 .basic-swiper-container{
