@@ -19,6 +19,7 @@ import CollectionsReducer from './Reducers/CollectionsReducer';
 // import AddonsReducer from './Reducers/AddonsReducer';
 
 import FlowersReducer from './Reducers/FlowersReducer';
+import FlowerReducer from './Reducers/FlowerReducer';
 
 export default createStore(
   combineReducers({
@@ -29,11 +30,12 @@ export default createStore(
     SalesReducer,
     CollectionsReducer,
     // AddonsReducer,
-    FlowersReducer
+    FlowersReducer,
+    FlowerReducer
   }),
   {},
   applyMiddleware(
-    // Logger,
+    Logger,
     Promise(),
     Thunk
   )

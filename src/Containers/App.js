@@ -45,6 +45,7 @@ class Element extends React.Component{
     };
   }
 
+
   render(){
     return (
       <div
@@ -77,6 +78,10 @@ class Element extends React.Component{
                   path={'/flowers/:flower_category'}
                   exact={true}
                   component={Pages.Flowers}/>
+                <Route
+                  path={'/flowers/items/:flower_id'}
+                  exact={true}
+                  component={Pages.Flower}/>
               </Switch>
               <Footer
                 common={this.props.Common}/>
@@ -117,7 +122,8 @@ class App extends React.Component{
 const states = (state) => {
   return {
     Locale: state.LocaleReducer,
-    Common: state.CommonReducer
+    Common: state.CommonReducer,
+    Navigation: state.NavigationReducer
   };
 };
 
