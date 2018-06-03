@@ -6,12 +6,12 @@ export function SET_NAVIGATION(){
     type: 'SET_NAVIGATION',
     payload: new Promise((resolve, reject) => {
       Axios.all([
-        Axios.get('http://zurasiprashvilitwo.000webhostapp.com/index.php', {
+        Axios.get('http://localhost/index.php', {
           params: {
             common: 'locale'
           }
         }),
-        Axios.get('http://zurasiprashvilitwo.000webhostapp.com/index.php', {
+        Axios.get('http://localhost/index.php', {
           params: {
             categories: 'list'
           }

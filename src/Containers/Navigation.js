@@ -119,7 +119,8 @@ class NavigationNavNavItem extends React.Component{
 
   render(){
     return (
-      <NavItem>
+      <NavItem
+        className={`${(this.props.current) === this.props.slag ? 'active' : ''}`}>
         <NavLink
           className={'p-3'}
           tag={Link}
@@ -157,6 +158,7 @@ class NavigationNavNavItemWithDropdown extends React.Component{
   render(){
     return (
       <UncontrolledDropdown
+        className={`${('/' + this.props.current) === this.props.slag ? 'active' : ''}`}
         nav
         inNavbar>
         <DropdownToggle
@@ -187,9 +189,9 @@ class NavigationNav extends React.Component{
   getNavItems(){
     return this.props.list.map((item, index) => {
       if(item.sub){
-        return <NavigationNavNavItemWithDropdown key={index} {...item}/>;
+        return <NavigationNavNavItemWithDropdown current={this.props.currentPage} key={index} {...item}/>;
       }else{
-        return <NavigationNavNavItem {...item} key={index}/>;
+        return <NavigationNavNavItem current={this.props.currentPage} {...item} key={index}/>;
       }
     });
   }
@@ -257,11 +259,11 @@ class NavigationNavbar extends React.Component{
   componentWillReceiveProps(props){
     if(props.fixed){
       setTimeout(() => {
-        this.navbar.classList.add('fixed-top');
+        this.navbar.classList.add('scrolled');
       }, 500);
     }else{
       setTimeout(() => {
-        this.navbar.classList.remove('fixed-top');
+        this.navbar.classList.remove('scrolled');
       }, 500);
     }
   }
@@ -273,8 +275,9 @@ class NavigationNavbar extends React.Component{
         ref={(element) => {this.navbar = element}}>
         <Container>
           <NavbarBrand
-            className={'text-capitalize font-weight-bold d-none d-sm-none d-md-none d-lg-none d-xl-none'}
-            href="/">
+            tag={Link}
+            className={'text-capitalize unscrolled font-weight-bold d-none d-sm-none d-md-none d-lg-none d-xl-none'}
+            to={'/'}>
             <Translate>
               ${this.props.title}
             </Translate>
@@ -283,7 +286,7 @@ class NavigationNavbar extends React.Component{
             className={'rounded-no ml-auto'}
             onClick={this._toggleNavbar}/>
           <Collapse isOpen={this.state.collapseIsOpen} navbar>
-            <NavigationNav list={this.props.list}/>
+            <NavigationNav currentPage={this.props.currentPage} list={this.props.list}/>
             <UserFavourites/>
           </Collapse>
         </Container>

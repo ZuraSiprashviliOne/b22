@@ -41,7 +41,7 @@ class Element extends React.Component{
     super(props);
 
     this.state = {
-      navbarIsFixed: false
+      navbarIsFixed: false,
     };
   }
 
@@ -52,7 +52,7 @@ class Element extends React.Component{
         className={'Application'}>
         <Scrollbar
           onScroll={(event) => {
-            if (event.target.scrollTop > 50) {
+            if (event.target.scrollTop > 30) {
               if (!this.state.navbarIsFixed) {
                 this.setState({navbarIsFixed: true});
               }

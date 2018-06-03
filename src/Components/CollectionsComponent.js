@@ -4,25 +4,185 @@ import React from 'react';
 import Swiper from 'react-id-swiper';
 
 import {SliderButton} from "./SliderButton";
+import FontAwesome from 'react-fontawesome';
 
 import {
   Container,
   Row,
-  Col
+  Col,
+  Button
 } from 'reactstrap';
 
 import Translate from '../Containers/Translate';
 
 import {Link} from 'react-router-dom';
 
-export class CollectionItem extends React.Component{
+
+export class AnimatedAndMetas extends React.Component{
+  constructor(props){
+    super(props);
+
+    this.state = {
+      question: false
+    };
+
+
+    this._handleQuestion = this._handleQuestion.bind(this);
+  }
+
+
+  _handleQuestion(){
+    this.setState({
+      question: !this.state.question
+    });
+  }
+
+
+  render(){
+    return [
+      <div
+        key={'animateeds'}
+        className={`question animated ${this.state.question === true ? 'open': 'closed'}`}>
+        <Button
+          onClick={this._handleQuestion}
+          className={'bg-transparent closeBtn animated'}>
+          <div
+            className={'h1 m-0'}>
+            <FontAwesome
+              className={'text-grass'}
+              name={'times'}/>
+          </div>
+        </Button>
+        <div
+          className={'cover p-2'}>
+          <div className={'border small text p-2'}>
+            <Translate>
+              {this.props.description}
+            </Translate>
+          </div>
+          <div className={'mt-3 d-flex flex-row readMoreDiv align-items-center justify-content-end'}>
+            <Link
+              to={this.props.slag}
+              className={'btn d-flex flex-row align-items-center btn-__grass animated readMoreBtn'}>
+              <span className={'text-light text-capitalize mr-2'}>
+                  <Translate>
+                    read more
+                  </Translate>
+                </span>
+              <h2
+                className={'m-0'}>
+                <FontAwesome
+                  name={'angle-right'}/>
+              </h2>
+            </Link>
+          </div>
+        </div>
+      </div>,
+      <div
+        key={'metas'}
+        className={'metas'}>
+        <Container>
+          <Row>
+            <Col
+              sm={6}
+              className={'p-1 item'}>
+              <Button
+                color={'grass'}
+                className={'btn-block animated shadow itemb'}>
+                <FontAwesome
+                  className={'text-white'}
+                  name={'star-o'}/>
+              </Button>
+            </Col>
+            <Col
+              sm={6}
+              className={'p-1 item'}>
+              <Button
+                color={'info'}
+                className={'btn-block animated shadow itemb'}>
+                <FontAwesome
+                  name={'shopping-cart'}/>
+              </Button>
+            </Col>
+            <Col
+              sm={{
+                size: 6,
+                offset: 6
+              }}
+              className={'p-1 item'}>
+              <Button
+                onClick={this._handleQuestion}
+                color={'__grass'}
+                className={'btn-block animated shadow itemb'}>
+                <FontAwesome
+                  name={'question'}/>
+              </Button>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    ]
+  }
+}
+
+export class CollectionItemImage extends React.Component{
   constructor(props){
     super(props);
   }
 
   render(){
     return (
-      <div className={'h-100 collection shadow'}>
+      <div
+        className={'image'}
+        style={{backgroundImage: `url(${this.props.image})`}}>
+        <img
+          src={'/assets/ideal.jpg'}
+          alt={'image'}
+          className={'w-100'}
+          style={{visibility: 'hidden'}}/>
+      </div>
+    )
+  }
+}
+
+export class CollectionItemImages extends React.Component{
+  constructor(props){
+    super(props);
+
+    this.state = {
+      params: {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        renderPrevButton: () => <SliderButton to={'left'}/>,
+        renderNextButton: () => <SliderButton to={'right'}/>
+      }
+    };
+
+    this.getSlides = this.getSlides.bind(this);
+  }
+
+  getSlides(){
+    return this.props.images.map((image) => {
+      return (
+        <div key={image + 'x'}>
+          <CollectionItemImage image={image}/>
+        </div>
+      );
+    })
+  }
+
+  render(){
+    return (
+      <Swiper
+        {...this.state.params}>
         <div
           className={'image'}
           style={{backgroundImage: `url(${this.props.image})`}}>
@@ -32,6 +192,22 @@ export class CollectionItem extends React.Component{
             className={'w-100'}
             style={{visibility: 'hidden'}}/>
         </div>
+        {this.getSlides()}
+      </Swiper>
+    )
+  }
+}
+
+export class CollectionItem extends React.Component{
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    return (
+      <div className={'h-100 collection shadow'}>
+        <AnimatedAndMetas slag={`/flowers/items/item_${this.props.id}`} description={this.props.description}/>
+        <CollectionItemImage image={this.props.image}/>
         <div className={'bg-white'}>
           <Container>
             <Row className={'align-items-center'}>
@@ -132,7 +308,7 @@ class Collections extends React.Component{
             </Col>
             <Col
               xs={12}
-              className={'py-3'}>
+              className={'py-3 coll-row'}>
               <Container>
                 <Row>
                   <Col

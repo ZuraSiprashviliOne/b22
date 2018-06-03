@@ -20,6 +20,7 @@ import {INIT_COLLECTIONS, SET_COLLECTIONS_ITEMS} from "../../Actions/Collections
 
 import {CollectionsComponent} from "../../Components/CollectionsComponent";
 import {INIT_ADDONS, SET_ADDONS_ADDONS} from "../../Actions/AddonsActions";
+import CollectionsReducer from "../../Reducers/CollectionsReducer";
 
 class Element extends React.Component{
   constructor(props){
@@ -58,33 +59,33 @@ class Home extends React.Component {
   }
 
   init(props) {
-    props.setPage(getPageSlag(this.props.match.path));
-    if(checkPromise(props.Slider) === false){
-      props.initSlider();
+    if (this.props.Navigation.currentPage !== getPageSlag(this.props.match.path)) {
+      this.props.setPage(getPageSlag(this.props.match.path));
     }
-    if(props.Slider.slides === null){
-      props.setSliderSlides();
+    if(checkPromise(this.props.Slider) === false){
+      this.props.initSlider();
     }
-    if(checkPromise(props.Sales) === false){
-      props.initSales();
+    if(this.props.Slider.slides === null){
+      this.props.setSliderSlides();
     }
-    if(checkPromise(props.Collections) === false){
-      props.initCollections();
+    if(checkPromise(this.props.Sales) === false){
+      this.props.initSales();
     }
-    if(checkPromise(props.Addons) === false){
-      props.initAddons();
+    if(checkPromise(this.props.Collections) === false){
+      this.props.initCollections();
     }
+    // if(checkPromise(this.props.Addons) === false){
+    //   this.props.initAddons();
+    // }
   }
-
-  render() {
-    if (
+  render(){
+    if(
       checkPromise(this.props.Slider)
       && checkPromise(this.props.Sales)
       && checkPromise(this.props.Collections)
-      && checkPromise(this.props.Addons)
-    ) {
-      return <Element {...this.props} />;
-    } else {
+    ){
+      return <Element {...this.props}/>;
+    }else{
       return <Loading/>;
     }
   }
@@ -96,7 +97,7 @@ const states = (state) => {
     Slider: state.SliderReducer,
     Sales: state.SalesReducer,
     Collections: state.CollectionsReducer,
-    Addons: state.AddonsReducer
+    Navigation: state.NavigationReducer
   };
 };
 

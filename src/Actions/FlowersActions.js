@@ -5,7 +5,7 @@ export function INIT_FLOWERS(){
   return {
     type: 'INIT_FLOWERS',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://zurasiprashvilitwo.000webhostapp.com/index.php', {
+      Axios.get('http://localhost/index.php', {
         params: {
           common: 'locale'
         }
@@ -34,7 +34,7 @@ export function SET_FLOWERS_FLOWERS(category){
   return {
     type: 'SET_FLOWERS_FLOWERS',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://zurasiprashvilitwo.000webhostapp.com/index.php', {
+      Axios.get('http://localhost/index.php', {
         params: {
           products: 'category',
           category_slag: category
