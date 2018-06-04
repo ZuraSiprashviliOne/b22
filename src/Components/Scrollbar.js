@@ -13,10 +13,19 @@ export class Scrollbar extends React.Component{
 
   }
 
+  componentDidUpdate(props){
+    if(props.currentpath || this.props.currentpath){
+      if(props.currentpath !== this.props.currentpath){
+        this.scrollbar.scrollTop();
+      }
+    }
+  }
+
   render(){
     return (
       <Scrollbars
         {...this.props}
+        ref={(element) =>{ this.scrollbar = element; }}
         autoHide={this.props.autoHide || true}
         autoHideDuration={this.props.autoHideDuration || 300}
         autoHideTimeout={this.props.autoHideTimeout || 0}

@@ -16,7 +16,6 @@ import CommonReducer from './Reducers/CommonReducer';
 import SliderReducer from './Reducers/SliderReducer';
 import SalesReducer from './Reducers/SalesReducer';
 import CollectionsReducer from './Reducers/CollectionsReducer';
-// import AddonsReducer from './Reducers/AddonsReducer';
 
 import FlowersReducer from './Reducers/FlowersReducer';
 import FlowerReducer from './Reducers/FlowerReducer';
@@ -29,7 +28,6 @@ export default createStore(
     CommonReducer,
     SalesReducer,
     CollectionsReducer,
-    // AddonsReducer,
     FlowersReducer,
     FlowerReducer
   }),

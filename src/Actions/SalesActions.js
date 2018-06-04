@@ -5,7 +5,7 @@ export function INIT_SALES(){
   return {
     type: 'INIT_SALES',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://localhost/index.php', {
+      Axios.get('http://localhost/data.php', {
         params: {
           common: 'locale'
         }
@@ -27,9 +27,9 @@ export function SET_SALES_ITEMS(){
   return {
     type: 'SET_SALES_ITEMS',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://localhost/index.php', {
+      Axios.get('http://localhost/data.php', {
         params: {
-          products: 'sales'
+          products: 'sales_real'
         }
       })
         .then((response) => {

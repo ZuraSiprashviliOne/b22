@@ -3,7 +3,7 @@ import React from 'react';
 
 import {connect} from 'react-redux';
 
-import {SET_NAVIGATION_CURRENT_PAGE} from "../../Actions/NavigationActions";
+import {SET_NAVIGATION_CURRENT_PAGE, SET_NAVIGATION_PATH} from "../../Actions/NavigationActions";
 import {getPageSlag} from "../../Helpers/Routing";
 
 import {Loading} from "../../Components/Loading";
@@ -13,14 +13,11 @@ import SliderComponent from '../../Components/SliderComponent';
 import {INIT_SLIDER, SET_SLIDER_SLIDES} from "../../Actions/SliderActions";
 import {checkPromise} from "../../Helpers/Valid";
 
-import {Addons} from "../../Components/Addons";
 import {Sales} from "../../Components/Sales";
 import {INIT_SALES, SET_SALES_ITEMS} from "../../Actions/SalesActions";
 import {INIT_COLLECTIONS, SET_COLLECTIONS_ITEMS} from "../../Actions/CollectionsActions";
 
 import {CollectionsComponent} from "../../Components/CollectionsComponent";
-import {INIT_ADDONS, SET_ADDONS_ADDONS} from "../../Actions/AddonsActions";
-import CollectionsReducer from "../../Reducers/CollectionsReducer";
 
 class Element extends React.Component{
   constructor(props){
@@ -39,9 +36,10 @@ class Element extends React.Component{
 
         <Sales {...this.props.Sales}/>
 
-        <CollectionsComponent {...this.props.Collections}/>
+        <div className={'collections-container'}>
+          <CollectionsComponent {...this.props.Collections}/>
+        </div>
 
-        {/*<Addons {...this.props.Addons}/>*/}
       </main>
     );
   }
@@ -74,9 +72,9 @@ class Home extends React.Component {
     if(checkPromise(this.props.Collections) === false){
       this.props.initCollections();
     }
-    // if(checkPromise(this.props.Addons) === false){
-    //   this.props.initAddons();
-    // }
+    if (this.props.match.url !== this.props.Navigation.path) {
+      this.props.setPath(this.props.match.url);
+    }
   }
   render(){
     if(
@@ -106,6 +104,9 @@ const actions = (dispatch) => {
     setPage: (slag) => {
       dispatch(SET_NAVIGATION_CURRENT_PAGE(slag));
     },
+    setPath: (path) => {
+      dispatch(SET_NAVIGATION_PATH(path));
+    },
     initSlider: () => {
       dispatch(INIT_SLIDER());
     },
@@ -119,10 +120,6 @@ const actions = (dispatch) => {
     initCollections: () => {
       dispatch(INIT_COLLECTIONS());
       dispatch(SET_COLLECTIONS_ITEMS());
-    },
-    initAddons: () => {
-      dispatch(INIT_ADDONS());
-      dispatch(SET_ADDONS_ADDONS());
     }
   }
 };

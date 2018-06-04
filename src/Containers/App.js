@@ -4,12 +4,11 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
 } from 'react-router-dom';
 
 import {connect} from 'react-redux';
 import {reactLocalStorage as Storage} from 'reactjs-localstorage';
-import {SET_LOCALE_CURRENT, SET_LOCALE_DEFAULTS} from "../Actions/LocaleActions";
 
 import {checkPromise} from "../Helpers/Valid";
 
@@ -45,6 +44,8 @@ class Element extends React.Component{
     };
   }
 
+  componentDidUpdate(props){
+  }
 
   render(){
     return (
@@ -52,6 +53,7 @@ class Element extends React.Component{
         id={'App'}
         className={'Application'}>
         <Scrollbar
+          currentpath={this.props.Navigation.path}
           onScroll={(event) => {
             if (event.target.scrollTop > 30) {
               if (!this.state.navbarIsFixed) {
@@ -92,7 +94,6 @@ class Element extends React.Component{
     );
   }
 }
-
 class App extends React.Component{
   constructor(props){
     super(props);
@@ -148,7 +149,7 @@ const actions = (dispatch) => {
     },
     initCommon: () => {
       dispatch(INIT_COMMON_REDUCER());
-    }
+    },
   };
 };
 

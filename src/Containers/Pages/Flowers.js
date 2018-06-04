@@ -3,7 +3,7 @@ import React from 'react';
 
 import {connect} from 'react-redux';
 import {Loading} from "../../Components/Loading";
-import {SET_NAVIGATION_CURRENT_PAGE} from "../../Actions/NavigationActions";
+import {SET_NAVIGATION_CURRENT_PAGE, SET_NAVIGATION_PATH} from "../../Actions/NavigationActions";
 import {getPageSlag} from "../../Helpers/Routing";
 
 import Translate from '../Translate';
@@ -204,6 +204,10 @@ class Flowers extends React.Component{
       this.props.setFlowers(this.props.match.params.flower_category);
       this.props.setFlowersCurrentCategory(this.props.match.params.flower_category);
     }
+
+    if (this.props.match.url !== this.props.Navigation.path) {
+      this.props.setPath(this.props.match.url);
+    }
   }
 
   render(){
@@ -228,6 +232,9 @@ const actions = (dispatch) => {
   return {
     setPage: (slag) => {
       dispatch(SET_NAVIGATION_CURRENT_PAGE(slag));
+    },
+    setPath: (path) => {
+      dispatch(SET_NAVIGATION_PATH(path));
     },
     initFlowers: () => {
       dispatch(INIT_FLOWERS());

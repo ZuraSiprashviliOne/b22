@@ -6,12 +6,12 @@ export function SET_NAVIGATION(){
     type: 'SET_NAVIGATION',
     payload: new Promise((resolve, reject) => {
       Axios.all([
-        Axios.get('http://localhost/index.php', {
+        Axios.get('http://localhost/data.php', {
           params: {
             common: 'locale'
           }
         }),
-        Axios.get('http://localhost/index.php', {
+        Axios.get('http://localhost/data.php', {
           params: {
             categories: 'list'
           }
@@ -34,4 +34,11 @@ export function SET_NAVIGATION_CURRENT_PAGE(slag){
     type: 'SET_NAVIGATION_CURRENT_PAGE',
     payload: slag
   };
+}
+
+export function SET_NAVIGATION_PATH(path){
+  return {
+    type: 'SET_NAVIGATION_PATH',
+    payload: path
+  }
 }

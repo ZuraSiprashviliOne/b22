@@ -16,6 +16,7 @@ import {
 import Translate from '../Containers/Translate';
 
 import {Link} from 'react-router-dom';
+import {Loading} from "./Loading";
 
 
 export class AnimatedAndMetas extends React.Component{
@@ -334,8 +335,12 @@ export class CollectionsComponent extends React.Component{
   }
 
   render(){
-    return this.props.items.map((item, index) => {
-      return <Collections key={index} {...item}/>;
-    });
+    if(this.props.items){
+      return this.props.items.map((item, index) => {
+        return <Collections key={index} {...item}/>;
+      });
+    }else{
+      return <Loading/>;
+    }
   }
 }

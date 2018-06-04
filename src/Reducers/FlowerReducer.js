@@ -15,6 +15,14 @@ const flowerReducer = (state = {
       break;
     }
 
+    case 'UNSET_FLOWER_FLOWER': {
+      state = {
+        ...state,
+        flower: null
+      };
+      break;
+    }
+
     case 'SET_FLOWER_FLOWER_FULFILLED': {
       state = {
         ...state,

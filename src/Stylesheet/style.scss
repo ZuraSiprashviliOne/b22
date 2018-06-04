@@ -145,7 +145,8 @@ a{
     border-bottom: 1px solid rgba($__grass, 0.3);
   }
 }
-
+.page{
+}
 header{
   .top{
     .top-nav{
@@ -494,21 +495,49 @@ header{
   }
 }
 
-#home_page{
+#home_page, #flower_page{
   .page-divider{
     border-bottom: 1px solid rgba($dark, 0.3);
   }
 
-  .collections{
-    .swiper-container {
-      padding: 1rem;
-    }
-    .coll-row {
-      padding-left: 0 !important;
-      padding-right: 0 !important;
+ .collections-container{
+   .collections{
+     .swiper-container {
+       padding: 1rem;
+     }
+     .coll-row {
+       padding-left: 0 !important;
+       padding-right: 0 !important;
 
-      .col-12{
-        padding: 0 !important;;
+       .col-12{
+         padding: 0 !important;;
+       }
+     }
+   }
+ }
+}
+
+#flower_page{
+  .images {
+    .swiper-container{
+      .swiper-slide {
+        .image{
+          @extend .shadow;
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center center;
+        }
+      }
+      &:first-child{
+        .swiper-slide{
+          padding: 0.5rem ;
+        }
+      }
+      &:last-child{
+        height: 100%;
+        .swiper-slide {
+          padding: 0 0.1rem;
+        }
       }
     }
   }

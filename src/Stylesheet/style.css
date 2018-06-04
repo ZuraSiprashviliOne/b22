@@ -313,7 +313,7 @@ a {
 * {
   outline: none !important; }
 
-.shadow, .offers .item {
+.shadow, .offers .item, #flower_page .images .swiper-container .swiper-slide .image {
   box-shadow: 0 0 15px 2px rgba(87, 197, 160, 0.1); }
   .shadow-grass {
     box-shadow: 0 0 15px 2px rgba(87, 197, 160, 0.1); }
@@ -321,35 +321,38 @@ a {
 .pre-footer .top {
   border-bottom: 1px solid rgba(0, 56, 50, 0.3); }
 
-header .top .top-nav ul {
-  height: 100%; }
-  header .top .top-nav ul li {
-    height: 100%;
-    transition: all 0.2s ease-in-out; }
-    header .top .top-nav ul li.active, header .top .top-nav ul li:hover, header .top .top-nav ul .navbar .navbar-nav li.nav-item:hover, header .navbar .navbar-nav .top .top-nav ul li.nav-item:hover, header .top .top-nav ul .flowerBar .lists li.list-group-item:hover, .flowerBar .lists header .top .top-nav ul li.list-group-item:hover {
-      background-color: rgba(0, 56, 50, 0.3);
-      color: #fff; }
-    header .top .top-nav ul li:last-child {
-      border-left: 1px solid rgba(0, 56, 50, 0.3);
-      border-right: 1px solid rgba(0, 56, 50, 0.3); }
-    header .top .top-nav ul li.search {
-      overflow: hidden; }
-      header .top .top-nav ul li.search:hover {
-        background-color: transparent !important; }
-      header .top .top-nav ul li.search input {
-        transition: all 0.2s ease-in-out;
-        color: #fff !important; }
-        header .top .top-nav ul li.search input::placeholder {
-          color: #ebe7df !important; }
-        header .top .top-nav ul li.search input:hover {
-          background-color: rgba(255, 255, 255, 0.3) !important;
-          color: #fff !important; }
-    header .top .top-nav ul li a {
-      display: block;
+header .top .top-nav {
+  padding-left: 2px;
+  padding-right: 2px; }
+  header .top .top-nav ul {
+    height: 100%; }
+    header .top .top-nav ul li {
       height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center; }
+      transition: all 0.2s ease-in-out; }
+      header .top .top-nav ul li.active, header .top .top-nav ul li:hover, header .top .top-nav ul .navbar .navbar-nav li.nav-item:hover, header .navbar .navbar-nav .top .top-nav ul li.nav-item:hover, header .top .top-nav ul .flowerBar .lists li.list-group-item:hover, .flowerBar .lists header .top .top-nav ul li.list-group-item:hover {
+        background-color: rgba(0, 56, 50, 0.3);
+        color: #fff; }
+      header .top .top-nav ul li:last-child {
+        border-left: 1px solid rgba(0, 56, 50, 0.3);
+        border-right: 1px solid rgba(0, 56, 50, 0.3); }
+      header .top .top-nav ul li.search {
+        overflow: hidden; }
+        header .top .top-nav ul li.search:hover {
+          background-color: transparent !important; }
+        header .top .top-nav ul li.search input {
+          transition: all 0.2s ease-in-out;
+          color: #fff !important; }
+          header .top .top-nav ul li.search input::placeholder {
+            color: #ebe7df !important; }
+          header .top .top-nav ul li.search input:hover {
+            background-color: rgba(255, 255, 255, 0.3) !important;
+            color: #fff !important; }
+      header .top .top-nav ul li a {
+        display: block;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; }
 header .navbar {
   padding-left: 2px;
   padding-right: 2px;
@@ -498,14 +501,25 @@ header .navbar {
 .basic-swiper-container .swiper-button-next, .basic-swiper-container .swiper-button-prev {
   background: transparent; }
 
-#home_page .page-divider {
+#home_page .page-divider, #flower_page .page-divider {
   border-bottom: 1px solid rgba(50, 50, 50, 0.3); }
-#home_page .collections .swiper-container, #home_page .collections-flowers .swiper-container {
+#home_page .collections-container .collections .swiper-container, #home_page .collections-container .collections-flowers .swiper-container, #flower_page .collections-container .collections .swiper-container, #flower_page .collections-container .collections-flowers .swiper-container {
   padding: 1rem; }
-#home_page .collections .coll-row, #home_page .collections-flowers .coll-row {
+#home_page .collections-container .collections .coll-row, #home_page .collections-container .collections-flowers .coll-row, #flower_page .collections-container .collections .coll-row, #flower_page .collections-container .collections-flowers .coll-row {
   padding-left: 0 !important;
   padding-right: 0 !important; }
-  #home_page .collections .coll-row .col-12, #home_page .collections-flowers .coll-row .col-12 {
+  #home_page .collections-container .collections .coll-row .col-12, #home_page .collections-container .collections-flowers .coll-row .col-12, #flower_page .collections-container .collections .coll-row .col-12, #flower_page .collections-container .collections-flowers .coll-row .col-12 {
     padding: 0 !important; }
+
+#flower_page .images .swiper-container .swiper-slide .image {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center; }
+#flower_page .images .swiper-container:first-child .swiper-slide {
+  padding: 0.5rem; }
+#flower_page .images .swiper-container:last-child {
+  height: 100%; }
+  #flower_page .images .swiper-container:last-child .swiper-slide {
+    padding: 0 0.1rem; }
 
 /*# sourceMappingURL=style.css.map */

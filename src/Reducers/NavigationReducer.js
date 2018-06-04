@@ -4,6 +4,7 @@ const navigationReducer = (state = {
   language: null,
   title: null,
   list: null,
+  path: null,
   currentPage: null
 }, action) => {
   switch(action.type){
@@ -14,6 +15,15 @@ const navigationReducer = (state = {
       };
       break;
     }
+
+    case 'SET_NAVIGATION_PATH': {
+      state = {
+        ...state,
+        path: action.payload
+      };
+      break;
+    }
+
     case 'SET_NAVIGATION_CURRENT_PAGE': {
       state = {
         ...state,
