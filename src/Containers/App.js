@@ -5,6 +5,7 @@ import {
   Switch,
   Route,
   Link,
+  Redirect
 } from 'react-router-dom';
 
 import {connect} from 'react-redux';
@@ -34,6 +35,7 @@ import Footer from './Footer';
 
 import Pages from './Pages';
 import {INIT_COMMON_REDUCER} from "../Actions/CommonActions";
+import {ADD_FAVOURITES_FAVOURITES_BY_ID} from "../Actions/FavouritesActions";
 
 class Element extends React.Component{
   constructor(props){
@@ -84,6 +86,16 @@ class Element extends React.Component{
                   path={'/flowers/items/:flower_id'}
                   exact={true}
                   component={Pages.Flower}/>
+                <Route
+                  path={'/order'}
+                  exact={true}
+                  component={Pages.Order}/>
+                <Route
+                  path={'/favourites'}
+                  exact={true}
+                  component={Pages.Favourites}/>
+                <Route
+                  component={() => <Redirect to={'/'}/>}/>
               </Switch>
               <Footer
                 common={this.props.Common}/>
@@ -103,10 +115,12 @@ class App extends React.Component{
       ready: () =>
         checkPromise(this.props.Locale.primary)
         && checkPromise(this.props.Common)
-    }
+    };
+
   }
 
   componentDidMount(){
+    this.props.checkFavourites();
     this.props.initCommon();
     this.props.initLocale(() => {
       if(!this.props.Locale.current){
@@ -124,7 +138,7 @@ const states = (state) => {
   return {
     Locale: state.LocaleReducer,
     Common: state.CommonReducer,
-    Navigation: state.NavigationReducer
+    Navigation: state.NavigationReducer,
   };
 };
 
@@ -149,6 +163,14 @@ const actions = (dispatch) => {
     },
     initCommon: () => {
       dispatch(INIT_COMMON_REDUCER());
+    },
+    checkFavourites: () => {
+      let favStorageLocale = JSON.parse(Storage.get('favourites') || null);
+      if(favStorageLocale !== null){
+        for(let i = 0; i < favStorageLocale.length; i++){
+          dispatch(ADD_FAVOURITES_FAVOURITES_BY_ID(parseInt(favStorageLocale[i])));
+        }
+      }
     },
   };
 };

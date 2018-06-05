@@ -24,17 +24,25 @@ export class AnimatedAndMetas extends React.Component{
     super(props);
 
     this.state = {
-      question: false
+      question: false,
+      fvadded: this.props.favourites.includes(this.props.id)
     };
 
-
     this._handleQuestion = this._handleQuestion.bind(this);
+
+    this._handleFavourite = this._handleFavourite.bind(this);
   }
 
 
   _handleQuestion(){
     this.setState({
       question: !this.state.question
+    });
+  }
+
+  _handleFavourite(){
+    this.setState({
+      fvadded: this.state.fvadded === true ? this.props.fvrm(this.props.id) : this.props.fvaddid(this.props.id)
     });
   }
 
@@ -88,11 +96,12 @@ export class AnimatedAndMetas extends React.Component{
               sm={6}
               className={'p-1 item'}>
               <Button
+                onClick={this._handleFavourite}
                 color={'grass'}
-                className={'btn-block animated shadow itemb'}>
+                className={`btn-block animated shadow itemb ${this.state.fvadded === true ? 'active': ''}` }>
                 <FontAwesome
                   className={'text-white'}
-                  name={'star-o'}/>
+                  name={this.state.fvadded === true ? 'star' : 'star-o'}/>
               </Button>
             </Col>
             <Col
@@ -207,7 +216,7 @@ export class CollectionItem extends React.Component{
   render(){
     return (
       <div className={'h-100 collection shadow'}>
-        <AnimatedAndMetas slag={`/flowers/items/item_${this.props.id}`} description={this.props.description}/>
+        <AnimatedAndMetas id={this.props.id} favourites={this.props.favourites} fvrm={this.props.fvrm} fvaddid={this.props.fvaddid} slag={`/flowers/items/item_${this.props.id}`} description={this.props.description}/>
         <CollectionItemImage image={this.props.image}/>
         <div className={'bg-white'}>
           <Container>
@@ -278,7 +287,9 @@ class Collections extends React.Component{
     return this.props.data.map((item) => {
       return (
         <div key={item.id}>
-          <CollectionItem {...item}/>
+          <CollectionItem favourites={this.props.favourites}
+            fvrm={this.props.fvrm}
+            fvaddid={this.props.fvaddid} {...item}/>
         </div>
       );
     })
@@ -337,7 +348,7 @@ export class CollectionsComponent extends React.Component{
   render(){
     if(this.props.items){
       return this.props.items.map((item, index) => {
-        return <Collections key={index} {...item}/>;
+        return <Collections favourites={this.props.favourites} fvrm={this.props.fvrm} fvaddid={this.props.fvaddid} key={index} {...item}/>;
       });
     }else{
       return <Loading/>;

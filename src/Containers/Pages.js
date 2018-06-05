@@ -5,8 +5,14 @@ import Flowers from './Pages/Flowers';
 
 import Flower from './Pages/Flower';
 
+import Order from './Pages/Order';
+
+import Favourites from './Pages/Favourites';
+
 export default {
   Home,
   Flowers,
-  Flower
+  Flower,
+  Order,
+  Favourites
 }

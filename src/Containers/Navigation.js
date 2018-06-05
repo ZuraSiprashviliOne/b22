@@ -221,7 +221,7 @@ class UserFavourites extends React.Component{
               className={'text-muted mr-2'}/>
             <Badge
               className={'text-white rounded-no'}
-              color={'secondary'}>30</Badge>
+              color={'secondary'}>{this.props.fvcount}</Badge>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -287,7 +287,7 @@ class NavigationNavbar extends React.Component{
             onClick={this._toggleNavbar}/>
           <Collapse isOpen={this.state.collapseIsOpen} navbar>
             <NavigationNav currentPage={this.props.currentPage} list={this.props.list}/>
-            <UserFavourites/>
+            <UserFavourites fvcount={this.props.fvcount}/>
           </Collapse>
         </Container>
       </div>
@@ -310,6 +310,7 @@ class Element extends React.Component{
           title={this.props.title}/>
         <NavigationNavbar
           fixed={this.props.fixed}
+          fvcount={this.props.Favourites.count}
           {...this.props.Navigation}/>
       </header>
     );
@@ -344,7 +345,8 @@ class Navigation extends React.Component{
 
 const states = (state) => {
   return {
-    Navigation: state.NavigationReducer
+    Navigation: state.NavigationReducer,
+    Favourites: state.FavouritesReducer
   };
 };
 

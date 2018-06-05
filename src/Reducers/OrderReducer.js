@@ -1,12 +1,13 @@
 
-const flowersReducer = (state = {
+const orderReducer = (state = {
   divider: null,
   language: null,
-  flowers: null,
-  currentCategory: null
+  product: null
 }, action) => {
+
   switch(action.type){
-    case 'INIT_FLOWERS_FULFILLED': {
+
+    case 'INIT_ORDER_FULFILLED': {
       state = {
         ...state,
         divider: action.payload.divider,
@@ -14,25 +15,27 @@ const flowersReducer = (state = {
       };
       break;
     }
-    case 'SET_FLOWERS_CURRENT_CATEGORY': {
+
+    case 'SET_ORDER': {
       state = {
         ...state,
-        currentCategory: action.payload
-      };
-      break;
-    }
-    case 'SET_FLOWERS_FLOWERS_FULFILLED': {
-      state = {
-        ...state,
-        flowers: [...action.payload]
+        product: action.payload
       };
       break;
     }
 
-    case 'UNSET_FLOWERS_FLOWERS': {
+    case 'UNSET_ORDER': {
       state = {
         ...state,
-        flower: action.payload
+        product: action.payload
+      };
+      break;
+    }
+
+    case 'SET_ORDER_PRODUCT': {
+      state = {
+        ...state,
+        product: action.payload
       };
       break;
     }
@@ -45,4 +48,4 @@ const flowersReducer = (state = {
   return state;
 };
 
-export default flowersReducer;
+export default orderReducer;

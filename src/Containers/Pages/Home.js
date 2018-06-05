@@ -3,6 +3,8 @@ import React from 'react';
 
 import {connect} from 'react-redux';
 
+import {reactLocalStorage as Storage} from 'reactjs-localstorage';
+
 import {SET_NAVIGATION_CURRENT_PAGE, SET_NAVIGATION_PATH} from "../../Actions/NavigationActions";
 import {getPageSlag} from "../../Helpers/Routing";
 
@@ -18,10 +20,34 @@ import {INIT_SALES, SET_SALES_ITEMS} from "../../Actions/SalesActions";
 import {INIT_COLLECTIONS, SET_COLLECTIONS_ITEMS} from "../../Actions/CollectionsActions";
 
 import {CollectionsComponent} from "../../Components/CollectionsComponent";
+import {ADD_FAVOURITES_FAVOURITES_BY_ID, UNSET_FAVOURITES_FAVOURITE_ITEM} from "../../Actions/FavouritesActions";
 
 class Element extends React.Component{
   constructor(props){
     super(props);
+
+    this._add_favourite = this._add_favourite.bind(this);
+    this._remove_favourites = this._remove_favourites.bind(this);
+  }
+
+  _add_favourite(id) {
+    if(this.props.Favourites.favourites.every((f) => f.id != id)){
+      this.props.fvaddid(id);
+      Storage.set('favourites', Storage.get('favourites') === undefined ? JSON.stringify([id]) : JSON.stringify([...JSON.parse(Storage.get('favourites')), id]));
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  _remove_favourites(id){
+    if(this.props.Favourites.favourites.some((f) => f.id == id)){
+      this.props.fvrm(id);
+      Storage.set('favourites', JSON.stringify(JSON.parse(Storage.get('favourites')).filter((f) => f != id)));
+      return false;
+    }else{
+      return true;
+    }
   }
 
   render(){
@@ -37,7 +63,7 @@ class Element extends React.Component{
         <Sales {...this.props.Sales}/>
 
         <div className={'collections-container'}>
-          <CollectionsComponent {...this.props.Collections}/>
+          <CollectionsComponent favourites={this.props.Favourites.favourites.map((f) => f.id)} fvrm={this._remove_favourites} fvaddid={this._add_favourite} {...this.props.Collections}/>
         </div>
 
       </main>
@@ -95,7 +121,8 @@ const states = (state) => {
     Slider: state.SliderReducer,
     Sales: state.SalesReducer,
     Collections: state.CollectionsReducer,
-    Navigation: state.NavigationReducer
+    Navigation: state.NavigationReducer,
+    Favourites: state.FavouritesReducer
   };
 };
 
@@ -120,6 +147,12 @@ const actions = (dispatch) => {
     initCollections: () => {
       dispatch(INIT_COLLECTIONS());
       dispatch(SET_COLLECTIONS_ITEMS());
+    },
+    fvaddid: (id) => {
+      dispatch(ADD_FAVOURITES_FAVOURITES_BY_ID(id));
+    },
+    fvrm: (id) => {
+      dispatch(UNSET_FAVOURITES_FAVOURITE_ITEM(id));
     }
   }
 };

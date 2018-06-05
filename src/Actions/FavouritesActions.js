@@ -1,9 +1,9 @@
 
 import Axios from 'axios';
 
-export function INIT_FLOWERS(){
+export function INIT_FAVOURITES(){
   return {
-    type: 'INIT_FLOWERS',
+    type: 'INIT_FAVOURITES',
     payload: new Promise((resolve, reject) => {
       Axios.get('http://localhost/data.php', {
         params: {
@@ -23,36 +23,44 @@ export function INIT_FLOWERS(){
   }
 }
 
-export function SET_FLOWERS_CURRENT_CATEGORY(category){
+export function ADD_FAVOURITES_FAVOURITE(favourite){
   return {
-    type: 'SET_FLOWERS_CURRENT_CATEGORY',
-    payload: category
+    type: 'ADD_FAVOURITES_FAVOURITE',
+    payload: favourite
   }
 }
 
-export function UNSET_FLOWERS_FLOWERS(){
+export function ADD_FAVOURITES_FAVOURITES_BY_ID(id){
   return {
-    type: 'UNSET_FLOWERS_FLOWERS',
-    payload: null
-  };
-}
-
-export function SET_FLOWERS_FLOWERS(category){
-  return {
-    type: 'SET_FLOWERS_FLOWERS',
+    type: 'ADD_FAVOURITES_FAVOURITES_BY_ID',
     payload: new Promise((resolve, reject) => {
       Axios.get('http://localhost/data.php', {
         params: {
-          products: 'category',
-          category_slag: category
+          product: id
         }
       })
         .then((response) => {
-          resolve(response.data);
+          if(response.data.length !== 0){
+            resolve(response.data[0]);
+          }
         })
         .catch((error) => {
           reject(error);
-        });
+        })
     })
+  }
+}
+
+export function UNSET_FAVOURITES_FAVOURITES(){
+  return {
+    type: 'UNSET_FAVOURITES_FAVOURITES',
+    payload: null
+  }
+}
+
+export function UNSET_FAVOURITES_FAVOURITE_ITEM(id){
+  return {
+    type: 'UNSET_FAVOURITES_FAVOURITE_ITEM',
+    payload: id
   }
 }

@@ -16,10 +16,17 @@ import{
   ListGroup,
   ListGroupItem,
 } from 'reactstrap';
-import {INIT_FLOWERS, SET_FLOWERS_CURRENT_CATEGORY, SET_FLOWERS_FLOWERS} from "../../Actions/FlowersActions";
+import {
+  INIT_FLOWERS,
+  SET_FLOWERS_CURRENT_CATEGORY,
+  SET_FLOWERS_FLOWERS,
+  UNSET_FLOWERS_FLOWERS
+} from "../../Actions/FlowersActions";
 import {checkPromise} from "../../Helpers/Valid";
 import {CollectionItemImage, CollectionItemImages} from "../../Components/CollectionsComponent";
 import {AnimatedAndMetas} from "../../Components/CollectionsComponent";
+import {ADD_FAVOURITES_FAVOURITES_BY_ID, UNSET_FAVOURITES_FAVOURITE_ITEM} from "../../Actions/FavouritesActions";
+import {reactLocalStorage as Storage} from "reactjs-localstorage";
 
 
 class FlowerItem extends React.Component {
@@ -27,7 +34,6 @@ class FlowerItem extends React.Component {
     super(props);
 
     this.getImage = this.getImage.bind(this);
-
   }
 
   getImage(){
@@ -41,7 +47,7 @@ class FlowerItem extends React.Component {
   render() {
     return (
       <div className={'h-100 collection shadow'}>
-        <AnimatedAndMetas slag={`/flowers/items/item_${this.props.id}`} description={this.props.description}/>
+        <AnimatedAndMetas id={this.props.id} favourites={this.props.favourites} fvrm={this.props.fvrm} fvaddid={this.props.fvaddid} slag={`/flowers/items/item_${this.props.id}`} description={this.props.description}/>
         {this.getImage()}
         <div className={'bg-white'}>
           <Container>
@@ -128,6 +134,28 @@ class Element extends React.Component{
     super(props);
 
     this.getFlowers = this.getFlowers.bind(this);
+    this._add_favourite = this._add_favourite.bind(this);
+    this._remove_favourites = this._remove_favourites.bind(this);
+  }
+
+  _add_favourite(id) {
+    if(this.props.Favourites.favourites.every((f) => f.id != id)){
+      this.props.fvaddid(id);
+      Storage.set('favourites', Storage.get('favourites') === undefined ? JSON.stringify([id]) : JSON.stringify([...JSON.parse(Storage.get('favourites')), id]));
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  _remove_favourites(id){
+    if(this.props.Favourites.favourites.some((f) => f.id == id)){
+      this.props.fvrm(id);
+      Storage.set('favourites', JSON.stringify(JSON.parse(Storage.get('favourites')).filter((f) => f != id)));
+      return false;
+    }else{
+      return true;
+    }
   }
 
   getFlowers(){
@@ -139,7 +167,7 @@ class Element extends React.Component{
           md={6}
           sm={6}
           className={'flowers_flower_col h-100 p-2 collection'}>
-          <FlowerItem {...flower} />
+          <FlowerItem favourites={this.props.Favourites.favourites.map((f) => f.id)} fvrm={this._remove_favourites} fvaddid={this._add_favourite}  {...flower} />
         </Col>
       );
     });
@@ -200,7 +228,7 @@ class Flowers extends React.Component{
     if(checkPromise(this.props.Flowers) === false){
       this.props.initFlowers();
     }
-    if(props.Flowers.currentCategory !== this.props.match.params.flower_category){
+    if (props.Flowers.currentCategory !== this.props.match.params.flower_category) {
       this.props.setFlowers(this.props.match.params.flower_category);
       this.props.setFlowersCurrentCategory(this.props.match.params.flower_category);
     }
@@ -225,7 +253,8 @@ class Flowers extends React.Component{
 const states = (state) => {
   return {
     Flowers: state.FlowersReducer,
-    Navigation: state.NavigationReducer
+    Navigation: state.NavigationReducer,
+    Favourites: state.FavouritesReducer
   };
 };
 const actions = (dispatch) => {
@@ -244,6 +273,15 @@ const actions = (dispatch) => {
     },
     setFlowersCurrentCategory: (category) => {
       dispatch(SET_FLOWERS_CURRENT_CATEGORY(category));
+    },
+    unset: () => {
+      dispatch(UNSET_FLOWERS_FLOWERS());
+    },
+    fvaddid: (id) => {
+      dispatch(ADD_FAVOURITES_FAVOURITES_BY_ID(id));
+    },
+    fvrm: (id) => {
+      dispatch(UNSET_FAVOURITES_FAVOURITE_ITEM(id));
     }
   };
 };
