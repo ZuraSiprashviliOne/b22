@@ -40,6 +40,17 @@ const favouritesReducer = (state = {
       };
       break;
     }
+    case 'ADD_FAVOURITES_FAVOURITES_BY_IDS_FULFILLED': {
+      state = {
+        ...state,
+        favourites: [
+          ...state.favourites,
+          ...action.payload
+        ],
+        count: state.count + action.payload.length
+      };
+      break;
+    }
 
     case 'UNSET_FAVOURITES_FAVOURITES': {
       state = {

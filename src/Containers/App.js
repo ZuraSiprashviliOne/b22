@@ -35,7 +35,7 @@ import Footer from './Footer';
 
 import Pages from './Pages';
 import {INIT_COMMON_REDUCER} from "../Actions/CommonActions";
-import {ADD_FAVOURITES_FAVOURITES_BY_ID} from "../Actions/FavouritesActions";
+import {ADD_FAVOURITES_FAVOURITES_BY_IDS} from "../Actions/FavouritesActions";
 
 class Element extends React.Component{
   constructor(props){
@@ -44,9 +44,6 @@ class Element extends React.Component{
     this.state = {
       navbarIsFixed: false,
     };
-  }
-
-  componentDidUpdate(props){
   }
 
   render(){
@@ -167,9 +164,8 @@ const actions = (dispatch) => {
     checkFavourites: () => {
       let favStorageLocale = JSON.parse(Storage.get('favourites') || null);
       if(favStorageLocale !== null){
-        for(let i = 0; i < favStorageLocale.length; i++){
-          dispatch(ADD_FAVOURITES_FAVOURITES_BY_ID(parseInt(favStorageLocale[i])));
-        }
+        let ids = favStorageLocale.map((f) => parseInt(f));
+        dispatch(ADD_FAVOURITES_FAVOURITES_BY_IDS(ids));
       }
     },
   };

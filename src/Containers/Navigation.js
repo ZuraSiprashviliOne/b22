@@ -215,6 +215,8 @@ class UserFavourites extends React.Component{
       <Nav className={'ml-auto text-capitalize flex-row justify-content-md-start justify-content-center'} navbar>
         <NavItem>
           <NavLink
+            tag={Link}
+            to={'/favourites'}
             className={'p-3 d-flex flex-row align-items-center h-100'}>
             <FontAwesome
               name={'star-o'}

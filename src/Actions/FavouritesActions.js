@@ -51,10 +51,32 @@ export function ADD_FAVOURITES_FAVOURITES_BY_ID(id){
   }
 }
 
+export function ADD_FAVOURITES_FAVOURITES_BY_IDS(ids){
+  return {
+    type: 'ADD_FAVOURITES_FAVOURITES_BY_IDS',
+    payload: new Promise((resolve, reject) => {
+      Axios.get('http://localhost/data.php', {
+        params: {
+          favourites: ids.join('_')
+        }
+      })
+        .then((response) => {
+          console.log(response.data);
+          if(response.data.length !== 0){
+            resolve(response.data);
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        })
+    })
+  }
+}
+
 export function UNSET_FAVOURITES_FAVOURITES(){
   return {
     type: 'UNSET_FAVOURITES_FAVOURITES',
-    payload: null
+    payload: []
   }
 }
 

@@ -29,7 +29,7 @@ import {ADD_FAVOURITES_FAVOURITES_BY_ID, UNSET_FAVOURITES_FAVOURITE_ITEM} from "
 import {reactLocalStorage as Storage} from "reactjs-localstorage";
 
 
-class FlowerItem extends React.Component {
+export class FlowerItem extends React.Component {
   constructor(props) {
     super(props);
 
