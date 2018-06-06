@@ -36,6 +36,7 @@ import Footer from './Footer';
 import Pages from './Pages';
 import {INIT_COMMON_REDUCER} from "../Actions/CommonActions";
 import {ADD_FAVOURITES_FAVOURITES_BY_IDS} from "../Actions/FavouritesActions";
+import {ADD_CARTS_CART_BY_ID} from "../Actions/CartActions";
 
 class Element extends React.Component{
   constructor(props){
@@ -92,6 +93,10 @@ class Element extends React.Component{
                   exact={true}
                   component={Pages.Favourites}/>
                 <Route
+                  path={'/cart'}
+                  exact={true}
+                  component={Pages.Cart}/>
+                <Route
                   component={() => <Redirect to={'/'}/>}/>
               </Switch>
               <Footer
@@ -118,6 +123,7 @@ class App extends React.Component{
 
   componentDidMount(){
     this.props.checkFavourites();
+    this.props.checkCarts();
     this.props.initCommon();
     this.props.initLocale(() => {
       if(!this.props.Locale.current){
@@ -168,6 +174,15 @@ const actions = (dispatch) => {
         dispatch(ADD_FAVOURITES_FAVOURITES_BY_IDS(ids));
       }
     },
+    checkCarts: () => {
+      let cartStorageLocale = JSON.parse(Storage.get('carts') || null);
+      if(cartStorageLocale !== null){
+        let ids = cartStorageLocale.map((c) => parseInt(c));
+        ids.map((id) => {
+          dispatch(ADD_CARTS_CART_BY_ID(id));
+        });
+      }
+    }
   };
 };
 

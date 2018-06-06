@@ -228,13 +228,17 @@ class UserFavourites extends React.Component{
         </NavItem>
         <NavItem>
           <NavLink
+            tag={Link}
+            to={'/cart'}
             className={'p-3 d-flex flex-row align-items-center h-100'}>
             <FontAwesome
               name={'shopping-cart'}
               className={'text-muted mr-2'}/>
             <Badge
               className={'text-white rounded-no'}
-              color={'grass'}>5</Badge>
+              color={'grass'}>
+              {this.props.cartcount}
+            </Badge>
           </NavLink>
         </NavItem>
       </Nav>
@@ -289,7 +293,7 @@ class NavigationNavbar extends React.Component{
             onClick={this._toggleNavbar}/>
           <Collapse isOpen={this.state.collapseIsOpen} navbar>
             <NavigationNav currentPage={this.props.currentPage} list={this.props.list}/>
-            <UserFavourites fvcount={this.props.fvcount}/>
+            <UserFavourites fvcount={this.props.fvcount} cartcount={this.props.cartcount}/>
           </Collapse>
         </Container>
       </div>
@@ -313,6 +317,7 @@ class Element extends React.Component{
         <NavigationNavbar
           fixed={this.props.fixed}
           fvcount={this.props.Favourites.count}
+          cartcount={this.props.Cart.count}
           {...this.props.Navigation}/>
       </header>
     );
@@ -348,7 +353,8 @@ class Navigation extends React.Component{
 const states = (state) => {
   return {
     Navigation: state.NavigationReducer,
-    Favourites: state.FavouritesReducer
+    Favourites: state.FavouritesReducer,
+    Cart: state.CartReducer
   };
 };
 

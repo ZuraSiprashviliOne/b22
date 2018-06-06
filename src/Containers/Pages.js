@@ -9,10 +9,13 @@ import Order from './Pages/Order';
 
 import Favourites from './Pages/Favourites';
 
+import Cart from './Pages/Cart';
+
 export default {
   Home,
   Flowers,
   Flower,
   Order,
-  Favourites
+  Favourites,
+  Cart
 }

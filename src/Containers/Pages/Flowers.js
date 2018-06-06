@@ -27,6 +27,7 @@ import {CollectionItemImage, CollectionItemImages} from "../../Components/Collec
 import {AnimatedAndMetas} from "../../Components/CollectionsComponent";
 import {ADD_FAVOURITES_FAVOURITES_BY_ID, UNSET_FAVOURITES_FAVOURITE_ITEM} from "../../Actions/FavouritesActions";
 import {reactLocalStorage as Storage} from "reactjs-localstorage";
+import {ADD_CARTS_CART_BY_ID, UNSET_CARTS_CART_ITEM} from "../../Actions/CartActions";
 
 
 export class FlowerItem extends React.Component {
@@ -47,7 +48,15 @@ export class FlowerItem extends React.Component {
   render() {
     return (
       <div className={'h-100 collection shadow'}>
-        <AnimatedAndMetas id={this.props.id} favourites={this.props.favourites} fvrm={this.props.fvrm} fvaddid={this.props.fvaddid} slag={`/flowers/items/item_${this.props.id}`} description={this.props.description}/>
+        <AnimatedAndMetas
+          id={this.props.id}
+          favourites={this.props.favourites}
+          fvrm={this.props.fvrm}
+          fvaddid={this.props.fvaddid}
+          carts={this.props.carts}
+          addcart={this.props.addcart}
+          rmcart={this.props.rmcart}
+          slag={`/flowers/items/item_${this.props.id}`} description={this.props.description}/>
         {this.getImage()}
         <div className={'bg-white'}>
           <Container>
@@ -136,6 +145,28 @@ class Element extends React.Component{
     this.getFlowers = this.getFlowers.bind(this);
     this._add_favourite = this._add_favourite.bind(this);
     this._remove_favourites = this._remove_favourites.bind(this);
+    this._add_cart = this._add_cart.bind(this);
+    this._rm_cart = this._rm_cart.bind(this);
+  }
+
+  _add_cart(id){
+    if(this.props.Cart.carts.every((f) => f.id != id)){
+      this.props.addcartid(id);
+      Storage.set('carts', Storage.get('carts') === undefined ? JSON.stringify([id]) : JSON.stringify([...JSON.parse(Storage.get('carts')), id]));
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  _rm_cart(id){
+    if(this.props.Cart.carts.some((f) => f.id == id)){
+      this.props.rmcart(id);
+      Storage.set('carts', JSON.stringify(JSON.parse(Storage.get('carts')).filter((f) => f != id)));
+      return false;
+    }else{
+      return true;
+    }
   }
 
   _add_favourite(id) {
@@ -167,7 +198,14 @@ class Element extends React.Component{
           md={6}
           sm={6}
           className={'flowers_flower_col h-100 p-2 collection'}>
-          <FlowerItem favourites={this.props.Favourites.favourites.map((f) => f.id)} fvrm={this._remove_favourites} fvaddid={this._add_favourite}  {...flower} />
+          <FlowerItem
+            carts={this.props.Cart.carts.map((c) => c.id)}
+            addcart={this._add_cart}
+            rmcart={this._rm_cart}
+            favourites={this.props.Favourites.favourites.map((f) => f.id)}
+            fvrm={this._remove_favourites}
+            fvaddid={this._add_favourite}
+            {...flower} />
         </Col>
       );
     });
@@ -254,7 +292,8 @@ const states = (state) => {
   return {
     Flowers: state.FlowersReducer,
     Navigation: state.NavigationReducer,
-    Favourites: state.FavouritesReducer
+    Favourites: state.FavouritesReducer,
+    Cart: state.CartReducer
   };
 };
 const actions = (dispatch) => {
@@ -282,6 +321,12 @@ const actions = (dispatch) => {
     },
     fvrm: (id) => {
       dispatch(UNSET_FAVOURITES_FAVOURITE_ITEM(id));
+    },
+    addcartid: (id) => {
+      dispatch(ADD_CARTS_CART_BY_ID(id));
+    },
+    rmcart: (id) => {
+      dispatch(UNSET_CARTS_CART_ITEM(id));
     }
   };
 };

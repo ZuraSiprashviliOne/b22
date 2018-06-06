@@ -24,6 +24,8 @@ import OrderReducer from './Reducers/OrderReducer';
 
 import FavouritesReducer from './Reducers/FavouritesReducer';
 
+import CartReducer from './Reducers/CartReducer';
+
 export default createStore(
   combineReducers({
     LocaleReducer,
@@ -35,7 +37,8 @@ export default createStore(
     FlowersReducer,
     FlowerReducer,
     OrderReducer,
-    FavouritesReducer
+    FavouritesReducer,
+    CartReducer
   }),
   {},
   applyMiddleware(

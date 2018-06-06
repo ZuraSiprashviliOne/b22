@@ -23,11 +23,13 @@ import {SliderButton} from "../../Components/SliderButton";
 import {
   Container,
   Row,
-  Col
+  Col,
+  Button
 } from 'reactstrap';
 import {SET_ORDER} from "../../Actions/OrderActions";
 import {ADD_FAVOURITES_FAVOURITES_BY_ID, UNSET_FAVOURITES_FAVOURITE_ITEM} from "../../Actions/FavouritesActions";
 import {reactLocalStorage as Storage} from "reactjs-localstorage";
+import {ADD_CARTS_CART_BY_ID, UNSET_CARTS_CART_ITEM} from "../../Actions/CartActions";
 
 class FlowerSwiper extends React.Component{
   constructor(props){
@@ -122,6 +124,18 @@ class FlowerSwiper extends React.Component{
 export class FlowerInfo extends React.Component{
   constructor(props){
     super(props);
+
+    this.state = {
+      carted: this.props.carts.includes(this.props.id)
+    };
+
+    this._handle_cart = this._handle_cart.bind(this);
+  }
+
+  _handle_cart(){
+    this.setState({
+      carted: this.state.carted === true ? this.props.rmcart(this.props.id) : this.props.addcart(this.props.id)
+    });
   }
 
   render(){
@@ -194,7 +208,10 @@ export class FlowerInfo extends React.Component{
               <Col
                 className={'p-1'}
                 sm={6}>
-                <button
+                <Button
+                  tag={Link}
+                  to={'/cart'}
+                  onClick={this._handle_cart}
                   className={'btn text-light btn-_grass btn-block rounded-no text-capitalize font-weight-light'}>
                   <div
                     className={'d-flex flex-row align-items-center between'}>
@@ -207,11 +224,11 @@ export class FlowerInfo extends React.Component{
                       style={{flex: 1}}
                       className={'text-center align-self-center'}>
                       <Translate>
-                        add to card
+                        add to cart
                       </Translate>
                     </div>
                   </div>
-                </button>
+                </Button>
               </Col>
               <Col
                 className={'p-1'}
@@ -280,6 +297,28 @@ class Element extends React.Component{
     super(props);
     this._add_favourite = this._add_favourite.bind(this);
     this._remove_favourites = this._remove_favourites.bind(this);
+    this._add_cart = this._add_cart.bind(this);
+    this._rm_cart = this._rm_cart.bind(this);
+  }
+
+  _add_cart(id){
+    if(this.props.Cart.carts.every((f) => f.id != id)){
+      this.props.addcartid(id);
+      Storage.set('carts', Storage.get('carts') === undefined ? JSON.stringify([id]) : JSON.stringify([...JSON.parse(Storage.get('carts')), id]));
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  _rm_cart(id){
+    if(this.props.Cart.carts.some((f) => f.id == id)){
+      this.props.rmcart(id);
+      Storage.set('carts', JSON.stringify(JSON.parse(Storage.get('carts')).filter((f) => f != id)));
+      return false;
+    }else{
+      return true;
+    }
   }
 
   _add_favourite(id) {
@@ -320,6 +359,10 @@ class Element extends React.Component{
               md={5}
               className={'data h-100 d-flex flex-column justify-content-around'}>
               <FlowerInfo
+                id={this.props.Flower.flower.id}
+                carts={this.props.Cart.carts}
+                addcart={this._add_cart}
+                rmcart={this._rm_cart}
                 order={this.props.order}
                 title={this.props.Flower.flower.title}
                 price={this.props.Flower.flower.price}
@@ -332,7 +375,11 @@ class Element extends React.Component{
         <FlowerWarr />
 
         <div className={'collections-container'}>
-          <CollectionsComponent favourites={this.props.Favourites.favourites.map((f) => f.id)} fvrm={this._remove_favourites} fvaddid={this._add_favourite}  {...this.props.Flower.flower.collection}/>
+          <CollectionsComponent
+            carts={this.props.Cart.carts}
+            addcart={this._add_cart}
+            rmcart={this._rm_cart}
+            favourites={this.props.Favourites.favourites.map((f) => f.id)} fvrm={this._remove_favourites} fvaddid={this._add_favourite}  {...this.props.Flower.flower.collection}/>
         </div>
       </div>
     );
@@ -387,7 +434,9 @@ class Flower extends React.Component{
 
   render(){
     if(checkPromise(this.props.Flower)){
-      return <Element order={this._order} {...this.props} />;
+      return <Element
+        order={this._order}
+        {...this.props} />;
     }else{
       return <Loading/>;
     }
@@ -399,7 +448,8 @@ const states = (state) => {
     Flower: state.FlowerReducer,
     Navigation: state.NavigationReducer,
     Order: state.OrderReducer,
-    Favourites: state.FavouritesReducer
+    Favourites: state.FavouritesReducer,
+    Cart: state.CartReducer
   };
 };
 const actions = (dispatch) => {
@@ -427,6 +477,12 @@ const actions = (dispatch) => {
     },
     fvrm: (id) => {
       dispatch(UNSET_FAVOURITES_FAVOURITE_ITEM(id));
+    },
+    addcartid: (id) => {
+      dispatch(ADD_CARTS_CART_BY_ID(id));
+    },
+    rmcart: (id) => {
+      dispatch(UNSET_CARTS_CART_ITEM(id));
     }
   };
 };

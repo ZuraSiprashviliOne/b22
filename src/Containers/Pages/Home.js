@@ -21,6 +21,7 @@ import {INIT_COLLECTIONS, SET_COLLECTIONS_ITEMS} from "../../Actions/Collections
 
 import {CollectionsComponent} from "../../Components/CollectionsComponent";
 import {ADD_FAVOURITES_FAVOURITES_BY_ID, UNSET_FAVOURITES_FAVOURITE_ITEM} from "../../Actions/FavouritesActions";
+import {ADD_CARTS_CART_BY_ID, UNSET_CARTS_CART_ITEM} from "../../Actions/CartActions";
 
 class Element extends React.Component{
   constructor(props){
@@ -28,6 +29,28 @@ class Element extends React.Component{
 
     this._add_favourite = this._add_favourite.bind(this);
     this._remove_favourites = this._remove_favourites.bind(this);
+    this._add_cart = this._add_cart.bind(this);
+    this._rm_cart = this._rm_cart.bind(this);
+  }
+
+  _add_cart(id){
+    if(this.props.Cart.carts.every((f) => f.id != id)){
+      this.props.addcartid(id);
+      Storage.set('carts', Storage.get('carts') === undefined ? JSON.stringify([id]) : JSON.stringify([...JSON.parse(Storage.get('carts')), id]));
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  _rm_cart(id){
+    if(this.props.Cart.carts.some((f) => f.id == id)){
+      this.props.rmcart(id);
+      Storage.set('carts', JSON.stringify(JSON.parse(Storage.get('carts')).filter((f) => f != id)));
+      return false;
+    }else{
+      return true;
+    }
   }
 
   _add_favourite(id) {
@@ -63,7 +86,14 @@ class Element extends React.Component{
         <Sales {...this.props.Sales}/>
 
         <div className={'collections-container'}>
-          <CollectionsComponent favourites={this.props.Favourites.favourites.map((f) => f.id)} fvrm={this._remove_favourites} fvaddid={this._add_favourite} {...this.props.Collections}/>
+          <CollectionsComponent
+            favourites={this.props.Favourites.favourites.map((f) => f.id)}
+            carts={this.props.Cart.carts.map((f) => f.id)}
+            fvrm={this._remove_favourites}
+            fvaddid={this._add_favourite}
+            addcart={this._add_cart}
+            rmcart={this._rm_cart}
+            {...this.props.Collections}/>
         </div>
 
       </main>
@@ -122,7 +152,8 @@ const states = (state) => {
     Sales: state.SalesReducer,
     Collections: state.CollectionsReducer,
     Navigation: state.NavigationReducer,
-    Favourites: state.FavouritesReducer
+    Favourites: state.FavouritesReducer,
+    Cart: state.CartReducer
   };
 };
 
@@ -153,6 +184,12 @@ const actions = (dispatch) => {
     },
     fvrm: (id) => {
       dispatch(UNSET_FAVOURITES_FAVOURITE_ITEM(id));
+    },
+    addcartid: (id) => {
+      dispatch(ADD_CARTS_CART_BY_ID(id));
+    },
+    rmcart: (id) => {
+      dispatch(UNSET_CARTS_CART_ITEM(id));
     }
   }
 };

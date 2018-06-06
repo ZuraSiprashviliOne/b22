@@ -61,7 +61,6 @@ export function ADD_FAVOURITES_FAVOURITES_BY_IDS(ids){
         }
       })
         .then((response) => {
-          console.log(response.data);
           if(response.data.length !== 0){
             resolve(response.data);
           }

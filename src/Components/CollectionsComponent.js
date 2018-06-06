@@ -25,14 +25,15 @@ export class AnimatedAndMetas extends React.Component{
 
     this.state = {
       question: false,
-      fvadded: this.props.favourites.includes(this.props.id)
+      fvadded: this.props.favourites.includes(this.props.id),
+      carted: this.props.carts.includes(this.props.id)
     };
 
     this._handleQuestion = this._handleQuestion.bind(this);
 
     this._handleFavourite = this._handleFavourite.bind(this);
+    this._handleCart = this._handleCart.bind(this);
   }
-
 
   _handleQuestion(){
     this.setState({
@@ -46,6 +47,11 @@ export class AnimatedAndMetas extends React.Component{
     });
   }
 
+  _handleCart(){
+    this.setState({
+      carted: this.state.carted === true ? this.props.rmcart(this.props.id) : this.props.addcart(this.props.id)
+    });
+  }
 
   render(){
     return [
@@ -108,10 +114,11 @@ export class AnimatedAndMetas extends React.Component{
               sm={6}
               className={'p-1 item'}>
               <Button
+                onClick={this._handleCart}
                 color={'info'}
-                className={'btn-block animated shadow itemb'}>
+                className={`btn-block animated shadow itemb ${this.state.carted === true ? 'active': ''}`}>
                 <FontAwesome
-                  name={'shopping-cart'}/>
+                  name={this.state.carted === true ? 'shopping-cart' : 'cart-plus'}/>
               </Button>
             </Col>
             <Col
@@ -216,7 +223,16 @@ export class CollectionItem extends React.Component{
   render(){
     return (
       <div className={'h-100 collection shadow'}>
-        <AnimatedAndMetas id={this.props.id} favourites={this.props.favourites} fvrm={this.props.fvrm} fvaddid={this.props.fvaddid} slag={`/flowers/items/item_${this.props.id}`} description={this.props.description}/>
+        <AnimatedAndMetas
+          addcart={this.props.addcart}
+          rmcart={this.props.rmcart}
+          carts={this.props.carts}
+          id={this.props.id}
+          favourites={this.props.favourites}
+          fvrm={this.props.fvrm}
+          fvaddid={this.props.fvaddid}
+          slag={`/flowers/items/item_${this.props.id}`}
+          description={this.props.description}/>
         <CollectionItemImage image={this.props.image}/>
         <div className={'bg-white'}>
           <Container>
@@ -287,7 +303,11 @@ class Collections extends React.Component{
     return this.props.data.map((item) => {
       return (
         <div key={item.id}>
-          <CollectionItem favourites={this.props.favourites}
+          <CollectionItem
+            favourites={this.props.favourites}
+            addcart={this.props.addcart}
+            rmcart={this.props.rmcart}
+            carts={this.props.carts}
             fvrm={this.props.fvrm}
             fvaddid={this.props.fvaddid} {...item}/>
         </div>
@@ -343,12 +363,20 @@ class Collections extends React.Component{
 export class CollectionsComponent extends React.Component{
   constructor(props){
     super(props);
+
   }
 
   render(){
     if(this.props.items){
       return this.props.items.map((item, index) => {
-        return <Collections favourites={this.props.favourites} fvrm={this.props.fvrm} fvaddid={this.props.fvaddid} key={index} {...item}/>;
+        return <Collections
+          favourites={this.props.favourites}
+          addcart={this.props.addcart}
+          rmcart={this.props.rmcart}
+          carts={this.props.carts}
+          fvrm={this.props.fvrm}
+          fvaddid={this.props.fvaddid}
+          key={index} {...item}/>;
       });
     }else{
       return <Loading/>;
