@@ -32,7 +32,7 @@ const flowersReducer = (state = {
     case 'UNSET_FLOWERS_FLOWERS': {
       state = {
         ...state,
-        flower: action.payload
+        flowers: action.payload
       };
       break;
     }

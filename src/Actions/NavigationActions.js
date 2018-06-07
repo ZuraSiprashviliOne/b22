@@ -6,12 +6,12 @@ export function SET_NAVIGATION(){
     type: 'SET_NAVIGATION',
     payload: new Promise((resolve, reject) => {
       Axios.all([
-        Axios.get('http://localhost/data.php', {
+        Axios.get('http://testoneone.000webhostapp.com/data.php', {
           params: {
             common: 'locale'
           }
         }),
-        Axios.get('http://localhost/data.php', {
+        Axios.get('http://testoneone.000webhostapp.com/data.php', {
           params: {
             categories: 'list'
           }

@@ -263,12 +263,13 @@ class Flowers extends React.Component{
     if(this.props.Navigation.currentPage !== getPageSlag(this.props.match.path)){
       this.props.setPage(getPageSlag(this.props.match.path));
     }
-    if(checkPromise(this.props.Flowers) === false){
+    if(checkPromise(this.props.Flowers, ['flowers']) === false){
       this.props.initFlowers();
     }
     if (props.Flowers.currentCategory !== this.props.match.params.flower_category) {
-      this.props.setFlowers(this.props.match.params.flower_category);
+      this.props.unset();
       this.props.setFlowersCurrentCategory(this.props.match.params.flower_category);
+      this.props.setFlowers(this.props.match.params.flower_category);
     }
 
     if (this.props.match.url !== this.props.Navigation.path) {
@@ -278,10 +279,14 @@ class Flowers extends React.Component{
 
   render(){
     if(
-      checkPromise(this.props.Flowers)
+      checkPromise(this.props.Flowers, ['flowers'])
       && checkPromise(this.props.Navigation)
     ){
-      return <Element {...this.props}/>;
+      if(this.props.Flowers.flowers.length === 0){
+        return <Loading/>;
+      }else{
+        return <Element {...this.props}/>;
+      }
     }else{
       return <Loading/>;
     }

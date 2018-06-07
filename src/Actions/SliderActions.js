@@ -5,7 +5,7 @@ export function INIT_SLIDER(){
   return {
     type: 'INIT_SLIDER',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://localhost/data.php', {
+      Axios.get('http://testoneone.000webhostapp.com/data.php', {
         params: {
           common: 'locale'
         }
@@ -27,7 +27,7 @@ export function SET_SLIDER_SLIDES(){
   return {
     type: 'SET_SLIDER_SLIDES',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://localhost/data.php', {
+      Axios.get('http://testoneone.000webhostapp.com/data.php', {
         params: {
           slider: 'slides'
         }

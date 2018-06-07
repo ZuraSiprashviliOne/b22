@@ -5,7 +5,7 @@ export function INIT_FAVOURITES(){
   return {
     type: 'INIT_FAVOURITES',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://localhost/data.php', {
+      Axios.get('http://testoneone.000webhostapp.com/data.php', {
         params: {
           common: 'locale'
         }
@@ -34,7 +34,7 @@ export function ADD_FAVOURITES_FAVOURITES_BY_ID(id){
   return {
     type: 'ADD_FAVOURITES_FAVOURITES_BY_ID',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://localhost/data.php', {
+      Axios.get('http://testoneone.000webhostapp.com/data.php', {
         params: {
           product: id
         }
@@ -55,7 +55,7 @@ export function ADD_FAVOURITES_FAVOURITES_BY_IDS(ids){
   return {
     type: 'ADD_FAVOURITES_FAVOURITES_BY_IDS',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://localhost/data.php', {
+      Axios.get('http://testoneone.000webhostapp.com/data.php', {
         params: {
           favourites: ids.join('_')
         }

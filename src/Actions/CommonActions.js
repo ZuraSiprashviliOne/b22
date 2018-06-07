@@ -5,7 +5,7 @@ export function INIT_COMMON_REDUCER(){
   return {
     type: 'INIT_COMMON_REDUCER',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://localhost/data.php', {
+      Axios.get('http://testoneone.000webhostapp.com/data.php', {
         params: {
           common: 'locale'
         }

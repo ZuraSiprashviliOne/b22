@@ -5,7 +5,7 @@ export function INIT_ORDER(){
   return {
     type: 'INIT_ORDER',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://localhost/data.php', {
+      Axios.get('http://testoneone.000webhostapp.com/data.php', {
         params: {
           common: 'locale'
         }

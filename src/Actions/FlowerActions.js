@@ -5,7 +5,7 @@ export function INIT_FLOWER(){
   return {
     type: 'INIT_FLOWER',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://localhost/data.php', {
+      Axios.get('http://testoneone.000webhostapp.com/data.php', {
         params: {
           common: 'locale'
         }
@@ -34,7 +34,7 @@ export function SET_FLOWER_FLOWER(id){
   return {
     type: 'SET_FLOWER_FLOWER',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://localhost/data.php', {
+      Axios.get('http://testoneone.000webhostapp.com/data.php', {
         params: {
           product: id
         }
