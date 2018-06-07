@@ -189,6 +189,9 @@ class OrderProduct extends React.Component{
                               <FlowerInfo
                                 exporter={true}
                                 order={() => {}}
+                                cartadd={()=>{}}
+                                rmcart={()=>{ }}
+                                carts={this.props.carts}
                                 title={this.props.title}
                                 price={this.props.price}
                                 old_price={this.props.old_price}
@@ -563,7 +566,7 @@ class Element extends React.Component{
         id={'order_page'}
         className={'page bg-light animated fadeIn py-md-5'}>
         {this.props.Order.product ? (
-          <OrderProduct {...this.props.Order.product}/>
+          <OrderProduct carts={this.props.Cart.carts} {...this.props.Order.product}/>
         ): <NoProduct />}
       </div>
     )
@@ -613,7 +616,8 @@ class Order extends React.Component{
 const states = (state) => {
   return {
     Order: state.OrderReducer,
-    Navigation: state.NavigationReducer
+    Navigation: state.NavigationReducer,
+    Cart: state.CartReducer
   };
 };
 const actions = (dispatch) => {

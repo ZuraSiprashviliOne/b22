@@ -31,6 +31,45 @@ import {FlowerItem} from "./Flowers";
 import {reactLocalStorage as Storage} from "reactjs-localstorage";
 import {ADD_CARTS_CART_BY_ID, UNSET_CARTS_CART_ITEM} from "../../Actions/CartActions";
 
+
+class NoFavourites extends React.Component{
+  constructor(props){
+    super(props);
+  }
+
+
+  render(){
+    return (
+      <Container>
+        <Row>
+          <Col
+            className={'p-1 my-3'}
+            xs={12}>
+            <div
+              className={'bg-white shadow p-md-3 p-1'}>
+              <h1 className={'m-0 text-grass text-capitalize t text-center py-2'}>
+                <Translate>
+                  your Favourite's cart is empty
+                </Translate>
+              </h1>
+              <div
+                className={'text-center py-2'}>
+                <Link
+                  to={'/flowers'}
+                  className={'btn btn-grass text-uppercase text-white shadow font-weight-light'}>
+                  <Translate>
+                    choose your Favourites
+                  </Translate>
+                </Link>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
+}
+
 class Element extends React.Component{
   constructor(props){
     super(props);
@@ -121,56 +160,59 @@ class Element extends React.Component{
       <div
         id={'favourites_page'}
         className={'page animated fadeIn'}>
-        <div
-          className={'info bg-white shadow my-md-5'}>
-          <div
-            className={'py-1 py-md-0 animated navbar navbar-expand-md navbar-light bg-white'}>
-            <Container>
-              <Nav
-                className={'mr-auto text-capitalize flex-row justify-content-md-start justify-content-center'}>
-                <NavItem>
-                  <NavLink
-                    tag={Button}
-                    className={'p-3 bg-transparent text-muted text-capitalize border-0 d-flex flex-row align-items-center h-100'}>
-                    <Translate
-                      divider={this.props.Favourites.divider}>
-                      {'current items:>>> ' + this.props.Favourites.count}
-                    </Translate>
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    tag={Button}
-                    className={'p-3 bg-transparent text-muted text-capitalize border-0 d-flex flex-row align-items-center h-100'}>
-                    <Translate
-                      divider={this.props.Favourites.divider}>
-                      {'total price:>>> ' + this.getPrice()}
-                    </Translate>$
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    tag={Link}
-                    to={'/cart'}
-                    className={'p-3 bg-transparent text-muted text-capitalize border-0 d-flex flex-row align-items-center h-100'}>
-                    <Translate
-                      divider={this.props.Favourites.divider}>
-                      {'view cart'}
-                    </Translate>
-                  </NavLink>
-                </NavItem>
-              </Nav>
-            </Container>
-          </div>
-        </div>
-        <div
+
+        {this.props.Favourites.count === 0 ? (
+          <NoFavourites />
+        ) : <div
           className={'flowers my-md-5'}>
+          <div
+            className={'info bg-white shadow my-md-5'}>
+            <div
+              className={'py-1 py-md-0 shadow animated navbar navbar-expand-md navbar-light bg-white'}>
+              <Container>
+                <Nav
+                  className={'mr-auto text-capitalize flex-row justify-content-md-start justify-content-center'}>
+                  <NavItem>
+                    <NavLink
+                      tag={Button}
+                      className={'p-3 bg-transparent text-muted text-capitalize border-0 d-flex flex-row align-items-center h-100'}>
+                      <Translate
+                        divider={this.props.Favourites.divider}>
+                        {'current items:>>> ' + this.props.Favourites.count}
+                      </Translate>
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      tag={Button}
+                      className={'p-3 bg-transparent text-muted text-capitalize border-0 d-flex flex-row align-items-center h-100'}>
+                      <Translate
+                        divider={this.props.Favourites.divider}>
+                        {'total price:>>> ' + this.getPrice()}
+                      </Translate>$
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      tag={Link}
+                      to={'/cart'}
+                      className={'p-3 bg-transparent text-muted text-capitalize border-0 d-flex flex-row align-items-center h-100'}>
+                      <Translate
+                        divider={this.props.Favourites.divider}>
+                        {'view cart'}
+                      </Translate>
+                    </NavLink>
+                  </NavItem>
+                </Nav>
+              </Container>
+            </div>
+          </div>
           <Container>
             <Row className={'collections-flowers'}>
               {this.getItems()}
             </Row>
           </Container>
-        </div>
+        </div>}
       </div>
     )
   }

@@ -5,6 +5,8 @@ import {Loading} from "../../Components/Loading";
 import {SET_NAVIGATION_CURRENT_PAGE, SET_NAVIGATION_PATH} from "../../Actions/NavigationActions";
 import {getPageSlag} from "../../Helpers/Routing";
 
+import {reactLocalStorage as Storage} from "reactjs-localstorage";
+
 import Translate from '../Translate';
 
 import {
@@ -15,12 +17,16 @@ import {
   Container,
   Row,
   Col,
-  Button
+  Button,
+  Nav,
+  NavItem,
+  NavLink,
 } from 'reactstrap';
 import {checkPromise} from "../../Helpers/Valid";
 import {INIT_CART, UNSET_CARTS_CART_ITEM} from "../../Actions/CartActions";
 import {CollectionItemImage, CollectionItemImages} from "../../Components/CollectionsComponent";
 import {FlowerInfo} from "./Flower";
+import {SET_ORDER} from "../../Actions/OrderActions";
 
 class Carts extends React.Component{
   constructor(props){
@@ -31,6 +37,16 @@ class Carts extends React.Component{
     this.getImage = this.getImage.bind(this);
 
     this._rm_cart = this._rm_cart.bind(this);
+
+    this._order = this._order.bind(this);
+
+    this.getPrice = this.getPrice.bind(this);
+  }
+
+  getPrice(){
+    let price = 0;
+    this.props.Cart.carts.map((f) => {price += parseFloat(f.price)});
+    return price.toPrecision(5);
   }
 
   _rm_cart(id) {
@@ -41,6 +57,10 @@ class Carts extends React.Component{
     } else {
       return true;
     }
+  }
+
+  _order(order){
+    this.props.setOrder(order);
   }
 
   getCarts(){
@@ -77,12 +97,15 @@ class Carts extends React.Component{
                   remove from cart
                 </Translate>
               </button>
-              <button
+              <Button
+                tag={Link}
+                to={'/order'}
+                onClick={() => {this._order(c)}}
                 className={'btn-__grass btn my-2 btn-block px-3 py-2 text-uppercase text-white'}>
                 <Translate>
                   order
                 </Translate>
-              </button>
+              </Button>
             </Col>
           </Row>
         </Container>
@@ -104,19 +127,51 @@ class Carts extends React.Component{
 
   render(){
     return (
-      <Container>
-        <Row>
-          <Col
-            xs={12}
-            className={'p-1'}>
-            <div
-              className={'h-100 item'}>
-              {this.getCarts()}
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    )
+      [
+        <div
+          key={'or'}
+          className={'py-1 py-md-0 border shadow animated navbar navbar-expand-md navbar-light bg-white'}>
+          <Container>
+            <Nav
+              className={'mr-auto shadow text-capitalize flex-row justify-content-md-start justify-content-center'}>
+              <NavItem>
+                <NavLink
+                  tag={Button}
+                  className={'p-3 bg-transparent text-muted text-capitalize border-0 d-flex flex-row align-items-center h-100'}>
+                  <Translate
+                    divider={this.props.Cart.divider}>
+                    {'current items:>>> ' + this.props.Cart.count}
+                  </Translate>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  tag={Button}
+                  className={'p-3 bg-transparent text-muted text-capitalize border-0 d-flex flex-row align-items-center h-100'}>
+                  <Translate
+                    divider={this.props.Cart.divider}>
+                    {this.getPrice()}
+                  </Translate>$
+                </NavLink>
+              </NavItem>
+            </Nav>
+          </Container>
+        </div>,
+        <Container
+          key={'s'}>
+          <Row>
+            <Col
+              xs={12}
+              className={'p-1'}>
+              <div
+                className={'h-100 item'}>
+                {this.getCarts()}
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      ]
+    );
   }
 }
 
@@ -214,7 +269,8 @@ class Cart extends React.Component{
 const states = (state) => {
   return {
     Navigation: state.NavigationReducer,
-    Cart: state.CartReducer
+    Cart: state.CartReducer,
+    Order: state.OrderReducer
   };
 };
 
@@ -228,6 +284,9 @@ const actions = (dispatch) => {
     },
     initCart: () => {
       dispatch(INIT_CART());
+    },
+    setOrder: (order) => {
+      dispatch(SET_ORDER(order));
     },
     rmcart: (id) => {
       dispatch(UNSET_CARTS_CART_ITEM(id))
