@@ -122,6 +122,7 @@ class NavigationNavNavItem extends React.Component{
       <NavItem
         className={`${(this.props.current) === this.props.slag ? 'active' : ''}`}>
         <NavLink
+          onClick={this.props.close}
           className={'p-3'}
           tag={Link}
           to={this.props.slag}>
@@ -144,6 +145,7 @@ class NavigationNavNavItemWithDropdown extends React.Component{
     return this.props.sub.map((item) => {
       return (
         <DropdownItem
+          onClick={this.props.close}
           key={item.slag}
           tag={Link}
           to={item.slag}>
@@ -186,12 +188,16 @@ class NavigationNav extends React.Component{
     this.getNavItems = this.getNavItems.bind(this);
   }
 
+  componentDidMount(){
+    this.props.close();
+  }
+
   getNavItems(){
     return this.props.list.map((item, index) => {
       if(item.sub){
-        return <NavigationNavNavItemWithDropdown current={this.props.currentPage} key={index} {...item}/>;
+        return <NavigationNavNavItemWithDropdown close={this.props.close} current={this.props.currentPage} key={index} {...item}/>;
       }else{
-        return <NavigationNavNavItem current={this.props.currentPage} {...item} key={index}/>;
+        return <NavigationNavNavItem close={this.props.close} current={this.props.currentPage} {...item} key={index}/>;
       }
     });
   }
@@ -208,6 +214,29 @@ class NavigationNav extends React.Component{
 class UserFavourites extends React.Component{
   constructor(props){
     super(props);
+
+    this.getLanguageItems = this.getLanguageItems.bind(this);
+    this.setLang = this.setLang.bind(this);
+  }
+
+  setLang(lang){
+    this.props.unsetlocale();
+    this.props.setlocale(lang);
+  }
+
+  getLanguageItems(){
+    return this.props.languages.map((lang) => {
+      return (
+        <DropdownItem
+          className={`text-capitalize ${this.props.currentlang === lang ? 'bg-grass text-white': ''}`}
+          onClick={() => {this.setLang(lang)}}
+          key={lang}>
+          <Translate>
+            {lang}
+          </Translate>
+        </DropdownItem>
+      );
+    });
   }
 
   render(){
@@ -241,6 +270,23 @@ class UserFavourites extends React.Component{
             </Badge>
           </NavLink>
         </NavItem>
+        <UncontrolledDropdown
+          nav
+          inNavbar>
+          <DropdownToggle
+            className={'p-3'}
+            nav
+            caret>
+            <Translate>
+              {this.props.currentlang}
+            </Translate>
+          </DropdownToggle>
+          <DropdownMenu
+            left={'true'}
+            className={'rounded-no '}>
+            {this.getLanguageItems()}
+          </DropdownMenu>
+        </UncontrolledDropdown>
       </Nav>
     );
   }
@@ -249,11 +295,16 @@ class UserFavourites extends React.Component{
 class NavigationNavbar extends React.Component{
   constructor(props){
     super(props);
-
+    this.toggle = this.toggle.bind(this);
     this._toggleNavbar = this._toggleNavbar.bind(this);
     this.state = {
       collapseIsOpen: false
     };
+    this.close = this.close.bind(this);
+  }
+
+  close(){
+    this.setState({collapseIsOpen: false});
   }
 
   _toggleNavbar() {
@@ -274,6 +325,12 @@ class NavigationNavbar extends React.Component{
     }
   }
 
+  toggle() {
+    this.setState({
+      collapseIsOpen: !this.state.collapseIsOpen
+    });
+  }
+
   render(){
     return (
       <div
@@ -292,8 +349,14 @@ class NavigationNavbar extends React.Component{
             className={'rounded-no ml-auto'}
             onClick={this._toggleNavbar}/>
           <Collapse isOpen={this.state.collapseIsOpen} navbar>
-            <NavigationNav currentPage={this.props.currentPage} list={this.props.list}/>
-            <UserFavourites fvcount={this.props.fvcount} cartcount={this.props.cartcount}/>
+            <NavigationNav close={this.close} currentPage={this.props.currentPage} list={this.props.list}/>
+            <UserFavourites
+              unsetlocale={this.props.unsetlocale}
+              currentlang={this.props.currentlang}
+              setlocale={this.props.setlocale}
+              languages={this.props.languages}
+              fvcount={this.props.fvcount}
+              cartcount={this.props.cartcount}/>
           </Collapse>
         </Container>
       </div>
@@ -315,6 +378,10 @@ class Element extends React.Component{
         <NavigationTop
           title={this.props.title}/>
         <NavigationNavbar
+          unsetlocale={this.props.unsetLocale}
+          setlocale={this.props.setLocale}
+          currentlang={this.props.currentlang}
+          languages={this.props.languages}
           fixed={this.props.fixed}
           fvcount={this.props.Favourites.count}
           cartcount={this.props.Cart.count}

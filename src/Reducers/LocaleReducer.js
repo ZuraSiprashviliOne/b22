@@ -108,6 +108,20 @@ const LocaleReducer = (state = {
       break;
     }
 
+    case 'UNSET_LOCALE': {
+      state = {
+        ...state,
+        primary: {
+          ...state.primary,
+          keywords: {
+            ...state.primary.keywords,
+            res: null
+          }
+        }
+      };
+      break;
+    }
+
     default: {
       break;
     }

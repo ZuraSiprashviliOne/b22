@@ -70,6 +70,13 @@ export function SET_LOCALE_PRIMARY_CURRENT(code = 'en'){
   }
 }
 
+export function UNSET_LOCALE() {
+  return {
+    type: 'UNSET_LOCALE',
+    payload: null
+  }
+}
+
 export function SET_LOCALE_PRIMARY_REFERENCE(code = null){
   return code === null ? {
     type: 'SET_LOCALE_PRIMARY_REFERENCE',

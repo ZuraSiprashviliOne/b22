@@ -18,7 +18,7 @@ import {Loading} from "../Components/Loading";
 import {
   INIT_LOCALE,
   SET_LOCALE_PRIMARY_CURRENT,
-  SET_LOCALE_PRIMARY_KEYWORDS_RES
+  SET_LOCALE_PRIMARY_KEYWORDS_RES, UNSET_LOCALE
 } from "../Actions/LocaleActions";
 
 import {Scrollbar} from "../Components/Scrollbar";
@@ -70,7 +70,10 @@ class Element extends React.Component{
               id={'RouterContainer'}>
               <Navigation
                 fixed={this.state.navbarIsFixed}
-                setLocale={this.props.setLocale}/>
+                setLocale={this.props.setLocale}
+                unsetLocale={this.props.unsetLocale}
+                currentlang={this.props.Locale.primary.current}
+                languages={this.props.Locale.primary.languages}/>
               <Switch>
                 <Route
                   path={'/'}
@@ -115,7 +118,7 @@ class App extends React.Component{
 
     this.state = {
       ready: () =>
-        checkPromise(this.props.Locale.primary)
+        checkPromise(this.props.Locale.primary) && this.props.Locale.primary.ref !== null
         && checkPromise(this.props.Common)
     };
 
@@ -163,6 +166,9 @@ const actions = (dispatch) => {
         dispatch(SET_LOCALE_PRIMARY_KEYWORDS_RES(code));
         Storage.set('locale', code);
       }
+    },
+    unsetLocale: () => {
+      dispatch(UNSET_LOCALE());
     },
     initCommon: () => {
       dispatch(INIT_COMMON_REDUCER());
