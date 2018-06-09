@@ -24,6 +24,28 @@ const orderReducer = (state = {
       break;
     }
 
+    case 'SET_ORDER_COUNT': {
+      state = {
+        ...state,
+        product: {
+          ...state.product,
+          count: action.payload
+        }
+      };
+      break;
+    }
+
+    case 'SET_ORDER_SIZE': {
+      state = {
+        ...state,
+        product: {
+          ...state.product,
+          size: action.payload
+        }
+      };
+      break;
+    }
+
     case 'UNSET_ORDER': {
       state = {
         ...state,

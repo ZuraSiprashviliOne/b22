@@ -4,7 +4,13 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {checkPromise} from "../../Helpers/Valid";
 import {Loading} from "../../Components/Loading";
-import {INIT_FLOWER, SET_FLOWER_FLOWER, UNSET_FLOWER_FLOWER} from "../../Actions/FlowerActions";
+import {
+  INIT_FLOWER,
+  SET_FLOWER_COUNT,
+  SET_FLOWER_FLOWER,
+  SET_FLOWER_SIZE,
+  UNSET_FLOWER_FLOWER
+} from "../../Actions/FlowerActions";
 import {getPageSlag} from "../../Helpers/Routing";
 import {SET_NAVIGATION_CURRENT_PAGE, SET_NAVIGATION_PATH} from "../../Actions/NavigationActions";
 
@@ -20,15 +26,19 @@ import {CollectionItemImage, CollectionsComponent} from '../../Components/Collec
 
 import {SliderButton} from "../../Components/SliderButton";
 
+import {reactLocalStorage as Storage} from 'reactjs-localstorage';
+
 import {
   Container,
   Row,
   Col,
-  Button
+  Button,
+  FormGroup,
+  Label,
+  Input,
 } from 'reactstrap';
 import {SET_ORDER} from "../../Actions/OrderActions";
 import {ADD_FAVOURITES_FAVOURITES_BY_ID, UNSET_FAVOURITES_FAVOURITE_ITEM} from "../../Actions/FavouritesActions";
-import {reactLocalStorage as Storage} from "reactjs-localstorage";
 import {ADD_CARTS_CART_BY_ID, UNSET_CARTS_CART_ITEM} from "../../Actions/CartActions";
 
 class FlowerSwiper extends React.Component{
@@ -121,6 +131,287 @@ class FlowerSwiper extends React.Component{
   }
 }
 
+
+class Radios extends React.Component{
+  constructor(props){
+    super(props);
+
+    this.state = {
+      selected: null
+    };
+
+    this._handleSelect = this._handleSelect.bind(this);
+  }
+
+  componentDidMount(){
+    if(Storage.get('sizes') !== undefined){
+      let jsonData = JSON.parse(Storage.get('sizes'));
+      let thatData = jsonData.find((data) => data.id === this.props.id);
+      if(thatData){
+        this.setState({
+          selected: thatData.size
+        });
+        this.props.setsize(thatData.size, this.props.id);
+      }else{
+        this.setState({
+          selected: 0
+        });
+        this.props.setsize(0, this.props.id);
+      }
+    }else{
+      Storage.set('sizes', JSON.stringify([{id: this.props.id, size: 0}]));
+      this.setState({
+        selected: 0
+      });
+      this.props.setsize(0, this.props.id);
+    }
+  }
+
+  _handleSelect(id){
+    this.setState({
+      selected: id
+    });
+    this.props.setsize(id, this.props.id);
+
+    if(Storage.get('sizes') !== undefined){
+      let storageData = JSON.parse(Storage.get('sizes'));
+      let resStorage = null;
+      if(storageData.find((data) => data.id == this.props.id)){
+        resStorage = storageData.map((data) => {
+          if (data.id === this.props.id) {
+            return {
+              id: this.props.id,
+              size: id
+            };
+          } else {
+            return data;
+          }
+        });
+      }else{
+        resStorage = [...storageData, {id: this.props.id, size: id}];
+      }
+      Storage.set('sizes', JSON.stringify(resStorage));
+    }else{
+      Storage.set('sizes', JSON.stringify([{id: this.props.id, size: id}]));
+    }
+  }
+
+  render(){
+    if(this.state.selected !== null){
+      return (
+        <div
+          className={'py-3 text-capitalize'}>
+          <FormGroup check>
+            <Label check>
+              <Input checked={this.state.selected === 0} onChange={() => {this._handleSelect(0)}} name={`size_${this.props.id}`} type={'radio'} />
+              <span className="text-dark">
+                <Translate>
+                  large
+                </Translate>
+              </span>
+            </Label>
+          </FormGroup>
+          <FormGroup check>
+            <Label check>
+              <Input checked={this.state.selected === 1} onChange={() => {this._handleSelect(1)}} name={`size_${this.props.id}`} type={'radio'} />
+              <span className="text-dark">
+                <Translate>
+                  medium
+                </Translate>
+              </span>
+            </Label>
+          </FormGroup>
+          <FormGroup check>
+            <Label check>
+              <Input checked={this.state.selected === 2} onChange={() => {this._handleSelect(2)}} name={`size_${this.props.id}`} type={'radio'} />
+              <span className="text-dark">
+                <Translate>
+                  small
+                </Translate>
+              </span>
+            </Label>
+          </FormGroup>
+        </div>
+      );
+    }else{
+      return null
+    }
+
+  }
+}
+
+class Counts extends React.Component{
+  constructor(props){
+    super(props);
+
+    this.state = {
+      count: null
+    };
+
+    this._handleMin = this._handleMin.bind(this);
+    this._handlePlu = this._handlePlu.bind(this);
+  }
+
+  componentDidMount(){
+    if(Storage.get('count') !== undefined){
+      let storageData = JSON.parse(Storage.get('count'));
+      let resStorage = null;
+      let thatData = storageData.find((data) => data.id == this.props.id);
+      if(thatData){
+        this.setState({
+          count: thatData.count
+        });
+        this.props.setcount(thatData.count, this.props.id);
+        resStorage = storageData.map((data) => {
+          if (data.id === this.props.id) {
+            return {
+              id: this.props.id,
+              count: data.count
+            };
+          } else {
+            return data;
+          }
+        });
+      }else{
+        this.setState({
+          count: 1
+        });
+        this.props.setcount(1, this.props.id);
+        resStorage = [...storageData, {id: this.props.id, count: 1}];
+      }
+      Storage.set('count', JSON.stringify(resStorage));
+    }else{
+      this.setState({
+        count: 1
+      });
+      this.props.setcount(1, this.props.id);
+      Storage.set('count', JSON.stringify([{id: this.props.id, count: 1}]));
+    }
+  }
+
+  _handleMin(){
+    if(parseInt(this.count.value) > 1){
+      if(Storage.get('count') !== undefined){
+        let storageData = JSON.parse(Storage.get('count'));
+        let resStorage = null;
+        let thatData = storageData.find((data) => data.id == this.props.id);
+        if(thatData){
+          this.setState({
+            count: thatData.count - 1
+          });
+          this.props.setcount(thatData.count - 1, this.props.id);
+          resStorage = storageData.map((data) => {
+            if (data.id === this.props.id) {
+              return {
+                id: this.props.id,
+                count: data.count - 1
+              };
+            } else {
+              return data;
+            }
+          });
+        }else{
+          this.setState({
+            count: 1
+          });
+          this.props.setcount(1, this.props.id);
+          resStorage = [...storageData, {id: this.props.id, count: 1}];
+        }
+        Storage.set('count', JSON.stringify(resStorage));
+      }else{
+        this.setState({
+          count: 1
+        });
+        this.props.setcount(1, this.props.id);
+        Storage.set('count', JSON.stringify([{id: this.props.id, count: 1}]));
+      }
+
+    }
+  }
+
+  _handlePlu(){
+    if(Storage.get('count') !== undefined){
+      let storageData = JSON.parse(Storage.get('count'));
+      let resStorage = null;
+      let thatData = storageData.find((data) => data.id == this.props.id);
+      if(thatData){
+        this.setState({
+          count: thatData.count + 1
+        });
+        this.props.setcount(thatData.count + 1, this.props.id);
+        resStorage = storageData.map((data) => {
+          if (data.id === this.props.id) {
+            return {
+              id: this.props.id,
+              count: data.count + 1
+            };
+          } else {
+            return data;
+          }
+        });
+      }else{
+        this.setState({
+          count: 1
+        });
+        this.props.setcount(1, this.props.id);
+        resStorage = [...storageData, {id: this.props.id, count: 1}];
+      }
+      Storage.set('count', JSON.stringify(resStorage));
+    }else{
+      this.setState({
+        count: 1
+      });
+      this.props.setcount(1, this.props.id);
+      Storage.set('count', JSON.stringify([{id: this.props.id, count: 1}]));
+    }
+  }
+
+  render(){
+    if(this.state.count !== null){
+      return (
+        <div>
+          <div className={'py-1 text-center'}>
+            <h3
+              className={'m-0  font-weight-light text-capitalize'}>
+              <Translate>
+                count
+              </Translate>
+            </h3>
+          </div>
+          <div className={'py-1'}>
+            <div className="actioners">
+              <button
+                type={'button'}
+                onClick={this._handleMin}
+                ref={(element) => {this.actMin = element}}
+                className={'btn text-dark shadow bg-white'}>
+                <FontAwesome
+                  name={'minus'}/>
+              </button>
+              <input
+                type={'text'}
+                readOnly={true}
+                ref={(element) => {this.count = element}}
+                className={'text-center form-control w-100 border shadow bg-white'}
+                value={this.state.count}/>
+              <button
+                type={'button'}
+                onClick={this._handlePlu}
+                ref={(element) => {this.actPlu = element}}
+                className={'btn text-dark shadow bg-white'}>
+                <FontAwesome
+                  name={'plus'}/>
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }else{
+      return null;
+    }
+  }
+}
+
 export class FlowerInfo extends React.Component{
   constructor(props){
     super(props);
@@ -199,6 +490,27 @@ export class FlowerInfo extends React.Component{
             {this.props.description}
           </Translate>
         </div>
+        <Container>
+          <Row
+            className={'align-items-center'}>
+            <Col
+              className={'p-1'}
+              xs={6}>
+              <Radios
+                setsize={this.props.setsize}
+                id={this.props.id}/>
+            </Col>
+            <Col
+              className={'p-1'}
+              xs={6}>
+              {this.props.hasCount ? (
+                <Counts
+                  setcount={this.props.setcount}
+                  id={this.props.id} />
+              ): null}
+            </Col>
+          </Row>
+        </Container>
       </div>,
       this.props.exporter ? null :
         <div key={'buttons'} className={'py-3 px-1 px-md-2'}>
@@ -359,6 +671,10 @@ class Element extends React.Component{
               md={5}
               className={'data h-100 d-flex flex-column justify-content-around'}>
               <FlowerInfo
+                setsize={this.props.setFlowerSize}
+                setcount={this.props.setFlowerCount}
+                hasCount={this.props.Flower.flower.hasCount}
+                count={this.props.Flower.flower.count}
                 id={this.props.Flower.flower.id}
                 carts={this.props.Cart.carts}
                 addcart={this._add_cart}
@@ -483,6 +799,12 @@ const actions = (dispatch) => {
     },
     rmcart: (id) => {
       dispatch(UNSET_CARTS_CART_ITEM(id));
+    },
+    setFlowerSize: (size) => {
+      dispatch(SET_FLOWER_SIZE(size));
+    },
+    setFlowerCount: (count) => {
+      dispatch(SET_FLOWER_COUNT(count));
     }
   };
 };

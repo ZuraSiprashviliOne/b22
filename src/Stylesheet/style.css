@@ -325,7 +325,17 @@ header .top .top-nav {
   padding-left: 2px;
   padding-right: 2px; }
   header .top .top-nav ul {
-    height: 100%; }
+    height: 100%;
+    position: relative; }
+    header .top .top-nav ul.searchUL .search_results {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      border: 1px solid red;
+      z-index: 400;
+      margin-top: 50px;
+      z-index: -100; }
     header .top .top-nav ul li {
       height: 100%;
       transition: all 0.2s ease-in-out; }
@@ -510,6 +520,18 @@ header .navbar {
   padding-right: 0 !important; }
   #home_page .collections-container .collections .coll-row .col-12, #home_page .collections-container .collections-flowers .coll-row .col-12, #flower_page .collections-container .collections .coll-row .col-12, #flower_page .collections-container .collections-flowers .coll-row .col-12 {
     padding: 0 !important; }
+
+.actioners {
+  position: relative; }
+  .actioners > button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1; }
+    .actioners > button:first-child {
+      left: 0; }
+    .actioners > button:last-child {
+      right: 0; }
 
 #flower_page .images .swiper-container .swiper-slide .image {
   background-size: cover;

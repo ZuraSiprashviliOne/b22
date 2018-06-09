@@ -30,8 +30,9 @@ import {
 } from 'reactstrap';
 
 import Translate from './Translate';
+import {INIT_SEARCH, SEARCH_SEARCH_ITEMS} from "../Actions/SearchActions";
 
-class NavigationTop extends React.Component{
+export class Search extends React.Component{
   constructor(props){
     super(props);
 
@@ -40,6 +41,48 @@ class NavigationTop extends React.Component{
     };
 
     this._searchClick = this._searchClick.bind(this);
+
+    this._handleChange = this._handleChange.bind(this);
+
+    this.getSearchItems = this.getSearchItems.bind(this);
+  }
+
+  getSearchItems(){
+    return this.props.search_items.map((item) => {
+      return (
+        <Link
+          key={item.id}
+          to={`/flowers/items/item_${item.id}`}>
+          <Row className={'py-1 border-bottom'}>
+            <Col
+              className={'p-1'}
+              xs={4}>
+              <img src={item.image} className={'w-100'} />
+            </Col>
+            <Col
+              className={'p-1'}
+              xs={8}>
+              <div className={'text-capitalize text-dark font-weight-dark pb-1'}>
+                <Translate>
+                  {item.title}
+                </Translate>
+              </div>
+              <div className={'text-muted small'}>
+                <Translate>
+                  {item.description.substr(0, 100)}...
+                </Translate>
+              </div>
+            </Col>
+          </Row>
+        </Link>
+      );
+    })
+  }
+
+  _handleChange(){
+    setTimeout(() => {
+      this.props.search_search_items(this.searchInput.value)
+    }, 500);
   }
 
   _searchClick(){
@@ -51,6 +94,44 @@ class NavigationTop extends React.Component{
         this.searchInput.classList.add('fadeInRight');
       }
     }
+  }
+
+  render(){
+    return (
+      <ul className="list-unstyled searchUL m-0 d-flex flex-row align-items-center">
+        <li className={`search flex-column justify-content-center align-items-center px-1 ${this.state.searchIconClicked === true ? 'd-flex': 'd-none'}`}>
+          <input
+            ref={(element) => {this.searchInput = element}}
+            type="text"
+            onChange={this._handleChange}
+            className="w-100 animated border-_grass rounded-no bg-transparent my-1 form-control"
+            placeholder={'Search...'}/>
+          <div
+            style={{zIndex: this.props.search_items.length !== 0 ? 80 : -100}}
+            className={`search_results shadow border text-dark bg-white p-1 animated ${this.props.search_items.length !== 0 ? 'fadeIn': 'fadeOut'}`}>
+            <Container>
+              {this.getSearchItems()}
+            </Container>
+          </div>
+        </li>
+        <li>
+          <Button
+            onClick={this._searchClick}
+            ref={(element) => {this.searchIcon = element}}
+            className={'btn bg-transparent border-0 px-3 py-3 text-white'}>
+            <FontAwesome
+              name={'search'}/>
+          </Button>
+        </li>
+      </ul>
+    );
+  }
+}
+
+class NavigationTop extends React.Component{
+  constructor(props){
+    super(props);
+
   }
 
   render(){
@@ -84,27 +165,7 @@ class NavigationTop extends React.Component{
             sm={6}
             xs={9}
             className="top-nav text-white d-flex flex-row align-items-center justify-content-end">
-            <ul className="list-unstyled  m-0 d-flex flex-row align-items-center">
-              <li className={`search flex-column justify-content-center align-items-center px-1 ${this.state.searchIconClicked === true ? 'd-flex': 'd-none'}`}>
-                <input
-                  ref={(element) => {this.searchInput = element}}
-                  type="text"
-                  className="w-100 animated border-_grass rounded-no bg-transparent my-1 form-control"
-                  placeholder={'Search...'}/>
-              </li>
-              <li>
-                <Button
-                  onClick={this._searchClick}
-                  ref={(element) => {this.searchIcon = element}}
-                  className="btn bg-transparent border-0 px-3 py-3 text-white">
-                  <FontAwesome
-                    name={'search'}/>
-                </Button>
-              </li>
-              {/*<li>*/}
-                {/*<a href="#" className="px-3 py-3 text-white font-weight-light">Register Or Login</a>*/}
-              {/*</li>*/}
-            </ul>
+            <Search search_search_items={this.props.search_search_items} search_items={this.props.search_items} />
           </Col>
         </Row>
       </Container>
@@ -222,6 +283,7 @@ class UserFavourites extends React.Component{
   setLang(lang){
     this.props.unsetlocale();
     this.props.setlocale(lang);
+    this.props.close();
   }
 
   getLanguageItems(){
@@ -283,7 +345,7 @@ class UserFavourites extends React.Component{
           </DropdownToggle>
           <DropdownMenu
             left={'true'}
-            className={'rounded-no '}>
+            className={'rounded-no'}>
             {this.getLanguageItems()}
           </DropdownMenu>
         </UncontrolledDropdown>
@@ -351,6 +413,7 @@ class NavigationNavbar extends React.Component{
           <Collapse isOpen={this.state.collapseIsOpen} navbar>
             <NavigationNav close={this.close} currentPage={this.props.currentPage} list={this.props.list}/>
             <UserFavourites
+              close={this.close}
               unsetlocale={this.props.unsetlocale}
               currentlang={this.props.currentlang}
               setlocale={this.props.setlocale}
@@ -376,6 +439,8 @@ class Element extends React.Component{
         className={'bg-grass'}
         id={'header'}>
         <NavigationTop
+          search_items={this.props.Search.results}
+          search_search_items={this.props.searchSearchItems}
           title={this.props.title}/>
         <NavigationNavbar
           unsetlocale={this.props.unsetLocale}
@@ -406,10 +471,14 @@ class Navigation extends React.Component{
     if(checkPromise(this.props.Navigation) === false){
       props.setNavigation();
     }
+
+    if(checkPromise(this.props.Search) === false){
+      props.initSearch();
+    }
   }
 
   render(){
-    if(checkPromise(this.props.Navigation)){
+    if(checkPromise(this.props.Navigation) && checkPromise(this.props.Search)){
       return <Element {...this.props}/>;
     }else{
       return <Loading />;
@@ -421,7 +490,8 @@ const states = (state) => {
   return {
     Navigation: state.NavigationReducer,
     Favourites: state.FavouritesReducer,
-    Cart: state.CartReducer
+    Cart: state.CartReducer,
+    Search: state.SearchReducer
   };
 };
 
@@ -429,6 +499,12 @@ const actions = (dispatch) => {
   return {
     setNavigation: () => {
       dispatch(SET_NAVIGATION());
+    },
+    initSearch: () => {
+      dispatch(INIT_SEARCH());
+    },
+    searchSearchItems: (data) => {
+      dispatch(SEARCH_SEARCH_ITEMS(data))
     }
   };
 };

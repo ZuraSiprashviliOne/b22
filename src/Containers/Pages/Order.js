@@ -6,7 +6,7 @@ import {Loading} from "../../Components/Loading";
 import {SET_NAVIGATION_CURRENT_PAGE, SET_NAVIGATION_PATH} from "../../Actions/NavigationActions";
 import {getPageSlag} from "../../Helpers/Routing";
 import {checkPromise} from "../../Helpers/Valid";
-import {INIT_ORDER, UNSET_ORDER} from "../../Actions/OrderActions";
+import {INIT_ORDER, SET_ORDER_COUNT, SET_ORDER_SIZE, UNSET_ORDER} from "../../Actions/OrderActions";
 
 import Translate from '../Translate';
 
@@ -187,6 +187,11 @@ class OrderProduct extends React.Component{
                             <Col
                               xs={12}>
                               <FlowerInfo
+                                setcount={this.props.setcount}
+                                setsize={this.props.setsize}
+                                id={this.props.id}
+                                hasCount={this.props.hasCount}
+                                count={this.props.count}
                                 exporter={true}
                                 order={() => {}}
                                 cartadd={()=>{}}
@@ -566,7 +571,11 @@ class Element extends React.Component{
         id={'order_page'}
         className={'page bg-light animated fadeIn py-md-5'}>
         {this.props.Order.product ? (
-          <OrderProduct carts={this.props.Cart.carts} {...this.props.Order.product}/>
+          <OrderProduct
+            setsize={this.props.setsize}
+            setcount={this.props.setcount}
+            carts={this.props.Cart.carts}
+            {...this.props.Order.product}/>
         ): <NoProduct />}
       </div>
     )
@@ -633,6 +642,12 @@ const actions = (dispatch) => {
     },
     unsetOrder: () => {
       dispatch(UNSET_ORDER());
+    },
+    setsize: (size) => {
+      dispatch(SET_ORDER_SIZE(size));
+    },
+    setcount: (count) => {
+      dispatch(SET_ORDER_COUNT(count));
     }
   };
 };

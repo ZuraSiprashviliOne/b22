@@ -9,6 +9,9 @@
 @import './animate/animate/wobble.scss';
 
 html{
+
+
+
   overflow-x: hidden !important;;
   width: 100vw;
 }
@@ -36,10 +39,16 @@ html{
   }
 }
 
+//@font-face {
+//  font-family: geo;
+//  src: url("./geo.ttf");
+//}
+
 body{
   min-height: 100vh;
   height: 100vh;
   overflow: hidden;
+  //font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "geo";
   .loading {
     position: fixed;
     top: 0;
@@ -155,6 +164,22 @@ header{
       padding-right: 2px;
       ul{
         height: 100%;
+        position: relative;
+
+        &.searchUL{
+
+          .search_results{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            border: 1px solid red;
+            z-index: 400;
+            margin-top: 50px;
+            z-index: -100;
+          }
+        }
+
         li {
           height: 100%;
 
@@ -516,6 +541,25 @@ header{
      }
    }
  }
+}
+
+.actioners{
+  position: relative;
+
+  >button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+
+    &:first-child{
+      left: 0;
+    }
+
+    &:last-child{
+      right: 0;
+    }
+  }
 }
 
 #flower_page{

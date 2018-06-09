@@ -69,6 +69,44 @@ const cartReducer = (state = {
       break;
     }
 
+    case 'SET_CART_SIZE': {
+      state = {
+        ...state,
+        carts: [
+          ...state.carts.map((cart) => {
+            if(cart.id === action.payload.id){
+              return {
+                ...cart,
+                size: action.payload.size
+              }
+            }else{
+              return cart;
+            }
+          })
+        ]
+      };
+      break;
+    }
+
+    case 'SET_CART_COUNT': {
+      state = {
+        ...state,
+        carts: [
+          ...state.carts.map((cart) => {
+            if(cart.id === action.payload.id){
+              return {
+                ...cart,
+                count: action.payload.count
+              }
+            }else{
+              return cart;
+            }
+          })
+        ]
+      };
+      break;
+    }
+
     default:{
 
       break;

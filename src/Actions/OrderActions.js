@@ -30,6 +30,21 @@ export function SET_ORDER(product){
   };
 }
 
+
+export function SET_ORDER_COUNT(num){
+  return {
+    type: 'SET_ORDER_COUNT',
+    payload: num
+  }
+}
+
+export function SET_ORDER_SIZE(id) {
+  return {
+    type: 'SET_ORDER_SIZE',
+    payload: id
+  }
+}
+
 export function UNSET_ORDER(){
   return {
     type: 'UNSET_ORDER',

@@ -23,10 +23,11 @@ import {
   NavLink,
 } from 'reactstrap';
 import {checkPromise} from "../../Helpers/Valid";
-import {INIT_CART, UNSET_CARTS_CART_ITEM} from "../../Actions/CartActions";
+import {INIT_CART, SET_CART_COUNT, SET_CART_SIZE, UNSET_CARTS_CART_ITEM} from "../../Actions/CartActions";
 import {CollectionItemImage, CollectionItemImages} from "../../Components/CollectionsComponent";
 import {FlowerInfo} from "./Flower";
 import {SET_ORDER} from "../../Actions/OrderActions";
+import {SET_FLOWER_COUNT, SET_FLOWER_SIZE} from "../../Actions/FlowerActions";
 
 class Carts extends React.Component{
   constructor(props){
@@ -77,6 +78,11 @@ class Carts extends React.Component{
               md={6}
               className={'info p-1'}>
               <FlowerInfo
+                setsize={this.props.setsize}
+                setcount={this.props.setcount}
+                id={c.id}
+                hasCount={c.hasCount}
+                count={c.count}
                 exporter={true}
                 carts={this.props.Cart.carts}
                 cartadd={() => {}}
@@ -223,7 +229,8 @@ class Element extends React.Component{
         id={'cart_page'}
         className={'page animated fadeIn py-md-5 bg-light'}>
         {this.props.Cart.count > 0 ? (
-          <Carts {...this.props}/>
+          <Carts
+            {...this.props}/>
         ): (
           <NoCarts />
         )}
@@ -290,6 +297,13 @@ const actions = (dispatch) => {
     },
     rmcart: (id) => {
       dispatch(UNSET_CARTS_CART_ITEM(id))
+    },
+    setsize: (size, id) => {
+      alert('attention actions');
+      dispatch(SET_CART_SIZE(size, id));
+    },
+    setcount: (count, id) => {
+      dispatch(SET_CART_COUNT(count, id));
     }
   };
 };

@@ -1,9 +1,9 @@
 
 import Axios from 'axios';
 
-export function INIT_FLOWER(){
+export function INIT_SEARCH(){
   return {
-    type: 'INIT_FLOWER',
+    type: 'INIT_SEARCH',
     payload: new Promise((resolve, reject) => {
       Axios.get('http://testoneone.000webhostapp.com/data.php', {
         params: {
@@ -14,7 +14,7 @@ export function INIT_FLOWER(){
           resolve({
             divider: response.data.divider,
             language: response.data.language
-          });
+          })
         })
         .catch((error) => {
           reject(error);
@@ -23,42 +23,17 @@ export function INIT_FLOWER(){
   }
 }
 
-export function UNSET_FLOWER_FLOWER(){
+export function SEARCH_SEARCH_ITEMS(data){
   return {
-    type: 'UNSET_FLOWER_FLOWER',
-    payload: null
-  }
-}
-
-export function SET_FLOWER_COUNT(num){
-  return {
-    type: 'SET_FLOWER_COUNT',
-    payload: num
-  }
-}
-
-export function SET_FLOWER_SIZE(id){
-  return {
-    type: 'SET_FLOWER_SIZE',
-    payload: id
-  }
-}
-
-export function SET_FLOWER_FLOWER(id){
-  return {
-    type: 'SET_FLOWER_FLOWER',
+    type: 'SEARCH_SEARCH_ITEMS',
     payload: new Promise((resolve, reject) => {
       Axios.get('http://testoneone.000webhostapp.com/data.php', {
         params: {
-          product: id
+          search: data
         }
       })
         .then((response) => {
-          if (response.data.length !== 0) {
-              resolve(response.data[0]);
-          }else{
-            resolve(null);
-          }
+          resolve(response.data.length === 0 ? [] : response.data);
         })
         .catch((error) => {
           reject(error);

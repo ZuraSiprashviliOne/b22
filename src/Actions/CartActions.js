@@ -50,6 +50,20 @@ export function UNSET_CARTS_CARTS(){
   }
 }
 
+export function SET_CART_SIZE(size, id){
+  return {
+    type: 'SET_CART_SIZE',
+    payload: {size, id}
+  };
+}
+
+export function SET_CART_COUNT(count, id){
+  return {
+    type: 'SET_CART_COUNT',
+    payload: {count, id}
+  };
+}
+
 export function UNSET_CARTS_CART_ITEM(id){
   return {
     type: 'UNSET_CARTS_CART_ITEM',
