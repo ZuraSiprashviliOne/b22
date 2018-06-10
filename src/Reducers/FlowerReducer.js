@@ -26,6 +26,28 @@ const flowerReducer = (state = {
       break;
     }
 
+    case 'SET_FLOWER_PRICE': {
+      state = {
+        ...state,
+        flower: {
+          ...state.flower,
+          price: action.payload
+        }
+      };
+      break;
+    }
+
+    case 'SET_FLOWER_OLD_PRICE':{
+      state = {
+        ...state,
+        flower: {
+          ...state.flower,
+          old_price: action.payload
+        }
+      };
+      break;
+    }
+
     case 'SET_FLOWER_SIZE': {
       state = {
         ...state,
@@ -50,6 +72,8 @@ const flowerReducer = (state = {
         ...state,
         flower: {
           ...action.payload,
+          old_price: state.flower === null ? action.payload.old_price: state.flower.old_price,
+          price: state.flower === null ? action.payload.price : state.flower.price,
           count: state.flower !== null ? state.flower.count : undefined,
           size: state.flower !== null ?  state.flower.size : undefined
         }

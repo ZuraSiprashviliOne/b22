@@ -7,7 +7,7 @@ import {Loading} from "../../Components/Loading";
 import {
   INIT_FLOWER,
   SET_FLOWER_COUNT,
-  SET_FLOWER_FLOWER,
+  SET_FLOWER_FLOWER, SET_FLOWER_OLD_PRICE, SET_FLOWER_PRICE,
   SET_FLOWER_SIZE,
   UNSET_FLOWER_FLOWER
 } from "../../Actions/FlowerActions";
@@ -136,6 +136,8 @@ class Radios extends React.Component{
   constructor(props){
     super(props);
 
+    console.log(this.props);
+
     this.state = {
       selected: null
     };
@@ -144,6 +146,7 @@ class Radios extends React.Component{
   }
 
   componentDidMount(){
+    let d = parseFloat(this.props.real_old_price) - parseFloat(this.props.real_price);
     if(Storage.get('sizes') !== undefined){
       let jsonData = JSON.parse(Storage.get('sizes'));
       let thatData = jsonData.find((data) => data.id === this.props.id);
@@ -152,17 +155,33 @@ class Radios extends React.Component{
           selected: thatData.size
         });
         this.props.setsize(thatData.size, this.props.id);
-      }else{
+        if(thatData.size == 0){
+          this.props.setprice(this.props.real_price, this.props.id);
+          this.props.setoldprice(parseFloat(this.props.real_price) + parseFloat(d), this.props.id);
+        }else if(thatData.size == 1){
+          this.props.setprice(this.props.size_price, this.props.id);
+          this.props.setoldprice(parseFloat(this.props.size_price) + parseFloat(d), this.props.id);
+        }else if(thatData.size == 2){
+          this.props.setprice(this.props.size__price, this.props.id);
+          this.props.setoldprice(parseFloat(this.props.size__price) + parseFloat(d), this.props.id);
+        }
+      }else {
         this.setState({
           selected: 0
         });
         this.props.setsize(0, this.props.id);
+
+        this.props.setprice(this.props.real_price, this.props.id);
+        this.props.setoldprice(parseFloat(this.props.real_price) + parseFloat(d), this.props.id);
       }
     }else{
       Storage.set('sizes', JSON.stringify([{id: this.props.id, size: 0}]));
       this.setState({
         selected: 0
       });
+
+      this.props.setprice(this.props.real_price, this.props.id);
+      this.props.setoldprice(parseFloat(this.props.real_price) + parseFloat(d), this.props.id);
       this.props.setsize(0, this.props.id);
     }
   }
@@ -171,8 +190,19 @@ class Radios extends React.Component{
     this.setState({
       selected: id
     });
-    this.props.setsize(id, this.props.id);
+    let d = parseFloat(this.props.real_old_price) - parseFloat(this.props.real_price);
 
+    this.props.setsize(id, this.props.id);
+    if(id == 0){
+      this.props.setprice(this.props.real_price, this.props.id);
+      this.props.setoldprice(parseFloat(this.props.real_price) + parseFloat(d), this.props.id);
+    }else if(id == 1){
+      this.props.setprice(this.props.size_price, this.props.id);
+      this.props.setoldprice(parseFloat(this.props.size_price) + parseFloat(d), this.props.id);
+    }else if(id == 2){
+      this.props.setprice(this.props.size__price, this.props.id);
+      this.props.setoldprice(parseFloat(this.props.size__price) + parseFloat(d), this.props.id);
+    }
     if(Storage.get('sizes') !== undefined){
       let storageData = JSON.parse(Storage.get('sizes'));
       let resStorage = null;
@@ -252,16 +282,18 @@ class Counts extends React.Component{
     this._handlePlu = this._handlePlu.bind(this);
   }
 
-  componentDidMount(){
-    if(Storage.get('count') !== undefined){
+  componentDidMount() {
+    if (Storage.get('count') !== undefined) {
       let storageData = JSON.parse(Storage.get('count'));
       let resStorage = null;
       let thatData = storageData.find((data) => data.id == this.props.id);
-      if(thatData){
+      if (thatData) {
         this.setState({
           count: thatData.count
         });
         this.props.setcount(thatData.count, this.props.id);
+        this.props.setprice(parseFloat(thatData.count) * parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
+        this.props.setoldprice(parseFloat(thatData.count) * parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
         resStorage = storageData.map((data) => {
           if (data.id === this.props.id) {
             return {
@@ -272,19 +304,23 @@ class Counts extends React.Component{
             return data;
           }
         });
-      }else{
+      } else {
         this.setState({
           count: 1
         });
         this.props.setcount(1, this.props.id);
+        this.props.setprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
+        this.props.setoldprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
         resStorage = [...storageData, {id: this.props.id, count: 1}];
       }
       Storage.set('count', JSON.stringify(resStorage));
-    }else{
+    } else {
       this.setState({
         count: 1
       });
       this.props.setcount(1, this.props.id);
+      this.props.setprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
+      this.props.setoldprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
       Storage.set('count', JSON.stringify([{id: this.props.id, count: 1}]));
     }
   }
@@ -300,6 +336,9 @@ class Counts extends React.Component{
             count: thatData.count - 1
           });
           this.props.setcount(thatData.count - 1, this.props.id);
+          this.props.setprice(parseFloat(thatData.count - 1) * parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
+          this.props.setoldprice(parseFloat(thatData.count - 1) * parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
+
           resStorage = storageData.map((data) => {
             if (data.id === this.props.id) {
               return {
@@ -315,6 +354,9 @@ class Counts extends React.Component{
             count: 1
           });
           this.props.setcount(1, this.props.id);
+
+          this.props.setprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
+          this.props.setoldprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
           resStorage = [...storageData, {id: this.props.id, count: 1}];
         }
         Storage.set('count', JSON.stringify(resStorage));
@@ -323,6 +365,8 @@ class Counts extends React.Component{
           count: 1
         });
         this.props.setcount(1, this.props.id);
+        this.props.setprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
+        this.props.setoldprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
         Storage.set('count', JSON.stringify([{id: this.props.id, count: 1}]));
       }
 
@@ -339,6 +383,9 @@ class Counts extends React.Component{
           count: thatData.count + 1
         });
         this.props.setcount(thatData.count + 1, this.props.id);
+        this.props.setprice(parseFloat(thatData.count + 1) * parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
+        this.props.setoldprice(parseFloat(thatData.count + 1) * parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
+
         resStorage = storageData.map((data) => {
           if (data.id === this.props.id) {
             return {
@@ -354,6 +401,9 @@ class Counts extends React.Component{
           count: 1
         });
         this.props.setcount(1, this.props.id);
+
+        this.props.setprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
+        this.props.setoldprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
         resStorage = [...storageData, {id: this.props.id, count: 1}];
       }
       Storage.set('count', JSON.stringify(resStorage));
@@ -362,6 +412,8 @@ class Counts extends React.Component{
         count: 1
       });
       this.props.setcount(1, this.props.id);
+      this.props.setprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
+      this.props.setoldprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
       Storage.set('count', JSON.stringify([{id: this.props.id, count: 1}]));
     }
   }
@@ -497,7 +549,15 @@ export class FlowerInfo extends React.Component{
               className={'p-1'}
               xs={6}>
               <Radios
+                real_price={this.props.real_price}
+                setprice={this.props.setprice}
+                price={this.props.price}
+                size_price={this.props.size_price}
+                size__price={this.props.size__price}
+                setoldprice={this.props.setoldprice}
                 setsize={this.props.setsize}
+                real_old_price={this.props.real_old_price}
+                old_price={this.props.old_price}
                 id={this.props.id}/>
             </Col>
             <Col
@@ -505,6 +565,13 @@ export class FlowerInfo extends React.Component{
               xs={6}>
               {this.props.hasCount ? (
                 <Counts
+                  real_price={this.props.real_price}
+                  setprice={this.props.setprice}
+                  price={this.props.price}
+                  count_price={this.props.count_price}
+                  setoldprice={this.props.setoldprice}
+                  real_old_price={this.props.real_old_price}
+                  old_price={this.props.old_price}
                   setcount={this.props.setcount}
                   id={this.props.id} />
               ): null}
@@ -671,6 +738,11 @@ class Element extends React.Component{
               md={5}
               className={'data h-100 d-flex flex-column justify-content-around'}>
               <FlowerInfo
+                count_price={this.props.Flower.flower.count_price}
+                real_price={this.props.Flower.flower.real_price}
+                size_price={this.props.Flower.flower.size_price}
+                size__price={this.props.Flower.flower.size__price}
+                setprice={this.props.setFlowerPrice}
                 setsize={this.props.setFlowerSize}
                 setcount={this.props.setFlowerCount}
                 hasCount={this.props.Flower.flower.hasCount}
@@ -682,6 +754,8 @@ class Element extends React.Component{
                 order={this.props.order}
                 title={this.props.Flower.flower.title}
                 price={this.props.Flower.flower.price}
+                setoldprice={this.props.setOldPrice}
+                real_old_price={this.props.Flower.flower.real_old_price}
                 old_price={this.props.Flower.flower.old_price}
                 description={this.props.Flower.flower.description}/>
             </Col>
@@ -805,6 +879,12 @@ const actions = (dispatch) => {
     },
     setFlowerCount: (count) => {
       dispatch(SET_FLOWER_COUNT(count));
+    },
+    setFlowerPrice: (price) => {
+      dispatch(SET_FLOWER_PRICE(price));
+    },
+    setOldPrice: (price) => {
+      dispatch(SET_FLOWER_OLD_PRICE(price));
     }
   };
 };

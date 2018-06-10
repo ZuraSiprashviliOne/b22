@@ -88,6 +88,44 @@ const cartReducer = (state = {
       break;
     }
 
+    case 'SET_CART_ITEM_PRICE': {
+      state = {
+        ...state,
+        carts: [
+          ...state.carts.map((cart) => {
+            if(cart.id === action.payload.id){
+              return {
+                ...cart,
+                price: action.payload.price
+              }
+            }else{
+              return cart;
+            }
+          })
+        ]
+      };
+      break;
+    }
+
+    case 'SET_CART_ITEM_OLD_PRICE': {
+      state = {
+        ...state,
+        carts: [
+          ...state.carts.map((cart) => {
+            if(cart.id === action.payload.id){
+              return {
+                ...cart,
+                old_price: action.payload.price
+              }
+            }else{
+              return cart;
+            }
+          })
+        ]
+      };
+      break;
+    }
+
     case 'SET_CART_COUNT': {
       state = {
         ...state,

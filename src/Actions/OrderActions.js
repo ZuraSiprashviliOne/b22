@@ -23,6 +23,20 @@ export function INIT_ORDER(){
   }
 }
 
+export function SET_ORDER_FLOWER_PRICE(price){
+  return {
+    type: 'SET_ORDER_FLOWER_PRICE',
+    payload: price
+  }
+}
+
+export function SET_ORDER_FLOWER_OLD_PRICE(price){
+  return {
+    type: 'SET_ORDER_FLOWER_OLD_PRICE',
+    payload: price
+  }
+}
+
 export function SET_ORDER(product){
   return {
     type: 'SET_ORDER',

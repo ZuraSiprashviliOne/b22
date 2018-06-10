@@ -44,6 +44,20 @@ export function SET_FLOWER_SIZE(id){
   }
 }
 
+export function SET_FLOWER_PRICE(price){
+  return {
+    type: 'SET_FLOWER_PRICE',
+    payload: price
+  };
+}
+
+export function SET_FLOWER_OLD_PRICE(price){
+  return {
+    type: 'SET_FLOWER_OLD_PRICE',
+    payload: price
+  }
+}
+
 export function SET_FLOWER_FLOWER(id){
   return {
     type: 'SET_FLOWER_FLOWER',

@@ -6,7 +6,13 @@ import {Loading} from "../../Components/Loading";
 import {SET_NAVIGATION_CURRENT_PAGE, SET_NAVIGATION_PATH} from "../../Actions/NavigationActions";
 import {getPageSlag} from "../../Helpers/Routing";
 import {checkPromise} from "../../Helpers/Valid";
-import {INIT_ORDER, SET_ORDER_COUNT, SET_ORDER_SIZE, UNSET_ORDER} from "../../Actions/OrderActions";
+import {
+  INIT_ORDER,
+  SET_ORDER_COUNT, SET_ORDER_FLOWER_OLD_PRICE,
+  SET_ORDER_FLOWER_PRICE,
+  SET_ORDER_SIZE,
+  UNSET_ORDER
+} from "../../Actions/OrderActions";
 
 import Translate from '../Translate';
 
@@ -187,6 +193,11 @@ class OrderProduct extends React.Component{
                             <Col
                               xs={12}>
                               <FlowerInfo
+                                count_price={this.props.count_price}
+                                real_price={this.props.real_price}
+                                size_price={this.props.size_price}
+                                size__price={this.props.size__price}
+                                setprice={this.props.setPrice}
                                 setcount={this.props.setcount}
                                 setsize={this.props.setsize}
                                 id={this.props.id}
@@ -199,6 +210,8 @@ class OrderProduct extends React.Component{
                                 carts={this.props.carts}
                                 title={this.props.title}
                                 price={this.props.price}
+                                real_old_price={this.props.real_old_price}
+                                setoldprice={this.props.setOldPrice}
                                 old_price={this.props.old_price}
                                 description={this.props.description}/>
                             </Col>
@@ -575,6 +588,8 @@ class Element extends React.Component{
             setsize={this.props.setsize}
             setcount={this.props.setcount}
             carts={this.props.Cart.carts}
+            setPrice={this.props.setPrice}
+            setOldPrice={this.props.setOldPrice}
             {...this.props.Order.product}/>
         ): <NoProduct />}
       </div>
@@ -648,6 +663,12 @@ const actions = (dispatch) => {
     },
     setcount: (count) => {
       dispatch(SET_ORDER_COUNT(count));
+    },
+    setPrice: (price) => {
+      dispatch(SET_ORDER_FLOWER_PRICE(price));
+    },
+    setOldPrice: (price) => {
+      dispatch(SET_ORDER_FLOWER_OLD_PRICE(price));
     }
   };
 };

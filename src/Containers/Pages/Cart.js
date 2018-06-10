@@ -23,7 +23,13 @@ import {
   NavLink,
 } from 'reactstrap';
 import {checkPromise} from "../../Helpers/Valid";
-import {INIT_CART, SET_CART_COUNT, SET_CART_SIZE, UNSET_CARTS_CART_ITEM} from "../../Actions/CartActions";
+import {
+  INIT_CART,
+  SET_CART_COUNT, SET_CART_ITEM_OLD_PRICE,
+  SET_CART_ITEM_PRICE,
+  SET_CART_SIZE,
+  UNSET_CARTS_CART_ITEM
+} from "../../Actions/CartActions";
 import {CollectionItemImage, CollectionItemImages} from "../../Components/CollectionsComponent";
 import {FlowerInfo} from "./Flower";
 import {SET_ORDER} from "../../Actions/OrderActions";
@@ -78,6 +84,11 @@ class Carts extends React.Component{
               md={6}
               className={'info p-1'}>
               <FlowerInfo
+                count_price={c.count_price}
+                real_price={c.real_price}
+                size_price={c.size_price}
+                size__price={c.size__price}
+                setprice={this.props.setPrice}
                 setsize={this.props.setsize}
                 setcount={this.props.setcount}
                 id={c.id}
@@ -91,6 +102,8 @@ class Carts extends React.Component{
                 title={c.title}
                 price={c.price}
                 old_price={c.old_price}
+                real_old_price={c.real_old_price}
+                setoldprice={this.props.setOldPrice}
                 description={c.description}/>
             </Col>
             <Col
@@ -299,11 +312,16 @@ const actions = (dispatch) => {
       dispatch(UNSET_CARTS_CART_ITEM(id))
     },
     setsize: (size, id) => {
-      alert('attention actions');
       dispatch(SET_CART_SIZE(size, id));
     },
     setcount: (count, id) => {
       dispatch(SET_CART_COUNT(count, id));
+    },
+    setPrice: (price, id) => {
+      dispatch(SET_CART_ITEM_PRICE(price, id));
+    },
+    setOldPrice: (price, id) => {
+      dispatch(SET_CART_ITEM_OLD_PRICE(price, id));
     }
   };
 };

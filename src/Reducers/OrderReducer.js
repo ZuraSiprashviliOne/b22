@@ -54,6 +54,28 @@ const orderReducer = (state = {
       break;
     }
 
+    case 'SET_ORDER_FLOWER_PRICE': {
+      state = {
+        ...state,
+        product: {
+          ...state.product,
+          price: action.payload
+        }
+      };
+      break;
+    }
+
+    case 'SET_ORDER_FLOWER_OLD_PRICE': {
+      state = {
+        ...state,
+        product: {
+          ...state.product,
+          old_price: action.payload
+        }
+      };
+      break;
+    }
+
     case 'SET_ORDER_PRODUCT': {
       state = {
         ...state,

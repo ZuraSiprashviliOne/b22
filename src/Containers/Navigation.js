@@ -291,7 +291,7 @@ class UserFavourites extends React.Component{
       return (
         <DropdownItem
           className={`text-capitalize ${this.props.currentlang === lang ? 'bg-grass text-white': ''}`}
-          onClick={() => {this.setLang(lang)}}
+          onClick={() => {this.props.currentlang === lang ? null : this.setLang(lang)}}
           key={lang}>
           <Translate>
             {lang}

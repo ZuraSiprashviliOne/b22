@@ -64,6 +64,20 @@ export function SET_CART_COUNT(count, id){
   };
 }
 
+export function SET_CART_ITEM_PRICE(price, id){
+  return {
+    type: 'SET_CART_ITEM_PRICE',
+    payload: {price, id}
+  }
+}
+
+export function SET_CART_ITEM_OLD_PRICE(price, id){
+  return {
+    type: 'SET_CART_ITEM_OLD_PRICE',
+    payload: {price, id}
+  }
+}
+
 export function UNSET_CARTS_CART_ITEM(id){
   return {
     type: 'UNSET_CARTS_CART_ITEM',
