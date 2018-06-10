@@ -100,6 +100,14 @@ class Element extends React.Component{
                   exact={true}
                   component={Pages.Cart}/>
                 <Route
+                  path={'/contact'}
+                  exact={true}
+                  component={Pages.Contact}/>
+                <Route
+                  path={'/conditions'}
+                  exact={true}
+                  component={Pages.Conditions}/>
+                <Route
                   component={() => <Redirect to={'/'}/>}/>
               </Switch>
               <Footer

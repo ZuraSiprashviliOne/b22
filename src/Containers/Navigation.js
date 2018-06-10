@@ -176,12 +176,13 @@ class NavigationTop extends React.Component{
 class NavigationNavNavItem extends React.Component{
   constructor(props){
     super(props);
+
   }
 
   render(){
     return (
       <NavItem
-        className={`${(this.props.current) === this.props.slag ? 'active' : ''}`}>
+        className={`${(this.props.current === '/' ? '/' : '/' + this.props.current) === this.props.slag ? 'active' : ''}`}>
         <NavLink
           onClick={this.props.close}
           className={'p-3'}

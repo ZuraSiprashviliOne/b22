@@ -11,11 +11,17 @@ import Favourites from './Pages/Favourites';
 
 import Cart from './Pages/Cart';
 
+import Contact from './Pages/Contact';
+
+import Conditions from './Pages/Conditions';
+
 export default {
   Home,
   Flowers,
   Flower,
   Order,
   Favourites,
-  Cart
+  Cart,
+  Contact,
+  Conditions
 }

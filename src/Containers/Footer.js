@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 
 import FontAwesome from 'react-fontawesome';
 
+import {Link} from 'react-router-dom';
+
 import {
   Container,
   Row,
@@ -14,6 +16,8 @@ import {
 import {Loading} from "../Components/Loading";
 
 import Translate from './Translate';
+import {INIT_FOOTER, SET_FOOTER} from "../Actions/FooterActions";
+import {checkPromise} from "../Helpers/Valid";
 
 class Top extends React.Component{
   constructor(props){
@@ -107,6 +111,50 @@ class Top extends React.Component{
 class Bottom extends React.Component{
   constructor(props){
     super(props);
+
+    this.getNavs = this.getNavs.bind(this);
+  }
+
+  getNavs(){
+    let navs = this.props.navigation.map((nav) => {
+      return (
+        <li
+          key={nav.id}>
+          <Link to={nav.slag} className={'text-light p-1'}>
+            <Translate>
+              {nav.title}
+            </Translate>
+          </Link>
+        </li>
+      );
+    });
+
+    navs.push((
+      <li
+        key={'favourites'}>
+        <Link
+          to={'/favourites'}
+          className={'text-light text-capitalize p-1'}>
+          <Translate>
+            favourites
+          </Translate>
+        </Link>
+      </li>
+    ));
+    navs.push((
+      <li
+        key={'carts'}>
+        <Link
+          to={'/cart'}
+          className={'text-light text-capitalize p-1'}>
+          <Translate>
+            cart
+          </Translate>
+        </Link>
+      </li>
+    ));
+
+    return navs;
   }
 
   render(){
@@ -132,31 +180,7 @@ class Bottom extends React.Component{
               md={6}
               className={'p-2 d-none d-sm-none d-md-none d-lg-block d-xl-block'}>
               <ul className={'list-unstyled text-capitalize d-flex flex-row align-items-center justify-content-end'}>
-                <li>
-                  <a href="#" className={'text-light p-1'}>
-                    home
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className={'text-light p-1'}>
-                    support
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className={'text-light p-1'}>
-                    terms and conditions
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className={'text-light p-1'}>
-                    faq
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className={'text-light'}>
-                    contact us
-                  </a>
-                </li>
+                {this.getNavs()}
               </ul>
             </Col>
           </Row>
@@ -174,7 +198,7 @@ class Element extends React.Component{
   render(){
     return [
       <Top key={'top'}/>,
-      <Bottom common={this.props.common} key={'bottom'}/>
+      <Bottom navigation={this.props.Footer.footer.navigation} common={this.props.common} key={'bottom'}/>
     ]
   }
 }
@@ -191,11 +215,17 @@ class Footer extends React.Component{
   }
 
   init(props){
+    if(checkPromise(this.props.Footer) === false){
+      this.props.initFooter();
+    }
 
+    if(this.props.Footer.footer === null){
+      this.props.setFooter();
+    }
   }
 
   render(){
-    if (true) {
+    if (checkPromise(this.props.Footer)) {
       return <Element {...this.props} />;
     } else {
       return <Loading/>;
@@ -204,11 +234,19 @@ class Footer extends React.Component{
 }
 
 const states = (state) => {
-  return {};
+  return {
+    Footer: state.FooterReducer
+  };
 };
 
 const actions = (dispatch) => {
   return {
+    initFooter: () => {
+      dispatch(INIT_FOOTER());
+    },
+    setFooter: () => {
+      dispatch(SET_FOOTER());
+    }
   }
 };
 

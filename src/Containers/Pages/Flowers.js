@@ -67,7 +67,7 @@ export class FlowerItem extends React.Component {
                 <div className={'bg-grass py-2 lie'}></div>
                 <div className={'bg-grass text-center text-white font-weight-bold pt-3 pb-4'}>
                   <i>
-                    ${this.props.price}
+                    ${parseFloat(this.props.real_price).toPrecision(4)}
                   </i>
                 </div>
               </Col>
@@ -228,7 +228,7 @@ class Element extends React.Component{
                   categories={this.props.Navigation.list.find((l) => l.slag === '/flowers').sub}/>
               </Col>
               <Col
-                className={'flowers p-md-2 p-1'}
+                className={'flowers p-md-2'}
                 md={9}>
                 <Container>
                   <Row className={'collections-flowers'}>

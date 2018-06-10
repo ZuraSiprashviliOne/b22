@@ -513,11 +513,11 @@ export class FlowerInfo extends React.Component{
               xs={8}>
               <h3
                 className={'font-weight-light m-0 text-capitalize'}>
-                ${this.props.price}
+                ${parseInt(this.props.price).toPrecision(5)}
                 {this.props.old_price !== this.props.price ? (
                   <sub
                     style={{textDecoration: 'line-through'}}
-                    className={'text-grass ml-1'}>${this.props.old_price}</sub>
+                    className={'text-grass ml-1'}>${parseInt(this.props.old_price).toPrecision(5)}</sub>
                 ) : null}
               </h3>
             </Col>

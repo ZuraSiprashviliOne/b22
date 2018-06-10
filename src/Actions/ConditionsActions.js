@@ -1,9 +1,9 @@
 
 import Axios from 'axios';
 
-export function INIT_FLOWERS(){
+export function INIT_CONDITIONS(){
   return {
-    type: 'INIT_FLOWERS',
+    type: 'INIT_CONDITIONS',
     payload: new Promise((resolve, reject) => {
       Axios.get('http://testoneone.000webhostapp.com/data.php', {
         params: {
@@ -12,8 +12,8 @@ export function INIT_FLOWERS(){
       })
         .then((response) => {
           resolve({
-            divider: response.data.divider,
-            language: response.data.language
+            language: response.data.language,
+            divider: response.data.divider
           });
         })
         .catch((error) => {
@@ -23,29 +23,13 @@ export function INIT_FLOWERS(){
   }
 }
 
-export function SET_FLOWERS_CURRENT_CATEGORY(category){
+export function SET_CONDITIONS(){
   return {
-    type: 'SET_FLOWERS_CURRENT_CATEGORY',
-    payload: category
-  }
-}
-
-export function UNSET_FLOWERS_FLOWERS(){
-  return {
-    type: 'UNSET_FLOWERS_FLOWERS',
-    payload: []
-  };
-}
-
-
-export function SET_FLOWERS_FLOWERS(category){
-  return {
-    type: 'SET_FLOWERS_FLOWERS',
+    type: 'SET_CONDITIONS',
     payload: new Promise((resolve, reject) => {
       Axios.get('http://testoneone.000webhostapp.com/data.php', {
         params: {
-          products: 'category',
-          category_slag: category
+          conditions: 'page'
         }
       })
         .then((response) => {

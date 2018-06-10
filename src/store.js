@@ -28,6 +28,12 @@ import CartReducer from './Reducers/CartReducer';
 
 import SearchReducer from './Reducers/SearchReducer';
 
+import ContactReducer from './Reducers/ContactReducer';
+
+import ConditionsReducer from './Reducers/ConditionsReducer';
+
+import FooterReducer from './Reducers/FooterReducer';
+
 export default createStore(
   combineReducers({
     LocaleReducer,
@@ -41,7 +47,10 @@ export default createStore(
     OrderReducer,
     FavouritesReducer,
     CartReducer,
-    SearchReducer
+    SearchReducer,
+    ContactReducer,
+    ConditionsReducer,
+    FooterReducer
   }),
   {},
   applyMiddleware(
