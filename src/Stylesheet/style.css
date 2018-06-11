@@ -335,7 +335,8 @@ header .top .top-nav {
       border: 1px solid red;
       z-index: 400;
       margin-top: 50px;
-      z-index: -100; }
+      z-index: -100;
+      max-height: calc(90vh - 60px) !important; }
     header .top .top-nav ul li {
       height: 100%;
       transition: all 0.2s ease-in-out; }

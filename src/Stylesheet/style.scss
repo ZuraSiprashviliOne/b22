@@ -177,6 +177,7 @@ header{
             z-index: 400;
             margin-top: 50px;
             z-index: -100;
+            max-height: calc(90vh - 60px) !important;
           }
         }
 

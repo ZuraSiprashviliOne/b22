@@ -31,6 +31,7 @@ import {
 
 import Translate from './Translate';
 import {INIT_SEARCH, SEARCH_SEARCH_ITEMS} from "../Actions/SearchActions";
+import {Scrollbar} from "../Components/Scrollbar";
 
 export class Search extends React.Component{
   constructor(props){
@@ -50,38 +51,46 @@ export class Search extends React.Component{
   getSearchItems(){
     return this.props.search_items.map((item) => {
       return (
-        <Link
-          key={item.id}
-          to={`/flowers/items/item_${item.id}`}>
-          <Row className={'py-1 border-bottom'}>
-            <Col
-              className={'p-1'}
-              xs={4}>
+        <Row key={item.id} className={'align-items-stretch border-bottom '}>
+          <Col
+            className={'h-100'}
+            xs={4}>
+            <Link
+              key={item.id}
+              className={'h-auto row py-1'}
+              to={`/flowers/items/item_${item.id}`}>
               <img src={item.image} className={'w-100'} />
-            </Col>
-            <Col
-              className={'p-1'}
-              xs={8}>
+            </Link>
+          </Col>
+          <Col
+            className={'h-100'}
+            xs={8}>
+            <Link
+              key={item.id}
+              className={' p-2 small h-auto row '}
+              to={`/flowers/items/item_${item.id}`}>
               <div className={'text-capitalize text-dark font-weight-dark pb-1'}>
                 <Translate>
                   {item.title}
                 </Translate>
               </div>
-              <div className={'text-muted small'}>
+              <div className={'text-muted small text-capitalize'}>
                 <Translate>
                   {item.description.substr(0, 100)}...
                 </Translate>
               </div>
-            </Col>
-          </Row>
-        </Link>
+            </Link>
+          </Col>
+        </Row>
       );
-    })
+    });
   }
 
   _handleChange(){
     setTimeout(() => {
-      this.props.search_search_items(this.searchInput.value)
+      if(this.searchInput.value){
+        this.props.search_search_items(this.searchInput.value)
+      }
     }, 500);
   }
 
@@ -92,6 +101,9 @@ export class Search extends React.Component{
         this.searchInput.classList.remove('fadeOutRight');
       }else{
         this.searchInput.classList.add('fadeInRight');
+        setTimeout(() => {
+          this.searchInput.focus();
+        }, 1000);
       }
     }
   }
@@ -107,11 +119,13 @@ export class Search extends React.Component{
             className="w-100 animated border-_grass rounded-no bg-transparent my-1 form-control"
             placeholder={'Search...'}/>
           <div
-            style={{zIndex: this.props.search_items.length !== 0 ? 80 : -100}}
+            style={{zIndex: this.props.search_items.length !== 0 ? 80 : -100, height: this.props.search_items.length ? this.props.search_items.length * 100 + 'px' : 0}}
             className={`search_results shadow border text-dark bg-white p-1 animated ${this.props.search_items.length !== 0 ? 'fadeIn': 'fadeOut'}`}>
-            <Container>
-              {this.getSearchItems()}
-            </Container>
+              <Scrollbar>
+                <Container className={'searchContainerElement'}>
+                    {this.getSearchItems()}
+                </Container>
+              </Scrollbar>
           </div>
         </li>
         <li>
