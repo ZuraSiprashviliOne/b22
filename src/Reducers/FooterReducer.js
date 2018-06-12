@@ -2,7 +2,7 @@
 const footerReducer = (state = {
   divider: null,
   language: null,
-  footer: null
+  footer: null,
 }, action) => {
 
   switch(action.type){
@@ -12,6 +12,17 @@ const footerReducer = (state = {
         ...state,
         divider: action.payload.divider,
         language: action.payload.language
+      };
+      break;
+    }
+
+    case 'SUBSCRIBE_FULFILLED': {
+      state =  {
+        ...state,
+        footer: {
+          ...state.footer,
+          subscribe: action.payload
+        }
       };
       break;
     }

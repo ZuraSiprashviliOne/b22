@@ -16,7 +16,7 @@ import {
 import {Loading} from "../Components/Loading";
 
 import Translate from './Translate';
-import {INIT_FOOTER, SET_FOOTER} from "../Actions/FooterActions";
+import {INIT_FOOTER, SET_FOOTER, SUBSCRIBE} from "../Actions/FooterActions";
 import {checkPromise} from "../Helpers/Valid";
 
 class Top extends React.Component{
@@ -27,8 +27,14 @@ class Top extends React.Component{
   }
 
   _subscribe(event){
-    alert('subscribed');
     event.preventDefault();
+    var regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+    if(regexEmail.test(this.textInput.value)){
+      this.props.subscribe(true, this.textInput.value);
+    }else{
+      this.textInput.placeholder = 'Not Valid';
+    }
+    this.textInput.value = '';
   }
 
   render(){
@@ -88,13 +94,13 @@ class Top extends React.Component{
                         type={'text'}
                         ref={(element) => {this.textInput = element}}
                         className={'rounded-no bg-__grass text-light px-3 py-2 form-control border-0'}
-                        placeholder={'Enter your Email form Subscription'} />
+                        placeholder={this.props.subed === true ? 'Subscribed': 'Lets Subscribe'} />
                     </div>
                     <div className={'input-group'} style={{flex: 0}}>
                       <button
                         onClick={this._subscribe}
                         className={'rounded-no btn-white border-white text-grass form-control'}>
-                        <FontAwesome name={'angle-right'}/>
+                        <FontAwesome name={this.props.subed === true ? 'check' : 'angle-right'}/>
                       </button>
                     </div>
                   </div>
@@ -172,8 +178,9 @@ class Bottom extends React.Component{
               </div>
               <div className={'text-capitalize small'}>
                 <Translate>
-                  {this.props.common.copy}
+                  created by
                 </Translate>
+                {this.props.common.copy}
               </div>
             </Col>
             <Col
@@ -197,8 +204,8 @@ class Element extends React.Component{
 
   render(){
     return [
-      <Top key={'top'}/>,
-      <Bottom navigation={this.props.Footer.footer.navigation} common={this.props.common} key={'bottom'}/>
+      <Top subed={this.props.Footer.footer.subscribe} subscribe={this.props.subscribe} key={'top'}/>,
+      <Bottom divider={this.props.Footer.divider} navigation={this.props.Footer.footer.navigation} common={this.props.common} key={'bottom'}/>
     ]
   }
 }
@@ -246,6 +253,9 @@ const actions = (dispatch) => {
     },
     setFooter: () => {
       dispatch(SET_FOOTER());
+    },
+    subscribe: (sub, email) => {
+      dispatch(SUBSCRIBE(sub, email));
     }
   }
 };

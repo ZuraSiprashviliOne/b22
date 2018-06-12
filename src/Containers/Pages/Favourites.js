@@ -49,7 +49,7 @@ class NoFavourites extends React.Component{
               className={'bg-white shadow p-md-3 p-1'}>
               <h1 className={'m-0 text-grass text-capitalize t text-center py-2'}>
                 <Translate>
-                  your Favourite's cart is empty
+                  your favourite's cart is empty
                 </Translate>
               </h1>
               <div
@@ -58,7 +58,7 @@ class NoFavourites extends React.Component{
                   to={'/flowers'}
                   className={'btn btn-grass text-uppercase text-white shadow font-weight-light'}>
                   <Translate>
-                    choose your Favourites
+                    choose your favourites
                   </Translate>
                 </Link>
               </div>
@@ -178,7 +178,7 @@ class Element extends React.Component{
                       className={'p-3 bg-transparent text-muted text-capitalize border-0 d-flex flex-row align-items-center h-100'}>
                       <Translate
                         divider={this.props.Favourites.divider}>
-                        {'current items:>>> ' + this.props.Favourites.count}
+                        {'current items>>>: ' + this.props.Favourites.count}
                       </Translate>
                     </NavLink>
                   </NavItem>
@@ -188,7 +188,7 @@ class Element extends React.Component{
                       className={'p-3 bg-transparent text-muted text-capitalize border-0 d-flex flex-row align-items-center h-100'}>
                       <Translate
                         divider={this.props.Favourites.divider}>
-                        {'total price:>>> ' + this.getPrice()}
+                        {'total price>>>: ' + this.getPrice()}
                       </Translate>$
                     </NavLink>
                   </NavItem>

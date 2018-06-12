@@ -87,11 +87,9 @@ export class Search extends React.Component{
   }
 
   _handleChange(){
-    setTimeout(() => {
-      if(this.searchInput.value){
-        this.props.search_search_items(this.searchInput.value)
-      }
-    }, 500);
+    if(this.searchInput.value){
+      this.props.search_search_items(this.searchInput.value)
+    }
   }
 
   _searchClick(){
@@ -299,6 +297,11 @@ class UserFavourites extends React.Component{
     this.props.unsetlocale();
     this.props.setlocale(lang);
     this.props.close();
+    if(lang === 'ka'){
+      document.getElementsByTagName('body')[0].classList.add('ka');
+    }else{
+      document.getElementsByTagName('body')[0].classList.remove('ka');
+    }
   }
 
   getLanguageItems(){
@@ -416,11 +419,10 @@ class NavigationNavbar extends React.Component{
         <Container>
           <NavbarBrand
             tag={Link}
-            className={'text-capitalize unscrolled font-weight-bold d-none d-sm-none d-md-none d-lg-none d-xl-none'}
+            className={'text-capitalize text-grass font-weight-bold d-md-none d-lg-none d-xl-none'}
             to={'/'}>
-            <Translate>
-              ${this.props.title}
-            </Translate>
+            <FontAwesome
+              name={'ravelry'}/>
           </NavbarBrand>
           <NavbarToggler
             className={'rounded-no ml-auto'}

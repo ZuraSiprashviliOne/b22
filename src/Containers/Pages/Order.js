@@ -111,8 +111,8 @@ class OrderProduct extends React.Component{
                                 <h5
                                   className={'font-weight-light m-0'}>
                                   <Translate>
-                                    phone number 1
-                                  </Translate>
+                                    phone number
+                                  </Translate> 1
                                 </h5>
                               </div>
                               <div
@@ -131,8 +131,8 @@ class OrderProduct extends React.Component{
                                 <h5
                                   className={'font-weight-light m-0'}>
                                   <Translate>
-                                    phone number 2
-                                  </Translate>
+                                    phone number
+                                  </Translate> 2
                                 </h5>
                               </div>
                               <div
@@ -179,13 +179,13 @@ class OrderProduct extends React.Component{
                                   </Translate>
                                 </h5>
                                 <div className={'text-muted p-1 small'}>
-                                  *Please, full in this gap carefully, since the text written by you will be copied on the card without editing.
+                                  *please, fill in this gap carefully, since the text written by you will be copied on the card without editing.
                                 </div>
                               </div>
                               <div
                                 className={'p-1'}>
-                                      <textarea
-                                        className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}/>
+                                <textarea
+                                  className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}/>
                               </div>
                             </Col>
                           </Row>
@@ -193,6 +193,7 @@ class OrderProduct extends React.Component{
                             <Col
                               xs={12}>
                               <FlowerInfo
+                                size={this.props.size}
                                 count_price={this.props.count_price}
                                 real_price={this.props.real_price}
                                 size_price={this.props.size_price}
@@ -473,7 +474,7 @@ class OrderProduct extends React.Component{
                                       <h5
                                         className={'font-weight-light m-0'}>
                                         <Translate>
-                                          addinational info
+                                          additional info
                                         </Translate>
                                       </h5>
                                     </div>

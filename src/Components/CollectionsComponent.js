@@ -70,11 +70,13 @@ export class AnimatedAndMetas extends React.Component{
         </Button>
         <div
           className={'cover p-2'}>
-          <div className={'border small text p-2'}>
-            <Translate>
-              {this.props.description}
-            </Translate>
-          </div>
+            {this.props.description ? (
+              <div className={'border small text p-2'}>
+                <Translate>
+                  {this.props.description}
+                </Translate>
+              </div>
+            ): null}
           <div className={'mt-3 d-flex flex-row readMoreDiv align-items-center justify-content-end'}>
             <Link
               to={this.props.slag}

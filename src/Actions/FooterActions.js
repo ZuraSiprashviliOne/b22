@@ -41,3 +41,22 @@ export function SET_FOOTER(){
     })
   }
 }
+
+export function SUBSCRIBE(subscribe, email){
+  return {
+    type: 'SUBSCRIBE',
+    payload: new Promise((resolve, reject) => {
+      Axios.get('http://testoneone.000webhostapp.com/data.php', {
+        params: {
+          subscribe: email
+        }
+      })
+        .then((response) => {
+          resolve(subscribe && response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    })
+  }
+}

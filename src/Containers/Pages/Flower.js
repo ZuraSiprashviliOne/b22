@@ -136,114 +136,31 @@ class Radios extends React.Component{
   constructor(props){
     super(props);
 
-    console.log(this.props);
-
-    this.state = {
-      selected: null
-    };
-
     this._handleSelect = this._handleSelect.bind(this);
   }
 
-  componentDidMount(){
-    let d = parseFloat(this.props.real_old_price) - parseFloat(this.props.real_price);
-    if(Storage.get('sizes') !== undefined){
-      let jsonData = JSON.parse(Storage.get('sizes'));
-      let thatData = jsonData.find((data) => data.id === this.props.id);
-      if(thatData){
-        this.setState({
-          selected: thatData.size
-        });
-        this.props.setsize(thatData.size, this.props.id);
-        if(thatData.size == 0){
-          this.props.setprice(this.props.real_price, this.props.id);
-          this.props.setoldprice(parseFloat(this.props.real_price) + parseFloat(d), this.props.id);
-        }else if(thatData.size == 1){
-          this.props.setprice(this.props.size_price, this.props.id);
-          this.props.setoldprice(parseFloat(this.props.size_price) + parseFloat(d), this.props.id);
-        }else if(thatData.size == 2){
-          this.props.setprice(this.props.size__price, this.props.id);
-          this.props.setoldprice(parseFloat(this.props.size__price) + parseFloat(d), this.props.id);
-        }
-      }else {
-        this.setState({
-          selected: 0
-        });
-        this.props.setsize(0, this.props.id);
-
-        this.props.setprice(this.props.real_price, this.props.id);
-        this.props.setoldprice(parseFloat(this.props.real_price) + parseFloat(d), this.props.id);
-      }
-    }else{
-      Storage.set('sizes', JSON.stringify([{id: this.props.id, size: 0}]));
-      this.setState({
-        selected: 0
-      });
-
-      this.props.setprice(this.props.real_price, this.props.id);
-      this.props.setoldprice(parseFloat(this.props.real_price) + parseFloat(d), this.props.id);
-      this.props.setsize(0, this.props.id);
-    }
-  }
-
   _handleSelect(id){
-    this.setState({
-      selected: id
-    });
-    let d = parseFloat(this.props.real_old_price) - parseFloat(this.props.real_price);
-
-    this.props.setsize(id, this.props.id);
-    if(id == 0){
-      this.props.setprice(this.props.real_price, this.props.id);
-      this.props.setoldprice(parseFloat(this.props.real_price) + parseFloat(d), this.props.id);
-    }else if(id == 1){
-      this.props.setprice(this.props.size_price, this.props.id);
-      this.props.setoldprice(parseFloat(this.props.size_price) + parseFloat(d), this.props.id);
-    }else if(id == 2){
-      this.props.setprice(this.props.size__price, this.props.id);
-      this.props.setoldprice(parseFloat(this.props.size__price) + parseFloat(d), this.props.id);
-    }
-    if(Storage.get('sizes') !== undefined){
-      let storageData = JSON.parse(Storage.get('sizes'));
-      let resStorage = null;
-      if(storageData.find((data) => data.id == this.props.id)){
-        resStorage = storageData.map((data) => {
-          if (data.id === this.props.id) {
-            return {
-              id: this.props.id,
-              size: id
-            };
-          } else {
-            return data;
-          }
-        });
-      }else{
-        resStorage = [...storageData, {id: this.props.id, size: id}];
-      }
-      Storage.set('sizes', JSON.stringify(resStorage));
-    }else{
-      Storage.set('sizes', JSON.stringify([{id: this.props.id, size: id}]));
-    }
+    this.props.setsize(id);
   }
 
   render(){
-    if(this.state.selected !== null){
-      return (
-        <div
-          className={'py-3 text-capitalize'}>
-          <FormGroup check>
-            <Label check>
-              <Input checked={this.state.selected === 0} onChange={() => {this._handleSelect(0)}} name={`size_${this.props.id}`} type={'radio'} />
-              <span className="text-dark">
+    return (
+      <div
+        className={'py-3 text-capitalize'}>
+        <FormGroup check>
+          <Label check>
+            <Input checked={this.props.size == 0} onChange={() => {this._handleSelect(0)}} name={`size_${this.props.id}`} type={'radio'} />
+            <span className="text-dark">
                 <Translate>
                   large
                 </Translate>
               </span>
-            </Label>
-          </FormGroup>
+          </Label>
+        </FormGroup>
+        {this.props.size_price != 0 ? (
           <FormGroup check>
             <Label check>
-              <Input checked={this.state.selected === 1} onChange={() => {this._handleSelect(1)}} name={`size_${this.props.id}`} type={'radio'} />
+              <Input checked={this.props.size == 1} onChange={() => {this._handleSelect(1)}} name={`size_${this.props.id}`} type={'radio'} />
               <span className="text-dark">
                 <Translate>
                   medium
@@ -251,9 +168,11 @@ class Radios extends React.Component{
               </span>
             </Label>
           </FormGroup>
+        ): null}
+        {this.props.size__price != 0 ? (
           <FormGroup check>
             <Label check>
-              <Input checked={this.state.selected === 2} onChange={() => {this._handleSelect(2)}} name={`size_${this.props.id}`} type={'radio'} />
+              <Input checked={this.props.size == 2} onChange={() => {this._handleSelect(2)}} name={`size_${this.props.id}`} type={'radio'} />
               <span className="text-dark">
                 <Translate>
                   small
@@ -261,12 +180,9 @@ class Radios extends React.Component{
               </span>
             </Label>
           </FormGroup>
-        </div>
-      );
-    }else{
-      return null
-    }
-
+        ): null}
+      </div>
+    );
   }
 }
 
@@ -274,193 +190,60 @@ class Counts extends React.Component{
   constructor(props){
     super(props);
 
-    this.state = {
-      count: null
-    };
-
     this._handleMin = this._handleMin.bind(this);
     this._handlePlu = this._handlePlu.bind(this);
-  }
 
-  componentDidMount() {
-    if (Storage.get('count') !== undefined) {
-      let storageData = JSON.parse(Storage.get('count'));
-      let resStorage = null;
-      let thatData = storageData.find((data) => data.id == this.props.id);
-      if (thatData) {
-        this.setState({
-          count: thatData.count
-        });
-        this.props.setcount(thatData.count, this.props.id);
-        this.props.setprice(parseFloat(thatData.count) * parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
-        this.props.setoldprice(parseFloat(thatData.count) * parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
-        resStorage = storageData.map((data) => {
-          if (data.id === this.props.id) {
-            return {
-              id: this.props.id,
-              count: data.count
-            };
-          } else {
-            return data;
-          }
-        });
-      } else {
-        this.setState({
-          count: 1
-        });
-        this.props.setcount(1, this.props.id);
-        this.props.setprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
-        this.props.setoldprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
-        resStorage = [...storageData, {id: this.props.id, count: 1}];
-      }
-      Storage.set('count', JSON.stringify(resStorage));
-    } else {
-      this.setState({
-        count: 1
-      });
-      this.props.setcount(1, this.props.id);
-      this.props.setprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
-      this.props.setoldprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
-      Storage.set('count', JSON.stringify([{id: this.props.id, count: 1}]));
-    }
+    console.log(this.props, 'aaa');
   }
 
   _handleMin(){
-    if(parseInt(this.count.value) > 1){
-      if(Storage.get('count') !== undefined){
-        let storageData = JSON.parse(Storage.get('count'));
-        let resStorage = null;
-        let thatData = storageData.find((data) => data.id == this.props.id);
-        if(thatData){
-          this.setState({
-            count: thatData.count - 1
-          });
-          this.props.setcount(thatData.count - 1, this.props.id);
-          this.props.setprice(parseFloat(thatData.count - 1) * parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
-          this.props.setoldprice(parseFloat(thatData.count - 1) * parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
-
-          resStorage = storageData.map((data) => {
-            if (data.id === this.props.id) {
-              return {
-                id: this.props.id,
-                count: data.count - 1
-              };
-            } else {
-              return data;
-            }
-          });
-        }else{
-          this.setState({
-            count: 1
-          });
-          this.props.setcount(1, this.props.id);
-
-          this.props.setprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
-          this.props.setoldprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
-          resStorage = [...storageData, {id: this.props.id, count: 1}];
-        }
-        Storage.set('count', JSON.stringify(resStorage));
-      }else{
-        this.setState({
-          count: 1
-        });
-        this.props.setcount(1, this.props.id);
-        this.props.setprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
-        this.props.setoldprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
-        Storage.set('count', JSON.stringify([{id: this.props.id, count: 1}]));
-      }
-
+    if(this.props.count !== 0){
+      this.props.setcount(parseInt(this.props.count) - 1);
     }
   }
 
   _handlePlu(){
-    if(Storage.get('count') !== undefined){
-      let storageData = JSON.parse(Storage.get('count'));
-      let resStorage = null;
-      let thatData = storageData.find((data) => data.id == this.props.id);
-      if(thatData){
-        this.setState({
-          count: thatData.count + 1
-        });
-        this.props.setcount(thatData.count + 1, this.props.id);
-        this.props.setprice(parseFloat(thatData.count + 1) * parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
-        this.props.setoldprice(parseFloat(thatData.count + 1) * parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
-
-        resStorage = storageData.map((data) => {
-          if (data.id === this.props.id) {
-            return {
-              id: this.props.id,
-              count: data.count + 1
-            };
-          } else {
-            return data;
-          }
-        });
-      }else{
-        this.setState({
-          count: 1
-        });
-        this.props.setcount(1, this.props.id);
-
-        this.props.setprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
-        this.props.setoldprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
-        resStorage = [...storageData, {id: this.props.id, count: 1}];
-      }
-      Storage.set('count', JSON.stringify(resStorage));
-    }else{
-      this.setState({
-        count: 1
-      });
-      this.props.setcount(1, this.props.id);
-      this.props.setprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_price), this.props.id);
-      this.props.setoldprice(parseFloat(this.props.count_price) + parseFloat(this.props.real_old_price), this.props.id);
-      Storage.set('count', JSON.stringify([{id: this.props.id, count: 1}]));
-    }
+    this.props.setcount(parseInt(this.props.count) + 1);
   }
 
   render(){
-    if(this.state.count !== null){
-      return (
-        <div>
-          <div className={'py-1 text-center'}>
-            <h3
-              className={'m-0  font-weight-light text-capitalize'}>
-              <Translate>
-                count
-              </Translate>
-            </h3>
-          </div>
-          <div className={'py-1'}>
-            <div className="actioners">
-              <button
-                type={'button'}
-                onClick={this._handleMin}
-                ref={(element) => {this.actMin = element}}
-                className={'btn text-dark shadow bg-white'}>
-                <FontAwesome
-                  name={'minus'}/>
-              </button>
-              <input
-                type={'text'}
-                readOnly={true}
-                ref={(element) => {this.count = element}}
-                className={'text-center form-control w-100 border shadow bg-white'}
-                value={this.state.count}/>
-              <button
-                type={'button'}
-                onClick={this._handlePlu}
-                ref={(element) => {this.actPlu = element}}
-                className={'btn text-dark shadow bg-white'}>
-                <FontAwesome
-                  name={'plus'}/>
-              </button>
+    return (
+      <div>
+        <div className={'py-1 text-center'}>
+          <h3
+            className={'m-0  font-weight-light text-capitalize'}>
+            <Translate>
+              count
+            </Translate>
+          </h3>
+        </div>
+        <div className={'py-1'}>
+          <div className="actioners">
+            <button
+              type={'button'}
+              onClick={this._handleMin}
+              ref={(element) => {this.actMin = element}}
+              className={'btn text-dark shadow bg-white'}>
+              <FontAwesome
+                name={'minus'}/>
+            </button>
+            <div
+              ref={(element) => {this.count = element}}
+              className={'shadow bg-white  py-2 border text-center form-control w-100'}>
+              {this.props.count}
             </div>
+            <button
+              type={'button'}
+              onClick={this._handlePlu}
+              ref={(element) => {this.actPlu = element}}
+              className={'btn text-dark shadow bg-white'}>
+              <FontAwesome
+                name={'plus'}/>
+            </button>
           </div>
         </div>
-      );
-    }else{
-      return null;
-    }
+      </div>
+    );
   }
 }
 
@@ -473,12 +256,100 @@ export class FlowerInfo extends React.Component{
     };
 
     this._handle_cart = this._handle_cart.bind(this);
+    this.setAllSize = this.setAllSize.bind(this);
+    this.setAllCount = this.setAllCount.bind(this);
   }
 
   _handle_cart(){
     this.setState({
       carted: this.state.carted === true ? this.props.rmcart(this.props.id) : this.props.addcart(this.props.id)
     });
+  }
+
+  setAllCount(count) {
+    // let storageCount = Storage.get('count');
+    // if(storageCount === undefined){
+    //   Storage.set('count', JSON.stringify([{id: this.props.id, count: count}]));
+    // }else{
+    //   storageCount = JSON.parse(storageCount);
+    //   let thatData = storageCount.find((sc) => sc.id == this.props.id);
+    //   if(thatData){
+    //     Storage.set('count', JSON.stringify(storageCount.map((sc) => {
+    //       if(sc.id == this.props.id){
+    //         return {
+    //           id: this.props.id,
+    //           count: count
+    //         };
+    //       }else{
+    //         return sc;
+    //       }
+    //     })));
+    //   }else{
+    //     Storage.set('count', JSON.stringify([...storageCount, {id: this.props.id, count: count}]));
+    //   }
+    // }
+
+    let datPrice;
+    let ddoldprice = parseFloat(this.props.real_old_price) - parseFloat(this.props.real_price);
+    if(this.props.size == 0){
+      datPrice = this.props.real_price;
+    }else if(this.props.size == 1){
+      datPrice = this.props.size_price;
+    }else if(this.props.size == 2){
+      datPrice = this.props.size__price;
+    }else{
+      datPrice = this.props.real_price;
+    }
+
+    this.props.setcount(count, this.props.id);
+    this.props.setprice(parseInt(count) * parseFloat(this.props.count_price) + parseFloat(datPrice), this.props.id);
+    this.props.setoldprice(parseInt(count) * parseFloat(this.props.count_price) + parseFloat(datPrice) + ddoldprice, this.props.id);
+  }
+
+  setAllSize(size){
+    this.props.setcount(0, this.props.id);
+    // let storageSize = Storage.get('sizes');
+    // if(storageSize === undefined){
+    //   Storage.set('sizes', JSON.stringify([{id: this.props.id, size: size}]));
+    // }else{
+    //   storageSize = JSON.parse(storageSize);
+    //   let thatData = storageSize.find((ss) => ss.id == this.props.id);
+    //   if(thatData){
+    //     Storage.set('sizes', JSON.stringify(storageSize.map((ss) => {
+    //       if(ss.id == this.props.id){
+    //         return {
+    //           id: this.props.id,
+    //           size: size
+    //         };
+    //       }else{
+    //         return ss;
+    //       }
+    //     })));
+    //   }else{
+    //     Storage.set('sizes', JSON.stringify([...storageSize, {id: this.props.id, size: size}]));
+    //   }
+    // }
+    this.props.setsize(size, this.props.id);
+
+    let dp = 0;
+    if (size == 0) {
+      dp = this.props.real_price;
+    } else if (size == 1) {
+      dp = this.props.size_price;
+    } else if (size == 2) {
+      dp = this.props.size__price;
+    }else{
+      dp = this.props.real_price;
+    }
+    dp = parseFloat(dp);
+    let olddprice = this.props.real_old_price - this.props.real_price;
+    this.props.setprice(dp, this.props.id);
+    this.props.setoldprice(dp + olddprice, this.props.id);
+  }
+
+  componentDidMount(){
+    this.setAllSize(this.props.size || 0);
+    this.setAllCount(this.props.count || 0)
   }
 
   render(){
@@ -513,11 +384,11 @@ export class FlowerInfo extends React.Component{
               xs={8}>
               <h3
                 className={'font-weight-light m-0 text-capitalize'}>
-                ${parseInt(this.props.price).toPrecision(5)}
-                {this.props.old_price !== this.props.price ? (
+                ${parseFloat(this.props.price).toPrecision(5)}
+                {this.props.old_price > this.props.price ? (
                   <sub
                     style={{textDecoration: 'line-through'}}
-                    className={'text-grass ml-1'}>${parseInt(this.props.old_price).toPrecision(5)}</sub>
+                    className={'text-grass ml-1'}>${parseFloat(this.props.old_price).toPrecision(5)}</sub>
                 ) : null}
               </h3>
             </Col>
@@ -527,52 +398,46 @@ export class FlowerInfo extends React.Component{
       <div
         key={'description'}
         className={'py-3 px-1 px-md-2 border-bottom'}>
-        <div
-          className={'py-3'}>
-          <h3
-            className={'text-capitalize m-0 font-weight-light'}>
+        {this.props.description ? [
+          <div
+            key={'t'}
+            className={'py-3'}>
+            <h3
+              className={'text-capitalize m-0 font-weight-light'}>
+              <Translate>
+                description
+              </Translate>
+            </h3>
+          </div>,
+          <div
+            key={'d'}
+            className={'small text-muted'}>
             <Translate>
-              description
-            </Translate>
-          </h3>
-        </div>
-        <div
-          className={'small text-muted'}>
-          <Translate>
             {this.props.description}
           </Translate>
-        </div>
+          </div>
+        ]: null}
         <Container>
           <Row
             className={'align-items-center'}>
             <Col
               className={'p-1'}
-              xs={6}>
+              sm={6}>
               <Radios
-                real_price={this.props.real_price}
-                setprice={this.props.setprice}
-                price={this.props.price}
+                size={this.props.size}
                 size_price={this.props.size_price}
+                real_price={this.props.real_price}
                 size__price={this.props.size__price}
-                setoldprice={this.props.setoldprice}
-                setsize={this.props.setsize}
-                real_old_price={this.props.real_old_price}
-                old_price={this.props.old_price}
+                setsize={this.setAllSize}
                 id={this.props.id}/>
             </Col>
             <Col
               className={'p-1'}
-              xs={6}>
+              sm={6}>
               {this.props.hasCount ? (
                 <Counts
-                  real_price={this.props.real_price}
-                  setprice={this.props.setprice}
-                  price={this.props.price}
-                  count_price={this.props.count_price}
-                  setoldprice={this.props.setoldprice}
-                  real_old_price={this.props.real_old_price}
-                  old_price={this.props.old_price}
-                  setcount={this.props.setcount}
+                  count={this.props.count}
+                  setcount={this.setAllCount}
                   id={this.props.id} />
               ): null}
             </Col>
@@ -654,14 +519,13 @@ class FlowerWarr extends React.Component{
             <h1
               className={'font-weight-light text-capitalize m-0'}>
               <Translate>
-                waranty
+                warranty
               </Translate>
             </h1>
             <div
               className={'small text-muted p-md-2 p-1'}>
               <Translate>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium architecto cum dicta eaque ex
-                hic iusto laborum magnam magni maxime obcaecati quidem sed sint, temporibus tenetur totam unde? Hic.
+                Your bouquet,which is prepared with fresh flowers, will be delivered at an arranged time. Provided we are informed about any fault of your bouquet within 24 hours from the purchase we will change the bouquet in question.
               </Translate>
             </div>
           </Col>
@@ -739,6 +603,7 @@ class Element extends React.Component{
               className={'data h-100 d-flex flex-column justify-content-around'}>
               <FlowerInfo
                 count_price={this.props.Flower.flower.count_price}
+                size={this.props.Flower.flower.size}
                 real_price={this.props.Flower.flower.real_price}
                 size_price={this.props.Flower.flower.size_price}
                 size__price={this.props.Flower.flower.size__price}

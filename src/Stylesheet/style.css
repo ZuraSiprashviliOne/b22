@@ -243,10 +243,15 @@ html {
     align-items: center;
     height: 100% !important; }
 
+@font-face {
+  font-family: geo;
+  src: url("./geo.ttf"); }
 body {
   min-height: 100vh;
   height: 100vh;
   overflow: hidden; }
+  body.ka {
+    font-family: geo !important; }
   body .loading {
     position: fixed;
     top: 0;

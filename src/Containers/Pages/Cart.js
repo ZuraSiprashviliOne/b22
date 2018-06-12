@@ -84,6 +84,7 @@ class Carts extends React.Component{
               md={6}
               className={'info p-1'}>
               <FlowerInfo
+                size={c.size}
                 count_price={c.count_price}
                 real_price={c.real_price}
                 size_price={c.size_price}
@@ -159,7 +160,7 @@ class Carts extends React.Component{
                   className={'p-3 bg-transparent text-muted text-capitalize border-0 d-flex flex-row align-items-center h-100'}>
                   <Translate
                     divider={this.props.Cart.divider}>
-                    {'current items:>>> ' + this.props.Cart.count}
+                    {'current items>>>: ' + this.props.Cart.count}
                   </Translate>
                 </NavLink>
               </NavItem>

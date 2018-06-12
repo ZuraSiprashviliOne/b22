@@ -161,6 +161,14 @@ const actions = (dispatch) => {
     initLocale: (callback) => {
       dispatch(INIT_LOCALE());
       callback();
+      let storageLocale = Storage.get('locale');
+      if(storageLocale){
+        if(storageLocale == 'ka'){
+          document.getElementsByTagName('body')[0].classList.add('ka');
+        }else{
+          document.getElementsByTagName('body')[0].classList.remove('ka');
+        }
+      }
     },
     setLocale: (code) => {
       let storageLocale = Storage.get('locale');
@@ -174,6 +182,7 @@ const actions = (dispatch) => {
         dispatch(SET_LOCALE_PRIMARY_KEYWORDS_RES(code));
         Storage.set('locale', code);
       }
+
     },
     unsetLocale: () => {
       dispatch(UNSET_LOCALE());

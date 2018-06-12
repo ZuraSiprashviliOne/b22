@@ -9,9 +9,6 @@
 @import './animate/animate/wobble.scss';
 
 html{
-
-
-
   overflow-x: hidden !important;;
   width: 100vw;
 }
@@ -39,16 +36,20 @@ html{
   }
 }
 
-//@font-face {
-//  font-family: geo;
-//  src: url("./geo.ttf");
-//}
+@font-face {
+  font-family: geo;
+  src: url("./geo.ttf");
+}
 
-body{
+body {
   min-height: 100vh;
   height: 100vh;
   overflow: hidden;
-  //font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "geo";
+
+  &.ka{
+    font-family: geo !important;
+  }
+
   .loading {
     position: fixed;
     top: 0;
