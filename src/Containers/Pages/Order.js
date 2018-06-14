@@ -31,6 +31,25 @@ import {FlowerInfo} from "./Flower";
 class OrderProduct extends React.Component{
   constructor(props){
     super(props);
+
+
+    this._onChangeNames = this._onChangeNames.bind(this);
+  }
+
+  _onChangeNames(event) {
+    // console.log(event.target.value);
+    // if (event.target.value) {
+    //   if (event.target.value.search(/^[a-zA-Z]+$/gi)) {
+    //     let m = /[0-9]/.exec(event.target.value);
+    //     // event.target.value = ;
+    //     let val = event.target.value;
+    //     val.split('').splice(m.index, 1);
+    //     val = val.join('');
+    //     event.target.value = val;
+    //   } else {
+    //     console.log('ok')
+    //   }
+    // }
   }
 
   render(){
@@ -76,6 +95,9 @@ class OrderProduct extends React.Component{
                               <div
                                 className={'p-1'}>
                                 <input
+                                  ref={(element) => {this.refer_firstName = element}}
+                                  onChange={this._onChangeNames}
+                                  required={true}
                                   type="text"
                                   className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
                                   placeholder={'John'}/>
@@ -96,7 +118,10 @@ class OrderProduct extends React.Component{
                               <div
                                 className={'p-1'}>
                                 <input
+                                  ref={(element) => {this.refer_lastName = element}}
+                                  onChange={this._onChangeNames}
                                   type="text"
+                                  required={true}
                                   className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
                                   placeholder={'Doe'}/>
                               </div>
@@ -119,6 +144,8 @@ class OrderProduct extends React.Component{
                                 className={'p-1'}>
                                 <input
                                   type="text"
+                                  ref={(element) => {this.refer_phone_one}}
+                                  onChange={this._onChangePhone}
                                   className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
                                   placeholder={'(+995) 555 58 58 79'}/>
                               </div>
@@ -138,6 +165,8 @@ class OrderProduct extends React.Component{
                               <div
                                 className={'p-1'}>
                                 <input
+                                  ref={(element) => {this.refer_phone_two}}
+                                  onChange={this._onChangePhone}
                                   type="text"
                                   className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
                                   placeholder={'(+995) 555 44 93 59'}/>
@@ -160,7 +189,10 @@ class OrderProduct extends React.Component{
                               <div
                                 className={'p-1'}>
                                 <input
+                                  ref={(element) => {this.refer_email = element}}
+                                  onChange={this._onChangeEmail}
                                   type="email"
+                                  required={true}
                                   className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
                                   placeholder={'example@gmail.com'}/>
                               </div>
@@ -185,6 +217,7 @@ class OrderProduct extends React.Component{
                               <div
                                 className={'p-1'}>
                                 <textarea
+                                  ref={(element) => {this.message}}
                                   className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}/>
                               </div>
                             </Col>
@@ -222,8 +255,10 @@ class OrderProduct extends React.Component{
                               xs={12}>
                               <div className={'px-3 py-2'}>
                                 <input
+                                  ref={(element) => {this.that = element}}
                                   className={''}
                                   type={'checkbox'}
+                                  required={true}
                                   value={''}/>
                                   <label
                                     className={'ml-2 form-check-label  small text-muted'}>
@@ -274,6 +309,8 @@ class OrderProduct extends React.Component{
                                       className={'p-1'}>
                                       <input
                                         type="text"
+                                        ref={(element) => {this.addrer_firstName = element}}
+                                        onChange={this._onChangeNames}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
                                         placeholder={'John'}/>
                                     </div>
@@ -294,6 +331,8 @@ class OrderProduct extends React.Component{
                                       className={'p-1'}>
                                       <input
                                         type="text"
+                                        ref={(element) => {this.addrer_lastName}}
+                                        onChange={this._onChangeNames}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
                                         placeholder={'Doe'}/>
                                     </div>
@@ -316,6 +355,8 @@ class OrderProduct extends React.Component{
                                       className={'p-1'}>
                                       <input
                                         type="text"
+                                        ref={(element) => {this.addrer_phone}}
+                                        onChange={this.onChangePhone}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
                                         placeholder={'(+995) 555 58 58 79'}/>
                                     </div>
@@ -358,6 +399,8 @@ class OrderProduct extends React.Component{
                                       className={'p-1'}>
                                       <input
                                         type="date"
+                                        ref={(element) => {this.delivery_date = element}}
+                                        onChange={this._onDateChange}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}/>
                                     </div>
                                   </Col>
@@ -377,6 +420,8 @@ class OrderProduct extends React.Component{
                                       className={'p-1'}>
                                       <input
                                         type="time"
+                                        ref={(element) => {this.delivery_time = element}}
+                                        onChange={this._onTimeChange}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}/>
                                     </div>
                                   </Col>
@@ -396,7 +441,9 @@ class OrderProduct extends React.Component{
                                     </div>
                                     <div
                                       className={'p-1'}>
-                                      <select className={'form-control'}>
+                                      <select
+                                        ref={(element) => {this.delivery_city = element}}
+                                        className={'form-control'}>
                                         <option value="tbilisi">
                                           <Translate>
                                             tbilisi
@@ -430,7 +477,11 @@ class OrderProduct extends React.Component{
                                     </div>
                                     <div
                                       className={'p-1'}>
-                                      <select className={'form-control'}>
+                                      <select
+                                        ref={(element) => {
+                                          this.delivery_anony = element
+                                        }}
+                                        className={'form-control'}>
                                         <option value="yes">
                                           <Translate>
                                             yes
@@ -462,6 +513,7 @@ class OrderProduct extends React.Component{
                                       className={'p-1'}>
                                       <input
                                         type="text"
+                                        ref={(element) => {this.delivery_address = element}}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
                                         placeholder={'Tbilisi, Avlabari, David\'s.st 14'}/>
                                     </div>
@@ -481,6 +533,9 @@ class OrderProduct extends React.Component{
                                     <div
                                       className={'p-1'}>
                                       <textarea
+                                        ref={(element) => {
+                                          this.additional_info = element
+                                        }}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}/>
                                     </div>
                                   </Col>

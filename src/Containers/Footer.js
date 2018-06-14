@@ -180,7 +180,7 @@ class Bottom extends React.Component{
                 <Translate>
                   created by
                 </Translate>
-                {this.props.common.copy}
+                {' ' + this.props.common.copy}
               </div>
             </Col>
             <Col

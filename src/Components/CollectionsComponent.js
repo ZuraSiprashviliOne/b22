@@ -206,7 +206,7 @@ export class CollectionItemImages extends React.Component{
           className={'image'}
           style={{backgroundImage: `url(${this.props.image})`}}>
           <img
-            src={this.props.image}
+            src={'/assets/ideal.jpg'}
             alt={'image'}
             className={'w-100'}
             style={{visibility: 'hidden'}}/>

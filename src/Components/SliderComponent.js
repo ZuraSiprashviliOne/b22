@@ -78,13 +78,20 @@ export default class Slider extends React.Component{
       swiper: null,
       activeIndex: 0,
       params: {
-        loop: true,
+        spaceBetween: 0,
+        slidesPerView: 'auto',
+        shortSwipes: false,
+        slideToClickedSlide: true,
+        preventClicksPropagation: false,
+        preventClicks: false,
+        initialSlide: 0,
+        touchRatio: 0,
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         },
-        renderPrevButton: () => <SliderButton to={'left'}/>,
-        renderNextButton: () => <SliderButton to={'right'}/>
+        // renderPrevButton: () => <SliderButton onClick={this.updated} to={'left'}/>,
+        // renderNextButton: () => <SliderButton onClick={this.updated} to={'right'}/>
       }
     };
 
@@ -94,6 +101,17 @@ export default class Slider extends React.Component{
 
     this.changeSliderTo = this.changeSliderTo.bind(this);
 
+    this.updated = this.updated.bind(this);
+
+  }
+
+  componentDidMount(){
+    this.setState({activeIndex: 0});
+  }
+
+  updated(){
+    console.log(this.state.activeIndex,this.state.swiper.swiper.activeIndex);
+    this.setState({activeIndex: this.state.swiper.swiper.activeIndex - 3});
   }
 
   getSliderSlides() {
@@ -125,7 +143,7 @@ export default class Slider extends React.Component{
             md={6}
             lg={3}
             onClick={() => {this.changeSliderTo(index)}}
-            className={`p-2 text-center ${this.state.activeIndex === index ? 'active' : ''}`}>
+            className={`p-2 text-center ${this.state.activeIndex == index ? 'active' : ''}`}>
             <div className={'rounded py-1'}></div>
             <div className={'py-2 px-xl-4 text-white px-lg-3 text-capitalize'}>
               <h5 className={'font-weight-light m-0'}>
@@ -134,11 +152,11 @@ export default class Slider extends React.Component{
                 </Translate>
               </h5>
             </div>
-            <div className={'text-light'}>
+            <div className={'text-light text-capitalize'}>
               <small>
                 <Translate divider={this.props.divider}>
-                  {`now from >>> $${slide.price}`}
-                </Translate>
+                  {'now from'}
+                </Translate>${slide.price}
               </small>
             </div>
           </Col>

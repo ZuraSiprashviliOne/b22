@@ -10,7 +10,7 @@ export class SliderButton extends React.Component{
 
   render(){
     return (
-      <button className={`swiper-button-${this.props.to === 'left' ? 'prev' : 'next'} text-grass border-0 bg-transparent h1 m-0`}>
+      <button {...this.props} className={`swiper-button-${this.props.to === 'left' ? 'prev' : 'next'} text-grass border-0 bg-transparent h1 m-0`}>
         <FontAwesome name={'angle-' + this.props.to}/>
       </button>
     )

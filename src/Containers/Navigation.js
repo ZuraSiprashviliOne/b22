@@ -76,7 +76,7 @@ export class Search extends React.Component{
               </div>
               <div className={'text-muted small text-capitalize'}>
                 <Translate>
-                  {item.description.substr(0, 100)}...
+                  {item.description !== null ? item.description.substr(0, 100) : ' '}
                 </Translate>
               </div>
             </Link>
