@@ -669,7 +669,7 @@ class Flower extends React.Component{
     if (this.props.Navigation.currentPage !== getPageSlag(this.props.match.path)) {
       this.props.setPage(getPageSlag(this.props.match.path));
     }
-    if(checkPromise(this.props.Flower) === false){
+    if(checkPromise(this.props.Flower, ['flower']) === false){
       this.props.initFlower();
     }
 
