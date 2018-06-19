@@ -15,6 +15,8 @@ import Translate from '../Containers/Translate';
 
 import {SliderButton} from "./SliderButton";
 
+import {Link} from 'react-router-dom';
+
 class SliderSlide extends React.Component{
   constructor(props){
     super(props);
@@ -44,24 +46,40 @@ class SliderSlide extends React.Component{
                   {this.props.description}
                 </Translate>
               </div>
-              <div className={'rects d-flex flex-row align-items-center-justify-content-start'}>
-                <a href="#" className={'m-1 rect text-muted bg-light rounded-no'}>
-                  <FontAwesome
-                    name={'eye'}/>
-                </a>
-                <a href="#" className={'m-1 rect text-muted bg-light rounded-no'}>
-                  <FontAwesome
-                    name={'facebook'}/>
-                </a>
-                <a href="#" className={'m-1 rect text-muted bg-light rounded-no'}>
-                  <FontAwesome
-                    name={'instagram'}/>
-                </a>
-                <a href="#" className={'m-1 rect text-muted bg-light rounded-no'}>
-                  <FontAwesome
-                    name={'twitter'}/>
-                </a>
+              <div
+                className={'my-3'}>
+                <div className="container">
+                  <div className="row">
+                    <div className="col-lg-4 col-md-6 col-12">
+                        <Link
+                            to={this.props.route}
+                            className="btn-block btn btn-grass text-capitalize text-white">
+                          <Translate>
+                            read more
+                          </Translate>
+                        </Link>
+                    </div>
+                  </div>
+                </div>
               </div>
+              {/*<div className={'rects d-flex flex-row align-items-center-justify-content-start'}>*/}
+                {/*<a href="#" className={'m-1 rect text-muted bg-light rounded-no'}>*/}
+                  {/*<FontAwesome*/}
+                    {/*name={'eye'}/>*/}
+                {/*</a>*/}
+                {/*<a href="#" className={'m-1 rect text-muted bg-light rounded-no'}>*/}
+                  {/*<FontAwesome*/}
+                    {/*name={'facebook'}/>*/}
+                {/*</a>*/}
+                {/*<a href="#" className={'m-1 rect text-muted bg-light rounded-no'}>*/}
+                  {/*<FontAwesome*/}
+                    {/*name={'instagram'}/>*/}
+                {/*</a>*/}
+                {/*<a href="#" className={'m-1 rect text-muted bg-light rounded-no'}>*/}
+                  {/*<FontAwesome*/}
+                    {/*name={'twitter'}/>*/}
+                {/*</a>*/}
+              {/*</div>*/}
             </div>
           </Col>
         </Row>

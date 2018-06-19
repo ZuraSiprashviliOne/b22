@@ -152,24 +152,15 @@ class NavigationTop extends React.Component{
         <Row
           className={'top'}>
           <Col
-            className={'d-none d-sm-flex d-md-flex d-lg-flex d-xl-flex logo-col text-white flex-row align-items-center justify-content-start'}
-            sm={6}>
+            className={'logo-col text-white flex-row align-items-center justify-content-start'}
+            sm={6}
+            xs={3}>
             <a
               href={'/'}
               className={'py-1 text-white'}>
               <h1
                 className={'m-0 font-weight-bold text-capitalize'}>
                 b22
-              </h1>
-            </a>
-          </Col>
-          <Col
-            xs={3}
-            className="d-flex flex-row align-items-center justify-content-start d-sm-none d-md-none d-lg-none d-xl-none">
-            <a href="/" className="py-1 text-white">
-              <h1 className="m-0 font-weight-bold text-capitalize">
-                <FontAwesome
-                  name={'gg-circle'}/>
               </h1>
             </a>
           </Col>
@@ -309,7 +300,7 @@ class UserFavourites extends React.Component{
       return (
         <DropdownItem
           className={`text-capitalize ${this.props.currentlang === lang ? 'bg-grass text-white': ''}`}
-          onClick={() => {this.props.currentlang === lang ? null : this.setLang(lang)}}
+          onClick={() => {this.props.currentlang === lang ? null : this.setLang(lang); this.props.close()}}
           key={lang}>
           <Translate>
             {lang}
@@ -326,6 +317,7 @@ class UserFavourites extends React.Component{
           <NavLink
             tag={Link}
             to={'/favourites'}
+            onClick={() => {this.props.close()}}
             className={'p-3 d-flex flex-row align-items-center h-100'}>
             <FontAwesome
               name={'star-o'}
@@ -339,6 +331,7 @@ class UserFavourites extends React.Component{
           <NavLink
             tag={Link}
             to={'/cart'}
+            onClick={() => {this.props.close()}}
             className={'p-3 d-flex flex-row align-items-center h-100'}>
             <FontAwesome
               name={'shopping-cart'}
@@ -393,18 +386,6 @@ class NavigationNavbar extends React.Component{
     });
   }
 
-  componentWillReceiveProps(props){
-    if(props.fixed){
-      setTimeout(() => {
-        this.navbar.classList.add('scrolled');
-      }, 500);
-    }else{
-      setTimeout(() => {
-        this.navbar.classList.remove('scrolled');
-      }, 500);
-    }
-  }
-
   toggle() {
     this.setState({
       collapseIsOpen: !this.state.collapseIsOpen
@@ -450,10 +431,23 @@ class Element extends React.Component{
     super(props);
   }
 
+  componentWillReceiveProps(props){
+      if(props.fixed){
+          setTimeout(() => {
+              this.header.classList.add('scrolled');
+          }, 500);
+      }else{
+          setTimeout(() => {
+              this.header.classList.remove('scrolled');
+          }, 500);
+      }
+  }
+
   render(){
     return (
       <header
-        className={'bg-grass'}
+        className={'bg-grass animated'}
+        ref={(element) => {this.header = element}}
         id={'header'}>
         <NavigationTop
           search_items={this.props.Search.results}

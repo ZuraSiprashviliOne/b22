@@ -8,6 +8,7 @@
 @import './animate/animate/flipInY.scss';
 @import './animate/animate/wobble.scss';
 
+
 html{
   overflow-x: hidden !important;;
   width: 100vw;
@@ -158,8 +159,32 @@ a{
 }
 .page{
 }
+main {
+  transition: $transition-base !important;
+  padding-top: 95px !important;
+}
 header{
+
+  position: fixed !important;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  right: 0;
+  &.scrolled{
+    //@extend .fadeIn;
+    position: fixed !important;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+
+  }
+  &.unscrolled {
+    position: initial;
+  }
+
   .top{
+    transition: $transition-base;
     .top-nav{
       padding-left: 2px;
       padding-right: 2px;
@@ -232,48 +257,38 @@ header{
   .navbar{
     padding-left: 2px;
     padding-right: 2px;
-    &.scrolled{
-      @extend .fadeIn;
-      position: fixed !important;
-      z-index: 999;
-      top: 0;
-      left: 0;
-      right: 0;
-    }
-    &.unscrolled {
-      position: initial;
-    }
 
     box-shadow: 0 0 18px 2px rgba($grass, 0.2);
-    .navbar-nav{
-      .nav-item{
+    .navbar-nav {
+
+      .nav-item {
         border-right: 1px solid rgba($_grass, 0.1);
 
         transition: $transition-base;
 
-        &:first-child{
+        &:first-child {
           border-left: 1px solid rgba($_grass, 0.1);
 
         }
 
-        @media only screen and(max-width: $md){
+        @media only screen and(max-width: $md) {
           border: 0 !important;
         }
-        &.active{
+        &.active {
           background-color: rgba($_grass, 0.1);
         }
 
-        &:hover{
+        &:hover {
           @extend .active;
         }
 
-        &.dropdown{
-          .dropdown-item{
-            a{
+        &.dropdown {
+          .dropdown-item {
+            a {
               transition: $transition-base;
             }
-            &:hover{
-              a{
+            &:hover {
+              a {
                 background-color: rgba($_grass, 0.1) !important;
               }
             }
@@ -282,6 +297,11 @@ header{
       }
     }
   }
+}
+
+*::selection {
+  background-color: rgba($grass, 0.7);
+  color: $white;
 }
 
 .swiper-container{
