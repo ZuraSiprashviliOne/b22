@@ -16,6 +16,8 @@ import {
 
 import Translate from '../Translate';
 
+import FontAwesome from 'react-fontawesome';
+
 import{
   Link
 } from 'react-router-dom';
@@ -38,6 +40,21 @@ class OrderProduct extends React.Component{
     this._onChangeNames = this._onChangeNames.bind(this);
 
     this._order = this._order.bind(this);
+
+    this.state = {
+      pending: false
+    };
+
+    this.pend = this.pend.bind(this);
+    this.unpend = this.unpend.bind(this);
+  }
+
+  pend(){
+    this.setState({pending: true});
+  }
+
+  unpend(){
+    this.setState({pending: false});
   }
 
   _onChangeNames(event) {
@@ -58,51 +75,40 @@ class OrderProduct extends React.Component{
 
   _order(event){
     event.preventDefault();
+    this.pend();
 
-    Axios.post('http://testoneone.000webhostapp.com/pay.php', {
-        orderIt: true,
-        data: {
-            flower: {
-                price: this.props.price,
-                id: this.props.id,
-                size: this.props.size,
-                count: this.props.count || -1
-            },
-            user: {
-                orderer: {
-                    firstName: this.o_firstName.value,
-                    lastName: this.o_lastName.value,
-                    email: this.o_email.value,
-                    phones: [
-                        this.o_phone_one.value,
-                        this.o_phone_two.value
-                    ]
-                },
-                additionalInfo: this.additional_info.value,
-                message: this.message.value,
-                addresser: {
-                    firstName: this.a_firstName.value,
-                    lastName: this.a_lastName.value,
-                    phone: this.a_phone.value
-                },
-                delivery: {
-                    date: this.delivery_date.value,
-                    time: this.delivery_time.value,
-                    city: this.delivery_city.value,
-                    anony: this.delivery_anony.value,
-                    fullAddress: this.delivery_address.value
-                }
-            }
-        }
-    })
-        .then((response) => {
-          console.log(JSON.parse(response.data));
-          alert('x');
-        })
-        .catch((error) => {
-          console.log(error);
-          alert('err');
-        });
+      Axios.get('http://testoneone.000webhostapp.com/pay.php', {
+          params: {
+              orderIt: true,
+              o_firstName: this.o_firstName.value,
+              o_lastName: this.o_lastName.value,
+              o_email: this.o_email.value,
+              o_phone_one: this.o_phone_one.value,
+              o_phone_two: this.o_phone_two.value,
+              message: this.message.value,
+              price: this.props.price,
+              a_firstName: this.a_firstName.value,
+              a_lastName: this.a_lastName.value,
+              a_phone: this.a_phone.value,
+              d_date: this.delivery_date.value,
+              d_time: this.delivery_time.value,
+              d_city: this.delivery_city.value,
+              d_anony: this.delivery_anony.value,
+              d_addr: this.delivery_address.value,
+              d_info: this.additional_info.value,
+              product_id: this.props.id
+          }
+      })
+          .then((response) => {
+              console.log(response.data);
+              alert('ok');
+              this.unpend();
+          })
+          .catch((error) => {
+              console.log(error);
+              alert('not okay');
+              this.unpend();
+          });
   }
 
   render(){
@@ -647,9 +653,15 @@ class OrderProduct extends React.Component{
                             type={'submit'}
                             name={'order_it'}
                             className={'btn-block h-100 text-light text-capitalize font-weight-light shadow btn-_grass'}>
-                            <Translate>
-                              send
-                            </Translate>
+                              {
+                                this.state.pending === true ? (
+                                    <FontAwesome
+                                      name={'spinner'}
+                                      spin={true}/>
+                                ): <Translate>
+                                    send
+                                </Translate>
+                              }
                           </Button>
                         </Col>
                       </Row>

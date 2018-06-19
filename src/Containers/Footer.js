@@ -41,73 +41,75 @@ class Top extends React.Component{
     return (
       <div className={'pre-footer bg-_grass'}>
         <Container>
-          <Row className={'py-5 top'}>
-            <Col
-              lg={4}
-              sm={6}>
-              <div className={'text-uppercase font-weight-light py-3'}>
-                <h2 className={'m-0'}>
-                  text widget
-                </h2>
-              </div>
-              <div className={'small font-weight-light'}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime perspiciatis velit maiores impedit
-                voluptas totam corporis est, ad neque a molestiae quod alias praesentium! Molestiae, illo molestias.
-                Consequatur, recusandae pariatur.
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur saepe pariatur, nemo aspernatur
-                omnis veritatis earum, optio eos in itaque architecto distinctio, eveniet repellendus nostrum aperiam ea
-                quis eaque mollitia.
-              </div>
-            </Col>
-            <Col
-              lg={4}
-              sm={6}>
-              <div className={'text-uppercase font-weight-light py-3'}>
-                <h2 className={'m-0'}>
-                  facebook widget
-                </h2>
-              </div>
-              <div className={'small font-weight-light'}>
-                <div className={'pb-2'}>
-                  <b className={'text-light font-weight-bold pr-1'}>News Feed</b>
-                  <span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio facere dolorum cumque deleniti dolores omnis ex ad voluptas nobis adipisci velit voluptate dolore eveniet soluta incidunt, sit autem, tempora quis.
-                  </span>
-                </div>
-                <div className={'pb-2'}>
-                  <b className={'text-light font-weight-bold pr-1'}>News Feed</b>
-                  <span>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio facere dolorum cumque deleniti dolores omnis ex ad voluptas nobis adipisci velit voluptate dolore eveniet soluta incidunt, sit autem, tempora quis.
-                  </span>
-                </div>
-              </div>
-            </Col>
-          </Row>
-          <Row className={'py-5 bottom'}>
-            <Col
-              xs={12}>
-              <Container>
-                <Row className={'align-items-center'}>
-                  <div className={'col-lg-4 col-md-6 col-sm-8 b d-flex flex-row align-items-center jutify-content-start'}>
-                    <div className={'input-group'}>
-                      <input
-                        type={'text'}
-                        ref={(element) => {this.textInput = element}}
-                        className={'rounded-no bg-__grass text-light px-3 py-2 form-control border-0'}
-                        placeholder={this.props.subed === true ? 'Subscribed': 'Lets Subscribe'} />
-                    </div>
-                    <div className={'input-group'} style={{flex: 0}}>
-                      <button
-                        onClick={this._subscribe}
-                        className={'rounded-no btn-white border-white text-grass form-control'}>
-                        <FontAwesome name={this.props.subed === true ? 'check' : 'angle-right'}/>
-                      </button>
-                    </div>
-                  </div>
-                </Row>
-              </Container>
-            </Col>
-          </Row>
+        <Row className="pt-1 shadow">
+        </Row>
+          {/*<Row className={'py-5 top'}>*/}
+            {/*<Col*/}
+              {/*lg={4}*/}
+              {/*sm={6}>*/}
+              {/*<div className={'text-uppercase font-weight-light py-3'}>*/}
+                {/*<h2 className={'m-0'}>*/}
+                  {/*text widget*/}
+                {/*</h2>*/}
+              {/*</div>*/}
+              {/*<div className={'small font-weight-light'}>*/}
+                {/*Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime perspiciatis velit maiores impedit*/}
+                {/*voluptas totam corporis est, ad neque a molestiae quod alias praesentium! Molestiae, illo molestias.*/}
+                {/*Consequatur, recusandae pariatur.*/}
+                {/*Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur saepe pariatur, nemo aspernatur*/}
+                {/*omnis veritatis earum, optio eos in itaque architecto distinctio, eveniet repellendus nostrum aperiam ea*/}
+                {/*quis eaque mollitia.*/}
+              {/*</div>*/}
+            {/*</Col>*/}
+            {/*<Col*/}
+              {/*lg={4}*/}
+              {/*sm={6}>*/}
+              {/*<div className={'text-uppercase font-weight-light py-3'}>*/}
+                {/*<h2 className={'m-0'}>*/}
+                  {/*facebook widget*/}
+                {/*</h2>*/}
+              {/*</div>*/}
+              {/*<div className={'small font-weight-light'}>*/}
+                {/*<div className={'pb-2'}>*/}
+                  {/*<b className={'text-light font-weight-bold pr-1'}>News Feed</b>*/}
+                  {/*<span>*/}
+                            {/*Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio facere dolorum cumque deleniti dolores omnis ex ad voluptas nobis adipisci velit voluptate dolore eveniet soluta incidunt, sit autem, tempora quis.*/}
+                  {/*</span>*/}
+                {/*</div>*/}
+                {/*<div className={'pb-2'}>*/}
+                  {/*<b className={'text-light font-weight-bold pr-1'}>News Feed</b>*/}
+                  {/*<span>*/}
+                    {/*Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio facere dolorum cumque deleniti dolores omnis ex ad voluptas nobis adipisci velit voluptate dolore eveniet soluta incidunt, sit autem, tempora quis.*/}
+                  {/*</span>*/}
+                {/*</div>*/}
+              {/*</div>*/}
+            {/*</Col>*/}
+          {/*</Row>*/}
+          {/*<Row className={'py-5 bottom'}>*/}
+            {/*<Col*/}
+              {/*xs={12}>*/}
+              {/*<Container>*/}
+                {/*<Row className={'align-items-center'}>*/}
+                  {/*<div className={'col-lg-4 col-md-6 col-sm-8 b d-flex flex-row align-items-center jutify-content-start'}>*/}
+                    {/*<div className={'input-group'}>*/}
+                      {/*<input*/}
+                        {/*type={'text'}*/}
+                        {/*ref={(element) => {this.textInput = element}}*/}
+                        {/*className={'rounded-no bg-__grass text-light px-3 py-2 form-control border-0'}*/}
+                        {/*placeholder={this.props.subed === true ? 'Subscribed': 'Lets Subscribe'} />*/}
+                    {/*</div>*/}
+                    {/*<div className={'input-group'} style={{flex: 0}}>*/}
+                      {/*<button*/}
+                        {/*onClick={this._subscribe}*/}
+                        {/*className={'rounded-no btn-white border-white text-grass form-control'}>*/}
+                        {/*<FontAwesome name={this.props.subed === true ? 'check' : 'angle-right'}/>*/}
+                      {/*</button>*/}
+                    {/*</div>*/}
+                  {/*</div>*/}
+                {/*</Row>*/}
+              {/*</Container>*/}
+            {/*</Col>*/}
+          {/*</Row>*/}
         </Container>
       </div>
     );

@@ -357,12 +357,42 @@ export class FlowerInfo extends React.Component{
       <div
         key={'title'}
         className={'border-bottom py-3 px-1 px-md-2'}>
-        <h1
-          className={'text-capitalize font-weight-light m-9'}>
-          <Translate>
-            {this.props.title}
-          </Translate>
-        </h1>
+        <Container>
+          <Row
+            className={'align-items-center'}>
+            <Col
+              xs={7}
+              md={12}
+              lg={7}>
+                <h1
+                    className={'text-capitalize font-weight-light m-9'}>
+                    <Translate>
+                        {this.props.title}
+                    </Translate>
+                </h1>
+            </Col>
+            <Col
+              xs={5}
+              md={12}
+              lg={5}>
+                <a
+                    target="popup"
+                    onClick={(event) => {
+                        window.open(event.target.href,'popup','width=600,height=600'); return false;
+                    }}
+                    href={'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u='+window.location.href+'%2&display=popup&ref=plugin&src=share_button'}
+                    className={'btn btn-info btn-block text-capitalize text-white shadow rounded-no d-flex flex-row align-items-center justify-content-between'}>
+                  <FontAwesome
+                    name={'facebook'}/>
+                  <div
+                    className={'flex-fill d-flex flex-row align-items-center font-weight-bold justify-content-center'}>
+                    share
+                  </div>
+                </a>
+            </Col>
+          </Row>
+        </Container>
+
       </div>,
       <div
         key={'price'}

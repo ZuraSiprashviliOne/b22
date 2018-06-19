@@ -55,6 +55,7 @@ body {
     position: fixed;
     top: 0;
     bottom: 0;
+    z-index: 500;
     left: 0;
     right: 0;
     color: rgba($grass, 0.7);
@@ -158,10 +159,8 @@ a{
   }
 }
 .page{
-}
-main {
   transition: $transition-base !important;
-  padding-top: 95px !important;
+  margin-top: 95px !important;
 }
 header{
 
@@ -183,18 +182,23 @@ header{
     position: initial;
   }
 
-  .top{
+  .top {
+    .item-col{
+      a{
+        display: block;
+      }
+    }
     transition: $transition-base;
-    .top-nav{
+    .top-nav {
       padding-left: 2px;
       padding-right: 2px;
-      ul{
+      ul {
         height: 100%;
         position: relative;
 
-        &.searchUL{
+        &.searchUL {
 
-          .search_results{
+          .search_results {
             position: absolute;
             top: 0;
             left: 0;

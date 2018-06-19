@@ -256,6 +256,7 @@ body {
     position: fixed;
     top: 0;
     bottom: 0;
+    z-index: 500;
     left: 0;
     right: 0;
     color: rgba(87, 197, 160, 0.7);
@@ -326,9 +327,9 @@ a {
 .pre-footer .top {
   border-bottom: 1px solid rgba(0, 56, 50, 0.3); }
 
-main {
+.page {
   transition: all 0.2s ease-in-out !important;
-  padding-top: 95px !important; }
+  margin-top: 95px !important; }
 
 header {
   position: fixed !important;
@@ -346,6 +347,8 @@ header {
     position: initial; }
   header .top {
     transition: all 0.2s ease-in-out; }
+    header .top .item-col a {
+      display: block; }
     header .top .top-nav {
       padding-left: 2px;
       padding-right: 2px; }
