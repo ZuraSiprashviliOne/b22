@@ -174,7 +174,7 @@ export default class Slider extends React.Component{
               <small>
                 <Translate divider={this.props.divider}>
                   {'now from'}
-                </Translate>${slide.price}
+                </Translate> ${slide.price}
               </small>
             </div>
           </Col>

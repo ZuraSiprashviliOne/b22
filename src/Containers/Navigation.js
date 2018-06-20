@@ -155,14 +155,14 @@ class NavigationTop extends React.Component{
             className={'logo-col text-white flex-row align-items-center justify-content-start'}
             sm={6}
             xs={3}>
-            <a
-              href={'/'}
-              className={'py-1 text-white'}>
+            <Link
+              to={'/'}
+              className={'py-1 text-white d-block'}>
               <h1
                 className={'m-0 font-weight-bold text-capitalize'}>
-                b22
+                logo
               </h1>
-            </a>
+            </Link>
           </Col>
           <Col
             sm={6}
@@ -398,13 +398,13 @@ class NavigationNavbar extends React.Component{
         className={'py-1 py-md-0 animated navbar navbar-expand-md navbar-light bg-white'}
         ref={(element) => {this.navbar = element}}>
         <Container>
-          <NavbarBrand
-            tag={Link}
-            className={'text-capitalize text-grass font-weight-bold d-md-none d-lg-none d-xl-none'}
-            to={'/'}>
-            <FontAwesome
-              name={'ravelry'}/>
-          </NavbarBrand>
+          {/*<NavbarBrand*/}
+            {/*tag={Link}*/}
+            {/*className={'text-capitalize text-grass font-weight-bold d-md-none d-lg-none d-xl-none'}*/}
+            {/*to={'/'}>*/}
+            {/*<FontAwesome*/}
+              {/*name={'ravelry'}/>*/}
+          {/*</NavbarBrand>*/}
           <NavbarToggler
             className={'rounded-no ml-auto'}
             onClick={this._toggleNavbar}/>

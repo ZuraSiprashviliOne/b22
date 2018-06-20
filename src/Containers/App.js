@@ -55,7 +55,7 @@ class Element extends React.Component{
         <Scrollbar
           currentpath={this.props.Navigation.path}
           onScroll={(event) => {
-            if (event.target.scrollTop > 30) {
+            if (event.target.scrollTop > 5) {
               if (!this.state.navbarIsFixed) {
                 this.setState({navbarIsFixed: true});
               }

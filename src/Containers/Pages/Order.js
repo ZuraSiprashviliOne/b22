@@ -117,7 +117,7 @@ class OrderProduct extends React.Component{
         <Row>
           <Col
             xs={12}
-            className={'p-1'}>
+            className={`p-1 ${this.state.pending ? 'pending' : ''}`}>
             <form
               onSubmit={this._order}
               className={'h-100 bg-white shadow p-2'}>
@@ -156,6 +156,7 @@ class OrderProduct extends React.Component{
                                 className={'p-1'}>
                                 <input
                                   ref={(element) => {this.o_firstName = element}}
+                                  readOnly={this.state.pending}
                                   onChange={this._onChangeNames}
                                   required={true}
                                   type="text"
@@ -181,6 +182,7 @@ class OrderProduct extends React.Component{
                                 <input
                                   ref={(element) => {this.o_lastName = element}}
                                   onChange={this._onChangeNames}
+                                  readOnly={this.state.pending}
                                   type="text"
                                   name={'orderer_lastName'}
                                   required={true}
@@ -206,6 +208,7 @@ class OrderProduct extends React.Component{
                                 className={'p-1'}>
                                 <input
                                   type="text"
+                                  readOnly={this.state.pending}
                                   ref={(element) => {this.o_phone_one = element}}
                                   onChange={this._onChangePhone}
                                   name={'orderer_phoneOne'}
@@ -230,6 +233,7 @@ class OrderProduct extends React.Component{
                                 <input
                                   ref={(element) => {this.o_phone_two = element}}
                                   onChange={this._onChangePhone}
+                                  readOnly={this.state.pending}
                                   type="text"
                                   name={'orderer_phoneTwo'}
                                   className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
@@ -255,6 +259,7 @@ class OrderProduct extends React.Component{
                                 <input
                                   ref={(element) => {this.o_email = element}}
                                   onChange={this._onChangeEmail}
+                                  readOnly={this.state.pending}
                                   type="email"
                                   required={true}
                                   name={'orderer_email'}
@@ -283,6 +288,7 @@ class OrderProduct extends React.Component{
                                 className={'p-1'}>
                                 <textarea
                                     name={'orderer_message'}
+                                    readOnly={this.state.pending}
                                   ref={(element) => {this.message = element}}
                                   className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}/>
                               </div>
@@ -325,6 +331,7 @@ class OrderProduct extends React.Component{
                                   className={''}
                                   name={'orderer_trust'}
                                   type={'checkbox'}
+                                  readOnly={this.state.pending}
                                   required={true}
                                   value={''}/>
                                   <label
@@ -377,6 +384,7 @@ class OrderProduct extends React.Component{
                                       <input
                                         type="text"
                                         name={'addresser_firstName'}
+                                        readOnly={this.state.pending}
                                         ref={(element) => {this.a_firstName = element}}
                                         onChange={this._onChangeNames}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
@@ -400,6 +408,7 @@ class OrderProduct extends React.Component{
                                       <input
                                         type="text"
                                         name={'addresser_lastName'}
+                                        readOnly={this.state.pending}
                                         ref={(element) => {this.a_lastName = element}}
                                         onChange={this._onChangeNames}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
@@ -427,6 +436,7 @@ class OrderProduct extends React.Component{
                                         name={'addresser_phone'}
                                         ref={(element) => {this.a_phone = element}}
                                         onChange={this._onChangePhone}
+                                        readOnly={this.state.pending}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
                                         placeholder={'(+995) 555 58 58 79'}/>
                                     </div>
@@ -473,6 +483,7 @@ class OrderProduct extends React.Component{
                                         name={'delivery_date'}
                                         ref={(element) => {this.delivery_date = element}}
                                         onChange={this._onDateChange}
+                                        readOnly={this.state.pending}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}/>
                                     </div>
                                   </Col>
@@ -494,6 +505,7 @@ class OrderProduct extends React.Component{
                                         type="time"
                                         required={true}
                                         name={'delivery_time'}
+                                        readOnly={this.state.pending}
                                         ref={(element) => {this.delivery_time = element}}
                                         onChange={this._onTimeChange}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}/>
@@ -518,6 +530,7 @@ class OrderProduct extends React.Component{
                                       <select
                                         ref={(element) => {this.delivery_city = element}}
                                         name={'delivery_city'}
+                                        readOnly={this.state.pending}
                                         className={'form-control'}>
                                         <option value="tbilisi">
                                           <Translate>
@@ -557,6 +570,7 @@ class OrderProduct extends React.Component{
                                           this.delivery_anony = element
                                         }}
                                         name={'anony_order'}
+                                        readOnly={this.state.pending}
                                         className={'form-control'}>
                                         <option value="yes">
                                           <Translate>
@@ -590,6 +604,7 @@ class OrderProduct extends React.Component{
                                       <input
                                         type="text"
                                         name={'full_address'}
+                                        readOnly={this.state.pending}
                                         ref={(element) => {this.delivery_address = element}}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
                                         placeholder={'Tbilisi, Avlabari, David\'s.st 14'}/>
@@ -614,6 +629,7 @@ class OrderProduct extends React.Component{
                                           this.additional_info = element
                                         }}
                                         name={'additional_info'}
+                                        readOnly={this.state.pending}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}/>
                                     </div>
                                   </Col>
