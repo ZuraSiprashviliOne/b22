@@ -74,7 +74,7 @@ export class Sales extends React.Component{
 
   render(){
     return (
-      <div className={'bg-grass text-light offers py-md-5'}>
+      <div className={'bg-_grass text-light offers py-md-5'}>
         <Container>
           <Row>
             <Col

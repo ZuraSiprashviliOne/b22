@@ -13,14 +13,7 @@ html{
   overflow-x: hidden !important;;
   width: 100vw;
 }
-@keyframes loading{
-  from{
-    transform: rotate(0);
-  }
-  to{
-    transform: rotate(360deg);
-  }
-}
+
 .swiper-container {
   position: relative;
 
@@ -51,30 +44,7 @@ body {
     font-family: geo !important;
   }
 
-  .loading {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    z-index: 500;
-    left: 0;
-    right: 0;
-    color: rgba($grass, 0.7);
-    background-color: $white !important;
 
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    font-size: $h1-font-size;
-    z-index: 100 !important;
-    .fa {
-      animation-name: loading;
-      animation-iteration-count: infinite;
-      animation-duration: 1s;
-      transform: rotate(0);
-      transition: 0.3s;
-    }
-  }
   #root {
     min-height: inherit;
     height: inherit;
@@ -160,19 +130,21 @@ a{
 }
 .page {
   transition: $transition-base !important;
-  margin-top: 36px !important;
-  min-height: calc(100vh - 200px);
+  min-height: 90vh !important;
 }
 header{
   &.scrolled{
     .navbar{
       @extend .fadeIn;
-      top: 0px !important;
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
     }
   }
   &.unscrolled {
     .navbar{
-      top: 56px !important;
+      position: static !important;
     }
   }
 
@@ -258,10 +230,6 @@ header{
     transition: 0.1s !important;
     transition-timing-function: linear;
     transition-delay: 0ms;
-    position: fixed;
-    top: 56px !important;
-    left: 0;
-    right: 0;
 
     .navbar-nav {
 
@@ -387,7 +355,11 @@ header{
       background-color: rgba($black, 0.3);
 
       .text{
-        background-color: rgba($black, 0.7);
+        background-color: rgba($__grass, 0.9);
+        a{
+          display: block;
+          padding-top: 5px;
+        }
       }
     }
   }

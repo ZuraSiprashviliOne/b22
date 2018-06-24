@@ -167,7 +167,7 @@ class Bottom extends React.Component{
 
   render(){
     return(
-      <footer className={'bg-__grass'}>
+      <footer className={'bg-grass'}>
         <Container>
           <Row className={'text-light py-5 align-items-center'}>
             <Col

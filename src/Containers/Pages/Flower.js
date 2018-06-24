@@ -192,8 +192,6 @@ class Counts extends React.Component{
 
     this._handleMin = this._handleMin.bind(this);
     this._handlePlu = this._handlePlu.bind(this);
-
-    console.log(this.props, 'aaa');
   }
 
   _handleMin(){
@@ -377,7 +375,7 @@ export class FlowerInfo extends React.Component{
                         window.open(event.target.href,'popup','width=600,height=600'); return false;
                     }}
                     href={'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=http://testoneone.000webhostapp.com/flowers/items/item_'+this.props.id+'&display=popup&ref=plugin&src=share_button'}
-                    className={'btn btn-info btn-block text-capitalize text-white shadow rounded-no d-flex flex-row align-items-center justify-content-between'}>
+                    className={'btn btn-grass btn-block text-capitalize text-white shadow rounded-no d-flex flex-row align-items-center justify-content-between'}>
                   <FontAwesome
                     name={'facebook'}/>
                   <div
@@ -506,7 +504,7 @@ export class FlowerInfo extends React.Component{
                 <Link
                   to={'/order'}
                   onClick={this.props.order}
-                  className={'btn text-light btn-__grass btn-block rounded-no text-capitalize font-weight-light'}>
+                  className={'btn text-light btn-grass btn-block rounded-no text-capitalize font-weight-light'}>
                   <div
                     className={'d-flex flex-row align-items-center between'}>
                     <div

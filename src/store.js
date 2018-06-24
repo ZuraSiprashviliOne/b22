@@ -34,6 +34,8 @@ import ConditionsReducer from './Reducers/ConditionsReducer';
 
 import FooterReducer from './Reducers/FooterReducer';
 
+import ThemeReducer from './Reducers/ThemeReducer';
+
 export default createStore(
   combineReducers({
     LocaleReducer,
@@ -50,7 +52,8 @@ export default createStore(
     SearchReducer,
     ContactReducer,
     ConditionsReducer,
-    FooterReducer
+    FooterReducer,
+    ThemeReducer
   }),
   {},
   applyMiddleware(

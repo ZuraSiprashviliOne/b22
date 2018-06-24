@@ -24,11 +24,9 @@ import {
 import {Scrollbar} from "../Components/Scrollbar";
 
 import 'font-awesome/css/font-awesome.min.css';
+import '../Stylesheet/loading.css';
 import 'animate.css/animate.min.css';
 import 'swiper/dist/css/swiper.min.css';
-
-import '../Stylesheet/bootstrap.css';
-import '../Stylesheet/style.css';
 
 import Navigation from './Navigation';
 import Footer from './Footer';
@@ -46,6 +44,20 @@ class Element extends React.Component{
       navbarIsFixed: false,
     };
   }
+
+  // componentDidMount(){
+  //   if(this.props.theme){
+  //     console.log(this.props.theme);
+  //     alert('x');
+  //       // require(this.props.theme.src);
+  //       // require(this.props.theme.src_2);
+  //       require('/assets/bootstrap_2.css');
+  //       require('/assets/style_2.css');
+  //   }else{
+  //     require('../Stylesheet/bootstrap.css');
+  //     require('../Stylesheet/style.css');
+  //   }
+  // }
 
   render(){
     return (

@@ -196,7 +196,7 @@ export default class Slider extends React.Component{
         {...this.state.params}>
         {this.getSliderSlides()}
       </Swiper>,
-      <div key={'thumbs'} className={'bg-__grass text-light thumbKinds'}>
+      <div key={'thumbs'} className={'bg-grass text-light thumbKinds'}>
         <Container>
           <Row className={'thumbsRow'}>
             {this.getThumbs()}

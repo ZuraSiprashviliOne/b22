@@ -77,7 +77,7 @@ class OrderProduct extends React.Component{
     event.preventDefault();
     this.pend();
 
-      Axios.get('http://testoneone.000webhostapp.com/pay.php', {
+      Axios.get('http://botanica22.ge/data/pay.php', {
           params: {
               orderIt: true,
               o_firstName: this.o_firstName.value,

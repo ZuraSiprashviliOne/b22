@@ -37,15 +37,22 @@ export class Search extends React.Component{
   constructor(props){
     super(props);
 
-    this.state = {
-      searchIconClicked: false
-    };
+      this.state = {
+          searchIconClicked: false,
+          closed: true
+      };
 
     this._searchClick = this._searchClick.bind(this);
 
     this._handleChange = this._handleChange.bind(this);
 
     this.getSearchItems = this.getSearchItems.bind(this);
+
+    this.close = this.close.bind(this);
+  }
+
+  close(){
+    this.setState({closed: true});
   }
 
   getSearchItems(){
@@ -57,6 +64,7 @@ export class Search extends React.Component{
             xs={4}>
             <Link
               key={item.id}
+              onClick={this.close}
               className={'h-auto row py-1'}
               to={`/flowers/items/item_${item.id}`}>
               <img src={item.image} className={'w-100'} />
@@ -67,6 +75,7 @@ export class Search extends React.Component{
             xs={8}>
             <Link
               key={item.id}
+              onClick={this.close}
               className={' p-2 small h-auto row '}
               to={`/flowers/items/item_${item.id}`}>
               <div className={'text-capitalize text-dark font-weight-dark pb-1'}>
@@ -88,7 +97,14 @@ export class Search extends React.Component{
 
   _handleChange(){
     if(this.searchInput.value){
-      this.props.search_search_items(this.searchInput.value)
+      this.props.search_search_items(this.searchInput.value);
+      if(this.props.search_search_items.length > 0){
+        if(this.state.closed === true){
+          this.setState({closed: false});
+        }
+      }
+    }else{
+      this.close();
     }
   }
 
@@ -117,7 +133,7 @@ export class Search extends React.Component{
             className="w-100 animated border-_grass rounded-no bg-transparent my-1 form-control"
             placeholder={'Search...'}/>
           <div
-            style={{zIndex: this.props.search_items.length !== 0 ? 80 : -100, height: this.props.search_items.length ? this.props.search_items.length * 100 + 'px' : 0}}
+            style={{zIndex: this.state.closed === false && this.props.search_items.length !== 0 ? 99999 : - 100 , visibility: this.state.closed === false && this.props.search_items.length !== 0 ? 'visible' : 'hidden', height: this.props.search_items.length ? this.props.search_items.length * 100 + 'px' : 0}}
             className={`search_results shadow border text-dark bg-white p-1 animated ${this.props.search_items.length !== 0 ? 'fadeIn': 'fadeOut'}`}>
               <Scrollbar>
                 <Container className={'searchContainerElement'}>
@@ -160,7 +176,7 @@ class NavigationTop extends React.Component{
               className={'py-1 text-white d-block'}>
               <h1
                 className={'m-0 font-weight-bold text-capitalize'}>
-                logo
+                  <img src="/assets/logo.png" alt="" style={{height: 45}}/>
               </h1>
             </Link>
           </Col>
