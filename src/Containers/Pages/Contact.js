@@ -22,6 +22,11 @@ class Element extends React.Component{
     super(props);
   }
 
+  componentDidMount(){
+      let str = `Contact us`;
+      document.title = str;
+  }
+
   render(){
     return (
       <div

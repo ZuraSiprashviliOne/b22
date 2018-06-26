@@ -49,7 +49,7 @@ class NoFavourites extends React.Component{
               className={'bg-white shadow p-md-3 p-1'}>
               <h1 className={'m-0 text-grass text-capitalize t text-center py-2'}>
                 <Translate>
-                  {'your favourite\'s cart is empty'}
+                    your favourite's cart is empty
                 </Translate>
               </h1>
               <div

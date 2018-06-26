@@ -414,13 +414,12 @@ class NavigationNavbar extends React.Component{
         className={'py-1 py-md-0 animated navbar navbar-expand-md navbar-light bg-white'}
         ref={(element) => {this.navbar = element}}>
         <Container>
-          {/*<NavbarBrand*/}
-            {/*tag={Link}*/}
-            {/*className={'text-capitalize text-grass font-weight-bold d-md-none d-lg-none d-xl-none'}*/}
-            {/*to={'/'}>*/}
-            {/*<FontAwesome*/}
-              {/*name={'ravelry'}/>*/}
-          {/*</NavbarBrand>*/}
+          <NavbarBrand
+            tag={Link}
+            className={`text-capitalize text-grass font-weight-bold d-md-none d-lg-none d-xl-none ${this.props.fixed ? 'd-flex flex-column justify-content-center d-sm-flex' : 'd-none'}`}
+            to={'/'}>
+              <img src="/assets/logo-dark.png"  style={{height: '50px'}} alt="logo"/>
+          </NavbarBrand>
           <NavbarToggler
             className={'rounded-no ml-auto'}
             onClick={this._toggleNavbar}/>

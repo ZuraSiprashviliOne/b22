@@ -28,6 +28,9 @@ import '../Stylesheet/loading.css';
 import 'animate.css/animate.min.css';
 import 'swiper/dist/css/swiper.min.css';
 
+import '../Stylesheet/bootstrap.css';
+import '../Stylesheet/style.css';
+
 import Navigation from './Navigation';
 import Footer from './Footer';
 
@@ -150,7 +153,7 @@ class App extends React.Component{
     this.props.initCommon();
     this.props.initLocale(() => {
       if(!this.props.Locale.current){
-        this.props.setLocale(this.props.Locale.default);
+        this.props.setLocale('ka');
       }
     });
   }
@@ -192,7 +195,7 @@ const actions = (dispatch) => {
       if(storageLocale !== code){
         dispatch(SET_LOCALE_PRIMARY_CURRENT(code));
         dispatch(SET_LOCALE_PRIMARY_KEYWORDS_RES(code));
-        Storage.set('locale', code);
+        // Storage.set('locale', 'ka');
       }
 
     },

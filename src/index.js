@@ -8,12 +8,11 @@ import {Provider} from 'react-redux';
 import Store from './store';
 
 import App from './Containers/App';
-import Application from './Application';
 
 ReactDOM.render(
   <Provider
     store={Store}>
-    <Application />
+      <App/>
   </Provider>
   , document.getElementById('root'));
 registerServiceWorker();

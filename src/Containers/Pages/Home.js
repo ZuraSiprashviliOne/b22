@@ -33,7 +33,13 @@ class Element extends React.Component{
     this._rm_cart = this._rm_cart.bind(this);
   }
 
-  _add_cart(id){
+  componentDidMount(){
+      let str = `Botanica22.ge :)`;
+      document.title = str;
+  }
+
+
+    _add_cart(id){
     if(this.props.Cart.carts.every((f) => f.id != id)){
       this.props.addcartid(id);
       Storage.set('carts', Storage.get('carts') === undefined ? JSON.stringify([id]) : JSON.stringify([...JSON.parse(Storage.get('carts')), id]));

@@ -149,6 +149,15 @@ class Element extends React.Component{
     this._rm_cart = this._rm_cart.bind(this);
   }
 
+  componentDidMount(){
+    if(this.props.Flowers){
+      if(this.props.Flowers.currentCategory){
+          let str = this.props.Flowers.currentCategory;
+          document.title = str;
+      }
+    }
+  }
+
   _add_cart(id){
     if(this.props.Cart.carts.every((f) => f.id != id)){
       this.props.addcartid(id);

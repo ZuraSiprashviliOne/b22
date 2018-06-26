@@ -5,7 +5,7 @@ export function INIT_SEARCH(){
   return {
     type: 'INIT_SEARCH',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://testoneone.000webhostapp.com/data.php', {
+      Axios.get('http://botanica22.ge/data.php', {
         params: {
           common: 'locale'
         }
@@ -27,7 +27,7 @@ export function SEARCH_SEARCH_ITEMS(data){
   return {
     type: 'SEARCH_SEARCH_ITEMS',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://testoneone.000webhostapp.com/data.php', {
+      Axios.get('http://botanica22.ge/data.php', {
         params: {
           search: data
         }

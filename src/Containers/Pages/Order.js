@@ -100,13 +100,25 @@ class OrderProduct extends React.Component{
           }
       })
           .then((response) => {
-              console.log(response.data);
-              alert('ok');
-              this.unpend();
+            if(response.data.id !== undefined && response.data.action !== undefined){
+              let form = document.createElement('form');
+              form.setAttribute('method', 'post');
+              form.setAttribute('action', response.data.action);
+
+              let hiddenField = document.createElement('input');
+              hiddenField.setAttribute('name', 'trans_id');
+              hiddenField.setAttribute('type', 'hidden');
+              hiddenField.setAttribute('value', response.data.id);
+              form.appendChild(hiddenField);
+              document.body.appendChild(form);
+              form.submit();
+
+            }
+            this.unpend();
           })
           .catch((error) => {
               console.log(error);
-              alert('not okay');
+              alert('Sorry but there was an error try again :)');
               this.unpend();
           });
   }
@@ -281,7 +293,9 @@ class OrderProduct extends React.Component{
                                   </Translate>
                                 </h5>
                                 <div className={'text-muted p-1 small'}>
-                                  *please, fill in this gap carefully, since the text written by you will be copied on the card without editing.
+                                    <Translate>
+                                        *please, fill in this gap carefully, since the text written by you will be copied on the card without editing.
+                                    </Translate>
                                 </div>
                               </div>
                               <div
@@ -735,7 +749,18 @@ class Element extends React.Component{
     super(props);
   }
 
-  render(){
+
+  componentDidMount(){
+    if(this.props.Order){
+      if(this.props.Order.product){
+          let str = `Ordering: ${this.props.Order.product.title}`;
+          document.title = str;
+      }
+    }
+  }
+
+
+    render(){
     return (
       <div
         id={'order_page'}

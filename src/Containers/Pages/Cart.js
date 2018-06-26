@@ -237,6 +237,13 @@ class Element extends React.Component{
     super(props);
   }
 
+  componentDidMount(){
+    if(this.props.Cart){
+        let str = `Your Cart ${this.props.Cart.count !== undefined && this.props.Cart.count !== null ? '(' + this.props.Cart.count + ')' : ''}`;
+        document.title = str;
+    }
+  }
+
   render(){
     return (
       <div

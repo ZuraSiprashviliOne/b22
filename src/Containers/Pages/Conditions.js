@@ -20,6 +20,11 @@ class Element extends React.Component{
     super(props);
   }
 
+  componentDidMount(){
+      let str = `Delivery Conditions`;
+      document.title = str;
+  }
+
   render(){
     return (
       <div

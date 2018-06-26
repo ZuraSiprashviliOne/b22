@@ -28,6 +28,8 @@ import {SliderButton} from "../../Components/SliderButton";
 
 import {reactLocalStorage as Storage} from 'reactjs-localstorage';
 
+import DocumentMeta from 'react-document-meta';
+
 import {
   Container,
   Row,
@@ -566,6 +568,15 @@ class Element extends React.Component{
     this._remove_favourites = this._remove_favourites.bind(this);
     this._add_cart = this._add_cart.bind(this);
     this._rm_cart = this._rm_cart.bind(this);
+  }
+
+  componentDidMount(){
+    if(this.props.Flower){
+      if(this.props.Flower.flower){
+          let str = this.props.Flower.flower.title;
+          document.title = str;
+      }
+    }
   }
 
   _add_cart(id){

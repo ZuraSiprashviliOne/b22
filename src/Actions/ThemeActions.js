@@ -5,7 +5,7 @@ export function SET_THEME_SRC(){
     return {
         type: 'SET_THEME_SRC',
         payload: new Promise((resolve, reject) => {
-            Axios.get('http://testoneone.000webhostapp.com/data.php', {
+            Axios.get('http://botanica22.ge/data.php', {
                 params: {
                     theme: true
                 }
