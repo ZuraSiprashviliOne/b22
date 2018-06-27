@@ -189,7 +189,7 @@ class Element extends React.Component{
                       <Translate
                         divider={this.props.Favourites.divider}>
                         {'total price>>>: ' + this.getPrice()}
-                      </Translate>$
+                      </Translate>₾
                     </NavLink>
                   </NavItem>
                   <NavItem>

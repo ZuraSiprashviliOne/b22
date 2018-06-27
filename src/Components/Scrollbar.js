@@ -26,14 +26,14 @@ export class Scrollbar extends React.Component{
       <Scrollbars
         {...this.props}
         ref={(element) =>{ this.scrollbar = element; }}
-        autoHide={this.props.autoHide || true}
+        autoHide={false}
         autoHideDuration={this.props.autoHideDuration || 300}
         autoHideTimeout={this.props.autoHideTimeout || 0}
         renderThumbVertical={() => {
           return (
             <div
               className={'track-vertical'} style={{
-              backgroundColor: 'rgba(255,255,255,1)'
+              backgroundColor: '#815f6c'
             }}/>
           );
         }}>

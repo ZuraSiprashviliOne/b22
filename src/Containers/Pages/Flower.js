@@ -38,6 +38,10 @@ import {
   FormGroup,
   Label,
   Input,
+    ButtonDropdown,
+    DropdownMenu,
+    DropdownToggle,
+    DropdownItem
 } from 'reactstrap';
 import {SET_ORDER} from "../../Actions/OrderActions";
 import {ADD_FAVOURITES_FAVOURITES_BY_ID, UNSET_FAVOURITES_FAVOURITE_ITEM} from "../../Actions/FavouritesActions";
@@ -248,17 +252,50 @@ class Counts extends React.Component{
 }
 
 export class FlowerInfo extends React.Component{
-  constructor(props){
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      carted: this.props.carts.includes(this.props.id)
-    };
+        this.state = {
+            carted: this.props.carts.includes(this.props.id),
+            isCurrencyOpen: false,
+            prices: {
+                gel: null,
+                eur: null,
+                usd: null,
+                rub: null
+            },
+            currentCurrency: 'gel',
+            cPrice: 0
+        };
 
-    this._handle_cart = this._handle_cart.bind(this);
-    this.setAllSize = this.setAllSize.bind(this);
-    this.setAllCount = this.setAllCount.bind(this);
+        this._handle_cart = this._handle_cart.bind(this);
+        this.setAllSize = this.setAllSize.bind(this);
+        this._toggleCurrency = this._toggleCurrency.bind(this);
+        this.setAllCount = this.setAllCount.bind(this);
+    }
+
+    componentWillMount(){
+        this.setState({
+            ...this.state,
+            prices: {
+                ...this.state.prices,
+                gel: parseFloat(this.props.price).toPrecision(4),
+                usd: (parseFloat(this.props.price) * 0.407452).toPrecision(4),
+                eur: (parseFloat(this.props.price) * 0.352510).toPrecision(4),
+                rub: (parseFloat(this.props.price) * 25.72).toPrecision(4)
+            },
+            cPrice: parseFloat(this.props.price).toPrecision(4)
+        })
+    }
+
+
+  _toggleCurrency(){
+    this.setState({
+        ...this.state,
+        isCurrencyOpen: !this.state.isCurrencyOpen
+    })
   }
+
 
   _handle_cart(){
     this.setState({
@@ -410,17 +447,71 @@ export class FlowerInfo extends React.Component{
               xs={8}>
               <h3
                 className={'font-weight-light m-0 text-capitalize'}>
-                ${parseFloat(this.props.price).toPrecision(5)}
+                  ₾ {parseFloat(this.props.price).toPrecision(5)}
                 {this.props.old_price > this.props.price ? (
                   <sub
                     style={{textDecoration: 'line-through'}}
-                    className={'text-grass ml-1'}>${parseFloat(this.props.old_price).toPrecision(5)}</sub>
+                    className={'text-grass ml-1'}>₾ {parseFloat(this.props.old_price).toPrecision(5)}</sub>
                 ) : null}
               </h3>
             </Col>
           </Row>
         </Container>
       </div>,
+        <div
+          key={'prices'}
+          className={'py-3 px-1 px-md-2 border-bottom d-flex flex-row align-items-center'}>
+            <ButtonDropdown isOpen={this.state.isCurrencyOpen} toggle={this._toggleCurrency}>
+                <Button id="caret" color="_grass text-white shadow">
+                    {
+                        this.state.cPrice
+                    }
+                </Button>
+                <DropdownToggle caret color="grass"  className={'shadow'}/>
+                <DropdownMenu>
+                    <DropdownItem
+                        onClick={() => {
+
+                            this.setState({
+                                ...this.state,
+                                currentCurrency: 'gel',
+                                cPrice: this.state.prices['gel']
+                            });
+                        }}
+                      className={'text-uppercase'}>
+                      gel
+                    </DropdownItem>
+
+                    <DropdownItem
+                        onClick={() => {
+                            this.setState({
+                                ...this.state,
+                                currentCurrency: 'eur',
+                                cPrice: this.state.prices['eur']
+                            });
+                        }}
+                        className={'text-uppercase'}>
+                        eur
+                    </DropdownItem>
+
+                    {/*<DropdownItem*/}
+                        {/*onClick={() => {*/}
+                            {/*this.setCcC('usd');*/}
+                        {/*}}*/}
+                        {/*className={'text-uppercase'}>*/}
+                        {/*usd*/}
+                    {/*</DropdownItem>*/}
+
+                    {/*<DropdownItem*/}
+                        {/*onClick={() => {*/}
+                            {/*this.setCcC('rub');*/}
+                        {/*}}*/}
+                        {/*className={'text-uppercase'}>*/}
+                        {/*rub*/}
+                    {/*</DropdownItem>*/}
+                </DropdownMenu>
+            </ButtonDropdown>
+        </div>,
       <div
         key={'description'}
         className={'py-3 px-1 px-md-2 border-bottom'}>

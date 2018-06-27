@@ -416,7 +416,7 @@ class NavigationNavbar extends React.Component{
         <Container>
           <NavbarBrand
             tag={Link}
-            className={`text-capitalize text-grass font-weight-bold d-md-none d-lg-none d-xl-none ${this.props.fixed ? 'd-flex flex-column justify-content-center d-sm-flex' : 'd-none'}`}
+            className={`pl-1 text-capitalize text-grass font-weight-bold d-md-none d-lg-none d-xl-none ${this.props.fixed ? 'd-flex flex-column justify-content-center d-sm-flex' : 'd-none'}`}
             to={'/'}>
               <img src="/assets/logo-dark.png"  style={{height: '50px'}} alt="logo"/>
           </NavbarBrand>

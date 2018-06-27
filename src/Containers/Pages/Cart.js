@@ -171,7 +171,7 @@ class Carts extends React.Component{
                   <Translate
                     divider={this.props.Cart.divider}>
                     {this.getPrice()}
-                  </Translate>$
+                  </Translate>₾
                 </NavLink>
               </NavItem>
             </Nav>

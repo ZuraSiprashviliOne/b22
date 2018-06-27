@@ -33,20 +33,100 @@ import {FlowerInfo} from "./Flower";
 import Axios from 'axios';
 
 class OrderProduct extends React.Component{
-  constructor(props){
-    super(props);
+    constructor(props) {
+        super(props);
 
 
-    this._onChangeNames = this._onChangeNames.bind(this);
+        this._onChangeNames = this._onChangeNames.bind(this);
 
-    this._order = this._order.bind(this);
+        this._order = this._order.bind(this);
 
-    this.state = {
-      pending: false
-    };
+        this.state = {
+            pending: false,
+            dateIsOkay: false
+        };
 
-    this.pend = this.pend.bind(this);
-    this.unpend = this.unpend.bind(this);
+        this.checkFunc = (date, time) => {
+            if (date == "" || time == "")
+                return false;
+
+            let year = parseInt(date.substring(0, 4));
+            let month = parseInt(date.substring(5, 7));
+            let day = parseInt(date.substring(8, 10));
+
+            let h = parseInt(time.substring(0, 2));
+            let m = parseInt(time.substring(3, 5));
+
+            let ctime = new Date();
+
+            // calculate time 5 h earlyer. mindfuck
+
+            h -= 5;
+            if (h < 0) {
+                h = 24 + h;
+                day--;
+                if (day < 0) {
+                    month--;
+                    if (month < 0) {
+                        month = 11;
+                        year--;
+                    }
+                    day = new Date(year, month, 0).getDate();
+                }
+            }
+
+            if (year < ctime.getFullYear()) {
+                return false;
+            }
+
+            if (month < ctime.getMonth() + 1 && year == ctime.getFullYear())
+                return false;
+
+            if (day < ctime.getDate() && month == ctime.getMonth() + 1 && year == ctime.getFullYear())
+                return false;
+
+            if (h < ctime.getHours() && day == ctime.getDate() && month == ctime.getMonth() + 1 && year == ctime.getFullYear())
+                return false;
+
+            if (m < ctime.getMinutes() && h == ctime.getHours() && day == ctime.getDate() && month == ctime.getMonth() + 1 && year == ctime.getFullYear())
+                return false;
+            if (h < 10)
+                return false;
+            return true;
+        };
+
+
+        this.pend = this.pend.bind(this);
+        this.unpend = this.unpend.bind(this);
+        this._onDateChange = this._onDateChange.bind(this);
+        this._onTimeChange = this._onTimeChange.bind(this);
+        this.checkTimes = this.checkTimes.bind(this);
+    }
+
+    _onDateChange(){
+      this.checkTimes();
+    }
+
+    _onTimeChange(){
+      this.checkTimes();
+    }
+
+  checkTimes(event){
+      if(event){
+          event.preventDefault();
+      }
+    if(this.checkFunc(this.delivery_date.value, this.delivery_time.value)){
+      this.setState({
+          ...this.state,
+          dateIsOkay: true
+      });
+    }else{
+      this.setState({
+          ...this.state,
+          dateIsOkay: false
+      });
+    }
+
   }
 
   pend(){
@@ -75,52 +155,54 @@ class OrderProduct extends React.Component{
 
   _order(event){
     event.preventDefault();
-    this.pend();
 
-      Axios.get('http://botanica22.ge/data/pay.php', {
-          params: {
-              orderIt: true,
-              o_firstName: this.o_firstName.value,
-              o_lastName: this.o_lastName.value,
-              o_email: this.o_email.value,
-              o_phone_one: this.o_phone_one.value,
-              o_phone_two: this.o_phone_two.value,
-              message: this.message.value,
-              price: this.props.price,
-              a_firstName: this.a_firstName.value,
-              a_lastName: this.a_lastName.value,
-              a_phone: this.a_phone.value,
-              d_date: this.delivery_date.value,
-              d_time: this.delivery_time.value,
-              d_city: this.delivery_city.value,
-              d_anony: this.delivery_anony.value,
-              d_addr: this.delivery_address.value,
-              d_info: this.additional_info.value,
-              product_id: this.props.id
-          }
-      })
-          .then((response) => {
-            if(response.data.id !== undefined && response.data.action !== undefined){
-              let form = document.createElement('form');
-              form.setAttribute('method', 'post');
-              form.setAttribute('action', response.data.action);
-
-              let hiddenField = document.createElement('input');
-              hiddenField.setAttribute('name', 'trans_id');
-              hiddenField.setAttribute('type', 'hidden');
-              hiddenField.setAttribute('value', response.data.id);
-              form.appendChild(hiddenField);
-              document.body.appendChild(form);
-              form.submit();
-
-            }
-            this.unpend();
+      if(this.state.dateIsOkay){
+        this.pend();
+          Axios.get('http://botanica22.ge/data/pay.php', {
+              params: {
+                  orderIt: true,
+                  o_firstName: this.o_firstName.value,
+                  o_lastName: this.o_lastName.value,
+                  o_email: this.o_email.value,
+                  o_phone_one: this.o_phone_one.value,
+                  o_phone_two: this.o_phone_two.value,
+                  message: this.message.value,
+                  price: this.props.price,
+                  a_firstName: this.a_firstName.value,
+                  a_lastName: this.a_lastName.value,
+                  a_phone: this.a_phone.value,
+                  d_date: this.delivery_date.value,
+                  d_time: this.delivery_time.value,
+                  d_city: this.delivery_city.value,
+                  d_anony: this.delivery_anony.value,
+                  d_addr: this.delivery_address.value,
+                  d_info: this.additional_info.value,
+                  product_id: this.props.id
+              }
           })
-          .catch((error) => {
-              console.log(error);
-              alert('Sorry but there was an error try again :)');
-              this.unpend();
-          });
+              .then((response) => {
+                  if(response.data.id !== undefined && response.data.action !== undefined){
+                      let form = document.createElement('form');
+                      form.setAttribute('method', 'post');
+                      form.setAttribute('action', response.data.action);
+
+                      let hiddenField = document.createElement('input');
+                      hiddenField.setAttribute('name', 'trans_id');
+                      hiddenField.setAttribute('type', 'hidden');
+                      hiddenField.setAttribute('value', response.data.id);
+                      form.appendChild(hiddenField);
+                      document.body.appendChild(form);
+                      form.submit();
+
+                  }
+                  this.unpend();
+              })
+              .catch((error) => {
+                  console.log(error);
+                  alert('Sorry but there was an error try again :)');
+                  this.unpend();
+              });
+      }
   }
 
   render(){
@@ -500,6 +582,20 @@ class OrderProduct extends React.Component{
                                         readOnly={this.state.pending}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}/>
                                     </div>
+                                      <div
+                                          className={'p-1'}>
+                                          <div className="text-muted font-italics small">
+                                              {this.state.dateIsOkay === true ? (
+                                                  <Translate>
+                                                      good time to delivery
+                                                  </Translate>
+                                              ) : (
+                                                  <Translate>
+                                                      we can't deliver at that time
+                                                  </Translate>
+                                              )}
+                                          </div>
+                                      </div>
                                   </Col>
                                   <Col
                                     className={'p-1'}
@@ -523,6 +619,17 @@ class OrderProduct extends React.Component{
                                         ref={(element) => {this.delivery_time = element}}
                                         onChange={this._onTimeChange}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}/>
+                                    </div>
+                                    <div
+                                      className={'p-1'}>
+                                        <Button
+                                            type={'reset'}
+                                            onClick={this.checkTimes}
+                                            className={'btn-block h-100 text-light text-capitalize font-weight-light shadow btn-grass'}>
+                                            <Translate>
+                                              check availability
+                                            </Translate>
+                                        </Button>
                                     </div>
                                   </Col>
                                 </Row>
@@ -549,16 +656,6 @@ class OrderProduct extends React.Component{
                                         <option value="tbilisi">
                                           <Translate>
                                             tbilisi
-                                          </Translate>
-                                        </option>
-                                        <option value="gori">
-                                          <Translate>
-                                            gori
-                                          </Translate>
-                                        </option>
-                                        <option value="gldani">
-                                          <Translate>
-                                            gldani
                                           </Translate>
                                         </option>
                                       </select>
@@ -620,6 +717,7 @@ class OrderProduct extends React.Component{
                                         name={'full_address'}
                                         readOnly={this.state.pending}
                                         ref={(element) => {this.delivery_address = element}}
+                                        required={true}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
                                         placeholder={'Tbilisi, Avlabari, David\'s.st 14'}/>
                                     </div>
