@@ -245,7 +245,9 @@ export class CollectionItem extends React.Component{
                 <div className={'bg-grass py-2 lie'}></div>
                 <div className={'bg-grass text-center text-white font-weight-bold pt-3 pb-4'}>
                   <i>
-                      ₾ {parseFloat(this.props.real_price).toPrecision(4)}
+
+                      <img src="/assets/lari_white.png" alt="lari" style={{width: '20px',height:'20px'}}/>
+                    { (parseFloat(this.props.price) < 11 ?  parseFloat(this.props.price) + 9 * parseFloat(this.props.count_price)  : parseFloat(this.props.real_price)).toPrecision(4)}
                   </i>
                 </div>
               </Col>

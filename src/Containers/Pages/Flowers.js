@@ -66,8 +66,9 @@ export class FlowerItem extends React.Component {
                 className={'pr-0 price'}>
                 <div className={'bg-grass py-2 lie'}></div>
                 <div className={'bg-grass text-center text-white font-weight-bold pt-3 pb-4'}>
+                    <img src="/assets/lari_white.png" alt="lari" style={{width: '20px',height:'20px'}}/>
                   <i>
-                      ₾ {parseFloat(this.props.real_price).toPrecision(4)}
+                      { (parseFloat(this.props.price) < 2 ?  parseFloat(this.props.price) + 9 * parseFloat(this.props.count_price)  : parseFloat(this.props.real_price)).toPrecision(4)}
                   </i>
                 </div>
               </Col>

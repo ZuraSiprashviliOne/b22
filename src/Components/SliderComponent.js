@@ -175,7 +175,7 @@ export default class Slider extends React.Component{
                 <Translate divider={this.props.divider}>
                   {'now from'}
                 </Translate>{' '}
-                  ₾{slide.price}
+                  <img src="/assets/lari_white.png" alt="lari" style={{width: '20px',height:'20px'}}/>{slide.price}
               </small>
             </div>
           </Col>
