@@ -196,6 +196,10 @@ class Counts extends React.Component{
   constructor(props){
     super(props);
 
+    this.state = {
+      broken: false
+    };
+
     this._handleMin = this._handleMin.bind(this);
     this._handlePlu = this._handlePlu.bind(this);
 
@@ -203,10 +207,22 @@ class Counts extends React.Component{
   }
 
   _handleChange(event){
-    let val = parseInt(this.count.value);
+    let val = parseInt(this.ccount.value);
     if(val >= 9 && val <= 101){
       this.props.setcount(val);
+      this.setState({
+          broken: false
+      });
     }else{
+      if(!isNaN(val)){
+          this.setState({
+              broken: true
+          })
+      }else{
+          this.setState({
+              broken: false
+          });
+      }
     }
   }
 
@@ -256,6 +272,30 @@ class Counts extends React.Component{
               <FontAwesome
                 name={'plus'}/>
             </button>
+          </div>
+        </div>
+        <div className="py-1 text-center">
+            <h3
+                className={'m-0  font-weight-light text-capitalize'}>
+                <Translate>
+                    custom count
+                </Translate>
+            </h3>
+        </div>
+        <div className="py-1">
+          <div className="actioners">
+            <input
+              type={'number'}
+              min={'9'}
+              max={'101'}
+              step={'1'}
+              ref={(element) => {this.ccount = element}}
+              onChange={this._handleChange}
+              placeholder={this.props.count || 9}
+              style={{
+                transition: '0.5s'
+              }}
+              className={`py-2 border shadow form-control w-100 text-center text-dark ${this.state.broken === true ? 'border-danger' : ' bg-white'}`}/>
           </div>
         </div>
       </div>
@@ -483,7 +523,7 @@ export class FlowerInfo extends React.Component{
         ]: null}
         <Container>
           <Row
-            className={'align-items-center'}>
+            className={''}>
             <Col
               className={'p-1'}
               sm={6}>
