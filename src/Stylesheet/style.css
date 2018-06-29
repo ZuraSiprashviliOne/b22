@@ -486,7 +486,7 @@ header .navbar {
       transition: 1s; }
     .collections .collection .question .closeBtn, .collections-flowers .collection .question .closeBtn {
       top: -1.5rem;
-      right: -1.3em;
+      right: 0em;
       border: 0 !important;
       position: absolute;
       z-index: 1; }

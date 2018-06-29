@@ -202,10 +202,11 @@ class Counts extends React.Component{
     this._handleChange = this._handleChange.bind(this);
   }
 
-  _handleChange(){
+  _handleChange(event){
     let val = parseInt(this.count.value);
-    if(val > 9 && val < 101){
+    if(val >= 9 && val <= 101){
       this.props.setcount(val);
+    }else{
     }
   }
 
@@ -242,18 +243,11 @@ class Counts extends React.Component{
               <FontAwesome
                 name={'minus'}/>
             </button>
-            {/*<div*/}
-              {/*ref={(element) => {this.count = element}}*/}
-              {/*className={'shadow bg-white  py-2 border text-center form-control w-100'}>*/}
-              {/*{this.props.count}*/}
-            {/*</div>*/}
-              <input
-                  type="number"
-                  step={0.1}
-                  ref={(element) => this.count = element}
-                  onChange={this._handleChange}
-                  className={'shadow bg-white py-2 border text-center form-control w-100'}
-                  value={parseInt(this.props.count)}/>
+            <div
+              ref={(element) => {this.count = element}}
+              className={'shadow bg-white  py-2 border text-center form-control w-100'}>
+              {this.props.count}
+            </div>
             <button
               type={'button'}
               onClick={this._handlePlu}

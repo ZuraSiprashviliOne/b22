@@ -108,7 +108,13 @@ class Element extends React.Component{
 
   getPrice(){
     let price = 0;
-    this.props.Favourites.favourites.map((f) => {price += parseFloat(f.price)});
+    this.props.Favourites.favourites.map((f) => {
+      if(parseFloat(f.real_price) < 11){
+          price += parseFloat(f.real_price) + parseInt(f.count || 9) * parseFloat(f.count_price);
+      }else{
+          price += parseFloat(f.price);
+      }
+    });
     return price.toPrecision(5);
   }
 
