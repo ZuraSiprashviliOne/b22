@@ -177,7 +177,8 @@ class OrderProduct extends React.Component{
                   d_anony: this.delivery_anony.value,
                   d_addr: this.delivery_address.value,
                   d_info: this.additional_info.value,
-                  product_id: this.props.id
+                  product_id: this.props.id,
+                  count: parseInt(this.props.count) || -1
               }
           })
               .then((response) => {
