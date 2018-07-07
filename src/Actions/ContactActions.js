@@ -5,7 +5,7 @@ export function INIT_CONTACT(){
   return {
     type: 'INIT_CONTACT',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           common: 'locale'
         }
@@ -27,7 +27,7 @@ export function SET_CONTACT(){
   return {
     type: 'SET_CONTACT',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           contact: 'page'
         }

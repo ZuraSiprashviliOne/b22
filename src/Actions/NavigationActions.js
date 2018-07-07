@@ -6,12 +6,12 @@ export function SET_NAVIGATION(){
     type: 'SET_NAVIGATION',
     payload: new Promise((resolve, reject) => {
       Axios.all([
-        Axios.get('http://botanica22.ge/data.php', {
+        Axios.get('https://botanica22.ge/data.php', {
           params: {
             common: 'locale'
           }
         }),
-        Axios.get('http://botanica22.ge/data.php', {
+        Axios.get('https://botanica22.ge/data.php', {
           params: {
             categories: 'list'
           }

@@ -486,14 +486,6 @@ export class FlowerInfo extends React.Component{
                     style={{textDecoration: 'line-through'}}
                     className={'text-grass ml-1'}>₾ {parseFloat(this.props.old_price).toPrecision(5)}</sub>
                 ) : null}
-                <sup
-                  className={'text-_grass'}>
-                  <small className="small text-capitalize">
-                    <Translate>
-                        {'Free delivery'}
-                    </Translate>
-                  </small>
-                </sup>
               </h3>
             </Col>
           </Row>

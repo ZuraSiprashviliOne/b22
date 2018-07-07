@@ -5,7 +5,7 @@ export function INIT_ORDER(){
   return {
     type: 'INIT_ORDER',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           common: 'locale'
         }

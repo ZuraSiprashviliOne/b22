@@ -5,7 +5,7 @@ export function INIT_SALES(){
   return {
     type: 'INIT_SALES',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           common: 'locale'
         }
@@ -27,7 +27,7 @@ export function SET_SALES_ITEMS(){
   return {
     type: 'SET_SALES_ITEMS',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           products: 'sales_real'
         }

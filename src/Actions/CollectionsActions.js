@@ -5,7 +5,7 @@ export function INIT_COLLECTIONS(){
   return {
     type: 'INIT_COLLECTIONS',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           common: 'locale'
         }
@@ -27,7 +27,7 @@ export function SET_COLLECTIONS_ITEMS(){
   return {
     type: 'SET_COLLECTIONS_ITEMS',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           products: 'catalog'
         }

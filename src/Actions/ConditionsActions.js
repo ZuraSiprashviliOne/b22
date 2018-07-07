@@ -5,7 +5,7 @@ export function INIT_CONDITIONS(){
   return {
     type: 'INIT_CONDITIONS',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           common: 'locale'
         }
@@ -27,7 +27,7 @@ export function SET_CONDITIONS(){
   return {
     type: 'SET_CONDITIONS',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           conditions: 'page'
         }

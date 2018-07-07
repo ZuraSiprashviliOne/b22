@@ -5,7 +5,7 @@ export function INIT_CART(){
   return {
     type: 'INIT_CART',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           common: 'locale'
         }
@@ -27,7 +27,7 @@ export function ADD_CARTS_CART_BY_ID(id){
   return {
     type: 'ADD_CARTS_CART_BY_ID',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           product: id
         }

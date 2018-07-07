@@ -308,7 +308,7 @@ class OrderProduct extends React.Component{
                                   onChange={this._onChangePhone}
                                   name={'orderer_phoneOne'}
                                   className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
-                                  placeholder={'(+995) 555 58 58 79'}/>
+                                  placeholder={'(+995) 568 82 22 22'}/>
                               </div>
                             </Col>
                             <Col
@@ -332,7 +332,7 @@ class OrderProduct extends React.Component{
                                   type="text"
                                   name={'orderer_phoneTwo'}
                                   className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
-                                  placeholder={'(+995) 555 44 93 59'}/>
+                                  placeholder={'(+995) 568 82 22 22'}/>
                               </div>
                             </Col>
                           </Row>
@@ -535,7 +535,7 @@ class OrderProduct extends React.Component{
                                         onChange={this._onChangePhone}
                                         readOnly={this.state.pending}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
-                                        placeholder={'(+995) 555 58 58 79'}/>
+                                        placeholder={'(+995) 568 82 22 22'}/>
                                     </div>
                                   </Col>
                                 </Row>
@@ -720,7 +720,7 @@ class OrderProduct extends React.Component{
                                         ref={(element) => {this.delivery_address = element}}
                                         required={true}
                                         className={'form-control border rounded-no bg-white px-2 py-1 text-muted'}
-                                        placeholder={'Tbilisi, Avlabari, David\'s.st 14'}/>
+                                        placeholder={'Tbilisi, Ir.Abashidze, 22'}/>
                                     </div>
                                   </Col>
                                   <Col

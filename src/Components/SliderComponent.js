@@ -171,12 +171,18 @@ export default class Slider extends React.Component{
               </h5>
             </div>
             <div className={'text-light text-capitalize'}>
-              <small>
-                <Translate divider={this.props.divider}>
-                  {'now from'}
-                </Translate>{' '}
-                  <img src="/assets/lari_white.png" alt="lari" style={{width: '20px',height:'20px'}}/>{slide.price}
-              </small>
+                {
+                  parseFloat(slide.price) == 0 ? (
+                      ' '
+                  ):(
+                      <small>
+                          <Translate divider={this.props.divider}>
+                              {'now from'}
+                          </Translate>{' '}
+                          <img src="/assets/lari_white.png" alt="lari" style={{width: '20px',height:'20px'}}/>{slide.price}
+                      </small>
+                  )
+                }
             </div>
           </Col>
         );

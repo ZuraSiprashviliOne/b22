@@ -5,7 +5,7 @@ export function INIT_FOOTER(){
   return {
     type: 'INIT_FOOTER',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           common: 'locale'
         }
@@ -27,7 +27,7 @@ export function SET_FOOTER(){
   return {
     type: 'SET_FOOTER',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           footer: 'data'
         }
@@ -46,7 +46,7 @@ export function SUBSCRIBE(subscribe, email){
   return {
     type: 'SUBSCRIBE',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           subscribe: email
         }

@@ -34,7 +34,7 @@ class Element extends React.Component{
   }
 
   componentDidMount(){
-      let str = `Botanica22.ge :)`;
+      let str = `Botanica22.ge`;
       document.title = str;
   }
 

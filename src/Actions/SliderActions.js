@@ -5,7 +5,7 @@ export function INIT_SLIDER(){
   return {
     type: 'INIT_SLIDER',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           common: 'locale'
         }
@@ -27,7 +27,7 @@ export function SET_SLIDER_SLIDES(){
   return {
     type: 'SET_SLIDER_SLIDES',
     payload: new Promise((resolve, reject) => {
-      Axios.get('http://botanica22.ge/data.php', {
+      Axios.get('https://botanica22.ge/data.php', {
         params: {
           slider: 'slides'
         }
